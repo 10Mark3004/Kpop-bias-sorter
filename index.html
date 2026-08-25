@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-pop Bias Sorter 1v1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>K-pop Bias Sorter - Liga</title>
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-bg: rgba(30, 41, 59, 0.75);
       --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
       --accent-hover: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
       --glow: 0 0 20px rgba(236, 72, 153, 0.4);
@@ -26,11 +26,12 @@
       background: var(--bg-gradient);
       background-attachment: fixed;
       color: var(--text-color);
-      padding: 20px 15px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      width: 100%;
     }
 
     h1 {
@@ -40,7 +41,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       margin-top: 10px;
     }
 
@@ -49,8 +50,9 @@
       text-align: center;
       max-width: 500px;
       font-size: 0.95rem;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       line-height: 1.4;
+      padding: 0 10px;
     }
 
     .container {
@@ -59,14 +61,17 @@
       background: var(--card-bg);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 25px 20px;
+      padding: 25px 15px;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     textarea {
       width: 100%;
-      height: 220px;
+      height: 200px;
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid #475569;
       color: #fff;
@@ -74,7 +79,7 @@
       border-radius: 12px;
       resize: vertical;
       font-family: inherit;
-      font-size: 14px;
+      font-size: 15px;
       margin-bottom: 20px;
       line-height: 1.5;
     }
@@ -93,7 +98,7 @@
       border: none;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 17px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
       transition: all 0.25s ease;
@@ -105,12 +110,13 @@
       box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
     }
 
-    /* Batalla 1v1 */
+    /* Batalla */
     .battle-area {
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
+      width: 100%;
     }
 
     .progress-bar-container {
@@ -129,61 +135,87 @@
       transition: width 0.3s ease;
     }
 
-    .progress-text {
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
       font-size: 0.9rem;
-      font-weight: 600;
       color: var(--text-muted);
+      font-weight: 600;
     }
 
     .vs-container {
       display: flex;
+      flex-direction: column;
       gap: 12px;
       width: 100%;
+      margin-top: 5px;
     }
 
     .card {
-      flex: 1;
+      width: 100%;
       background: rgba(15, 23, 42, 0.85);
       border: 2px solid #334155;
       border-radius: 16px;
-      padding: 30px 12px;
+      padding: 22px 15px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 140px;
     }
 
     .card:hover {
       border-color: #ec4899;
-      transform: translateY(-4px);
       box-shadow: var(--glow);
       background: rgba(30, 41, 59, 0.95);
+      transform: translateY(-2px);
     }
 
     .card .name {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: #fff;
     }
 
     .card .group {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: #a78bfa;
       margin-top: 6px;
       font-weight: 600;
     }
 
+    .vs-text {
+      text-align: center;
+      color: #ec4899;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+
+    .btn-tie {
+      background: rgba(51, 65, 85, 0.6);
+      border: 1px solid #64748b;
+      color: #cbd5e1;
+      padding: 12px;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .btn-tie:hover {
+      background: rgba(71, 85, 105, 0.8);
+      color: #fff;
+    }
+
     /* Resultados */
     .results-area {
       display: none;
+      width: 100%;
     }
 
     .results-title {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       text-align: center;
       margin-bottom: 20px;
       background: linear-gradient(to right, #f472b6, #a78bfa);
@@ -194,45 +226,59 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-      border-radius: 10px;
+      margin-top: 5px;
+      border-radius: 12px;
       overflow: hidden;
+      table-layout: fixed;
     }
 
     th, td {
-      padding: 14px 12px;
+      padding: 14px 8px;
       text-align: left;
+      word-wrap: break-word;
     }
 
     th {
       background: rgba(15, 23, 42, 0.9);
       color: #ec4899;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
+      font-weight: 700;
     }
 
     tr {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    tr:last-child {
+      border-bottom: none;
     }
 
     tr:nth-child(even) {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
     }
+
+    th.r1, td.rank { width: 15%; text-align: center; }
+    th.r2, td.name-col { width: 45%; }
+    th.r3, td.group-col { width: 40%; }
 
     td.rank {
       font-weight: 800;
-      width: 45px;
+      font-size: 1.2rem;
       color: #f472b6;
     }
 
     td.name-col {
       font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
     }
 
     td.group-col {
       color: var(--text-muted);
       font-size: 0.9rem;
+      font-weight: 500;
     }
 
     .btn-restart {
@@ -240,6 +286,7 @@
       background: transparent;
       border: 2px solid #8b5cf6;
       color: #a78bfa;
+      padding: 15px;
     }
 
     .btn-restart:hover {
@@ -251,192 +298,184 @@
 </head>
 <body>
 
-  <h1>K-pop Bias Sorter 1v1</h1>
-  <p class="description">Armá tu propio ranking seleccionando tu preferida en cada duelo 1v1.</p>
+  <h1>K-pop Bias Sorter</h1>
+  <p class="description">Sistema de Liga: Enfrentamientos aleatorios inteligentes para posicionar a todas las integrantes.</p>
 
   <div class="container">
-    <!-- Pantalla 1: Formulario -->
+    <!-- Pantalla 1 -->
     <div id="setup-screen">
-      <textarea id="bias-input" placeholder="Escribe un nombre por línea&#10;Ejemplo:&#10;Ireh - Purple Kiss&#10;Dosie - Purple Kiss&#10;Yuki - Purple Kiss&#10;Chaein - Purple Kiss&#10;Swan - Purple Kiss&#10;Gaeun - Purple Kiss"></textarea>
-      <button onclick="startSorter()">¡Comenzar Enfrentamientos!</button>
+      <textarea id="bias-input" placeholder="Escribe un nombre por línea&#10;Ejemplo:&#10;Ireh - Purple Kiss&#10;Hwiseo - H1-KEY&#10;Dosie - Purple Kiss&#10;Yuki - Purple Kiss&#10;Chaein - Purple Kiss&#10;Swan - Purple Kiss&#10;Gaeun - Purple Kiss"></textarea>
+      <button onclick="startSorter()">¡Iniciar Liga!</button>
     </div>
 
-    <!-- Pantalla 2: Batalla 1v1 -->
+    <!-- Pantalla 2 -->
     <div id="battle-screen" class="battle-area">
       <div class="progress-bar-container">
         <div id="progress-bar" class="progress-bar"></div>
       </div>
-      <div id="progress" class="progress-text">Enfrentamiento #1</div>
+      <div class="progress-info">
+        <span id="progress-text">Batalla 1 / 1</span>
+        <span id="progress-pct">0%</span>
+      </div>
 
       <div class="vs-container">
-        <div class="card" onclick="pickWinner(0)">
+        <div class="card" onclick="handleChoice(0)">
           <div id="name-0" class="name"></div>
           <div id="group-0" class="group"></div>
         </div>
-        <div class="card" onclick="pickWinner(1)">
+        
+        <div class="vs-text">VS</div>
+
+        <div class="card" onclick="handleChoice(1)">
           <div id="name-1" class="name"></div>
           <div id="group-1" class="group"></div>
         </div>
       </div>
+
+      <button class="btn-tie" onclick="handleChoice('tie')">Empate / No me decido 🤝</button>
     </div>
 
-    <!-- Pantalla 3: Resultados -->
+    <!-- Pantalla 3 -->
     <div id="results-screen" class="results-area">
-      <h2 class="results-title">👑 Tu Ranking Final 👑</h2>
+      <h2 class="results-title">👑 Tu Ranking Definitivo 👑</h2>
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Grupo</th>
+            <th class="r1">#</th>
+            <th class="r2">Nombre</th>
+            <th class="r3">Grupo</th>
           </tr>
         </thead>
         <tbody id="results-body"></tbody>
       </table>
-      <button class="btn-restart" onclick="resetSorter()">Crear otro Sorter</button>
+      <button class="btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
     </div>
   </div>
 
   <script>
-    let list = [];
-    let state = null;
-    let battleCount = 0;
-    let totalEstimatedBattles = 0;
+    let participants = [];
+    let matchups = [];
+    let currentMatchIndex = 0;
+    let totalMatchesNeeded = 0;
 
     function parseInput(text) {
       return text.split('\n')
         .map(line => line.trim())
         .filter(line => line.length > 0)
-        .map(line => {
+        .map((line, index) => {
           const parts = line.split('-').map(p => p.trim());
           return {
+            id: index,
             name: parts[0],
-            group: parts[1] || ''
+            group: parts[1] || '',
+            score: 1000, // Sistema estilo Elo inicial
+            matches: 0
           };
         });
     }
 
+    function generateMatchups(list) {
+      let pairs = [];
+      // Generar combinaciones inteligentes de enfrentamientos cruzados (sistema de liga)
+      for (let i = 0; i < list.length; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+          pairs.push([i, j]);
+        }
+      }
+      // Mezclar aleatoriamente los duelos
+      return pairs.sort(() => Math.random() - 0.5);
+    }
+
     function startSorter() {
       const input = document.getElementById('bias-input').value;
-      list = parseInput(input);
+      participants = parseInput(input);
 
-      if (list.length < 2) {
-        alert('Por favor, ingresa al menos 2 integrantes para comparar.');
+      if (participants.length < 2) {
+        alert('Por favor, ingresa al menos 2 integrantes.');
         return;
       }
 
-      battleCount = 0;
-      totalEstimatedBattles = Math.ceil(list.length * Math.log2(list.length));
+      matchups = generateMatchups(participants);
+      
+      // Limitamos los duelos si la lista es enorme (ej: más de 24 miembros = 276 duelos es mucho), 
+      // tomando una muestra óptima para que no se haga eterno, o haciendo todos si son pocos.
+      if (participants.length <= 15) {
+        totalMatchesNeeded = matchups.length; // Todos contra todos exactos
+      } else {
+        // Para listas grandes (como 24 de tripleS), limitamos a una cantidad justa y representativa (ej: 4-5 duelos por idol)
+        let maxCap = participants.length * 3;
+        if (matchups.length > maxCap) {
+          matchups = matchups.slice(0, maxCap);
+        }
+        totalMatchesNeeded = matchups.length;
+      }
 
-      // Inicialización del Merge Sort interactivo por niveles
-      state = {
-        level: list.map(item => [item]),
-        nextLevel: [],
-        left: null,
-        right: null,
-        merged: [],
-        i: 0,
-        j: 0
-      };
+      currentMatchIndex = 0;
 
       document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('results-screen').style.display = 'none';
       document.getElementById('battle-screen').style.display = 'flex';
-      
-      setupNextPair();
+
+      showCurrentMatch();
     }
 
-    function setupNextPair() {
-      // Si solo queda 1 sub-lista en la ronda actual y no hay nada en procesar
-      if (state.level.length === 1 && !state.left) {
-        showResults(state.level[0]);
+    function showCurrentMatch() {
+      if (currentMatchIndex >= matchups.length) {
+        showResults();
         return;
       }
 
-      // Si terminamos una ronda completa, pasamos a la siguiente ronda
-      if (state.level.length === 0 && !state.left) {
-        state.level = state.nextLevel;
-        state.nextLevel = [];
-        setupNextPair();
-        return;
-      }
+      const [idxA, idxB] = matchups[currentMatchIndex];
+      const memberA = participants.find(p => p.id === idxA);
+      const memberB = participants.find(p => p.id === idxB);
 
-      // Si no hay un par cargado actualmente, tomar los próximos 2 sub-arrays
-      if (!state.left) {
-        if (state.level.length >= 2) {
-          state.left = state.level.shift();
-          state.right = state.level.shift();
-          state.merged = [];
-          state.i = 0;
-          state.j = 0;
-        } else if (state.level.length === 1) {
-          // Elemento impar que pasa directamente a la siguiente ronda
-          state.nextLevel.push(state.level.shift());
-          setupNextPair();
-          return;
-        }
-      }
+      document.getElementById('name-0').innerText = memberA.name;
+      document.getElementById('group-0').innerText = memberA.group;
 
-      // Mostrar la batalla en pantalla
-      battleCount++;
-      document.getElementById('progress').innerText = `Enfrentamiento #${battleCount}`;
-      
-      let pct = Math.min(Math.round((battleCount / totalEstimatedBattles) * 100), 95);
+      document.getElementById('name-1').innerText = memberB.name;
+      document.getElementById('group-1').innerText = memberB.group;
+
+      // Actualizar barra de progreso real
+      let currentNum = currentMatchIndex + 1;
+      let pct = Math.round((currentNum / totalMatchesNeeded) * 100);
       document.getElementById('progress-bar').style.width = `${pct}%`;
-
-      const itemA = state.left[state.i];
-      const itemB = state.right[state.j];
-
-      document.getElementById('name-0').innerText = itemA.name;
-      document.getElementById('group-0').innerText = itemA.group;
-
-      document.getElementById('name-1').innerText = itemB.name;
-      document.getElementById('group-1').innerText = itemB.group;
+      document.getElementById('progress-text').innerText = `Duelo ${currentNum} de ${totalMatchesNeeded}`;
+      document.getElementById('progress-pct').innerText = `${pct}%`;
     }
 
-    function pickWinner(selectedIndex) {
-      if (selectedIndex === 0) {
-        state.merged.push(state.left[state.i]);
-        state.i++;
+    function handleChoice(choice) {
+      const [idxA, idxB] = matchups[currentMatchIndex];
+      let memberA = participants.find(p => p.id === idxA);
+      let memberB = participants.find(p => p.id === idxB);
+
+      // Ponderación de puntos estilo sistema competitivo/Elo
+      if (choice === 0) {
+        memberA.score += 35;
+        memberB.score -= 15;
+      } else if (choice === 1) {
+        memberB.score += 35;
+        memberA.score -= 15;
       } else {
-        state.merged.push(state.right[state.j]);
-        state.j++;
+        // Empate: reparto equitativo menor
+        memberA.score += 10;
+        memberB.score += 10;
       }
 
-      // Si alguno de los dos sub-grupos ya se terminó, volcar el resto
-      if (state.i >= state.left.length) {
-        while (state.j < state.right.length) {
-          state.merged.push(state.right[state.j]);
-          state.j++;
-        }
-        finishCurrentMerge();
-      } else if (state.j >= state.right.length) {
-        while (state.i < state.left.length) {
-          state.merged.push(state.left[state.i]);
-          state.i++;
-        }
-        finishCurrentMerge();
-      } else {
-        setupNextPair();
-      }
+      currentMatchIndex++;
+      showCurrentMatch();
     }
 
-    function finishCurrentMerge() {
-      state.nextLevel.push(state.merged);
-      state.left = null;
-      state.right = null;
-      state.merged = [];
-      setupNextPair();
-    }
-
-    function showResults(finalList) {
-      document.getElementById('progress-bar').style.width = '100%';
+    function showResults() {
       document.getElementById('battle-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'block';
+      document.getElementById('results-screen').style.display = 'flex';
+
+      // Ordenar de mayor a menor puntaje final
+      participants.sort((a, b) => b.score - a.score);
 
       const tbody = document.getElementById('results-body');
       tbody.innerHTML = '';
 
-      finalList.forEach((item, index) => {
+      participants.forEach((item, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td class="rank">${index + 1}</td>
@@ -450,7 +489,6 @@
     function resetSorter() {
       document.getElementById('results-screen').style.display = 'none';
       document.getElementById('setup-screen').style.display = 'block';
-      document.getElementById('progress-bar').style.width = '0%';
     }
   </script>
 </body>
