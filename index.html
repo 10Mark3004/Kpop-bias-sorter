@@ -3,16 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>K-pop Bias Sorter - ¡Arreglado!</title>
+  <title>K-pop Bias Sorter</title>
+  <!-- Librería html2canvas para descargar imágenes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Librería canvas-confetti para la celebración -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-bg: rgba(30, 41, 59, 0.85);
       --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
       --accent-hover: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
       --glow: 0 0 20px rgba(236, 72, 153, 0.4);
       --text-color: #f8fafc;
       --text-muted: #cbd5e1;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(15, 23, 42, 0.8);
+      --card-hover: rgba(30, 41, 59, 0.95);
+    }
+
+    /* Tema Claro */
+    body.light-theme {
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #fce7f3 100%);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text-color: #0f172a;
+      --text-muted: #64748b;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: rgba(241, 245, 249, 0.9);
+      --card-hover: rgba(255, 255, 255, 1);
+      --glow: 0 0 20px rgba(236, 72, 153, 0.2);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,6 +47,22 @@
       align-items: center;
       min-height: 100vh;
       width: 100%;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 8px 12px;
+      border-radius: 50px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -56,33 +91,123 @@
       max-width: 550px;
       background: var(--card-bg);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-color);
       padding: 25px 15px;
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 0.3s ease, border 0.3s ease;
     }
+
+    .group-selector-section {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      color: #ec4899;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .search-input:focus { outline: none; border-color: #ec4899; }
+
+    .groups-list-box {
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .group-accordion-item {
+      border-bottom: 1px solid var(--border-color);
+    }
+    .group-accordion-item:last-child { border-bottom: none; }
+
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .group-header:hover { background: rgba(236, 72, 153, 0.05); }
+
+    .members-container {
+      display: none;
+      padding: 8px 14px 12px 14px;
+      background: rgba(0, 0, 0, 0.03);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .member-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .btn-member-action {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-member-action.added { background: #10b981; }
+
+    .btn-all-group {
+      background: transparent;
+      border: 1px solid #8b5cf6;
+      color: #8b5cf6;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .btn-all-group:hover { background: #8b5cf6; color: white; }
 
     textarea {
       width: 100%;
-      height: 200px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid #475569;
-      color: #fff;
-      padding: 14px;
-      border-radius: 12px;
+      height: 110px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 12px;
+      border-radius: 10px;
       resize: vertical;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14px;
       margin-bottom: 20px;
-      line-height: 1.5;
+      line-height: 1.4;
     }
-
     textarea:focus { outline: none; border-color: #ec4899; box-shadow: var(--glow); }
 
-    button {
+    button.main-btn {
       width: 100%;
       padding: 16px;
       background: var(--accent-gradient);
@@ -94,18 +219,17 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-
-    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    button.main-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
     .battle-area { display: none; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
 
     .progress-bar-container {
       width: 100%;
-      background: rgba(15, 23, 42, 0.6);
+      background: var(--input-bg);
       border-radius: 10px;
       height: 12px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
     }
 
     .progress-bar {
@@ -129,8 +253,8 @@
 
     .card {
       width: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      border: 2px solid #334155;
+      background: var(--input-bg);
+      border: 2px solid var(--border-color);
       border-radius: 16px;
       padding: 25px 15px;
       text-align: center;
@@ -141,62 +265,131 @@
       justify-content: center;
       align-items: center;
     }
-
-    .card:hover { border-color: #ec4899; box-shadow: var(--glow); background: rgba(30, 41, 59, 0.95); transform: translateY(-2px); }
-
-    .card .name { font-size: 1.5rem; font-weight: 800; color: #fff; }
-
+    .card:hover { border-color: #ec4899; box-shadow: var(--glow); background: var(--card-hover); transform: translateY(-2px); }
+    .card .name { font-size: 1.5rem; font-weight: 800; color: var(--text-color); }
     .card .group { font-size: 1rem; color: #a78bfa; margin-top: 8px; font-weight: 600; }
-
     .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 5px 0; }
 
     .results-area { display: none; width: 100%; flex-direction: column; align-items: center; }
-
     .results-title {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       background: linear-gradient(to right, #f472b6, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
+    #capture-area {
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 15px;
+      border: 1px solid var(--border-color);
+    }
+
     table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; table-layout: fixed; }
-
-    th, td { padding: 16px 10px; text-align: left; }
-
-    th { background: rgba(15, 23, 42, 0.9); color: #ec4899; font-size: 0.9rem; text-transform: uppercase; font-weight: 700; }
-
-    tr { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-
+    th, td { padding: 14px 10px; text-align: left; }
+    th { background: var(--input-bg); color: #ec4899; font-size: 0.85rem; text-transform: uppercase; font-weight: 700; }
+    tr { border-bottom: 1px solid var(--border-color); }
     tr:last-child { border-bottom: none; }
+    tr:nth-child(even) { background: rgba(0, 0, 0, 0.02); }
 
-    tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
-
-    th.r1, td.rank { width: 15%; text-align: center; }
+    th.r1, td.rank { width: 20%; text-align: center; }
     th.r2, td.name-col { width: 45%; }
-    th.r3, td.group-col { width: 40%; }
+    th.r3, td.group-col { width: 35%; }
 
-    td.rank { font-weight: 800; font-size: 1.3rem; color: #f472b6; }
+    td.rank { font-weight: 800; font-size: 1.2rem; color: #f472b6; }
+    td.name-col { font-weight: 700; font-size: 1.1rem; color: var(--text-color); }
+    td.group-col { color: var(--text-muted); font-size: 0.9rem; }
 
-    td.name-col { font-weight: 700; font-size: 1.2rem; color: #fff; }
+    /* Área de la Copa del Campeón (Oculta para exportar individual) */
+    #trophy-card-area {
+      display: none;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 25px 15px;
+      border: 2px solid #fbbf24;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+    }
 
-    td.group-col { color: var(--text-muted); font-size: 1rem; }
+    .trophy-icon {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
 
-    .btn-restart { margin-top: 30px; background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .trophy-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fbbf24;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .trophy-winner-name {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-color);
+      margin-bottom: 2px;
+    }
+
+    .trophy-winner-group {
+      font-size: 1.1rem;
+      color: #a78bfa;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .trophy-phrase {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      line-height: 1.3;
+    }
+
+    .actions-box { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 20px; }
+    .btn-download { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .btn-download:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+    .btn-trophy { background: linear-gradient(135deg, #f59e0b 100%, #d97706 0%); }
+    .btn-trophy:hover { background: linear-gradient(135deg, #d97706 100%, #b45309 0%); }
+    .btn-restart { background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; }
     .btn-restart:hover { background: var(--accent-gradient); color: white; border-color: transparent; }
   </style>
 </head>
 <body>
 
+  <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️ Modo Claro</button>
+
   <h1>K-pop Bias Sorter</h1>
-  <p class="description">Sistema de Inserción Preciso: Ordena tu lista idol por idol de forma infalible.</p>
+  <p class="description">Selecciona tus integrantes favoritas o escribe las tuyas.</p>
 
   <div class="container">
     <!-- Pantalla 1 -->
-    <div id="setup-screen">
-      <textarea id="bias-input" placeholder="Escribe un nombre por línea&#10;Ejemplo:&#10;Ireh - Purple Kiss&#10;Hwiseo - H1-KEY&#10;Dosie - Purple Kiss&#10;Yuki - Purple Kiss&#10;Chaein - Purple Kiss&#10;Swan - Purple Kiss&#10;Gaeun - Purple Kiss"></textarea>
-      <button onclick="startSorter()">¡Comenzar Sorter!</button>
+    <div id="setup-screen" style="width: 100%;">
+      
+      <div class="group-selector-section">
+        <div class="section-title">🔍 Elegir integrantes por grupo:</div>
+        <input type="text" id="group-search" class="search-input" placeholder="Buscar grupo (Ej: Twice, aespa...)" oninput="renderGroupsList()">
+        <div id="groups-container" class="groups-list-box">
+          <!-- Se llena dinámicamente -->
+        </div>
+      </div>
+
+      <div class="section-title">✍️ O edítalo manualmente aquí:</div>
+      <textarea id="bias-input" placeholder="Nombre - Grupo (uno por línea)"></textarea>
+      
+      <button class="main-btn" onclick="startSorter()">¡Comenzar Sorter!</button>
     </div>
 
     <!-- Pantalla 2 -->
@@ -210,7 +403,6 @@
       </div>
 
       <div class="vs-container">
-        <!-- Tarjeta 0 -->
         <div class="card" onclick="handleChoice(0)">
           <div id="idol-name-0" class="name"></div>
           <div id="idol-group-0" class="group"></div>
@@ -218,7 +410,6 @@
         
         <div class="vs-text">VS</div>
 
-        <!-- Tarjeta 1 -->
         <div class="card" onclick="handleChoice(1)">
           <div id="idol-name-1" class="name"></div>
           <div id="idol-group-1" class="group"></div>
@@ -228,22 +419,152 @@
 
     <!-- Pantalla 3 -->
     <div id="results-screen" class="results-area">
-      <h2 class="results-title">👑 Tu Ranking Perfecto 👑</h2>
-      <table>
-        <thead>
-          <tr>
-            <th class="r1">#</th>
-            <th class="r2">Nombre</th>
-            <th class="r3">Grupo</th>
-          </tr>
-        </thead>
-        <tbody id="results-body"></tbody>
-      </table>
-      <button class="btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
+      <div id="capture-area">
+        <h2 class="results-title">👑 Tu Ranking Definitivo 👑</h2>
+        <table>
+          <thead>
+            <tr>
+              <th class="r1">#</th>
+              <th class="r2">Nombre</th>
+              <th class="r3">Grupo</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Tarjeta oculta exclusivamente para exportar la imagen de la copa -->
+      <div id="trophy-card-area">
+        <div class="trophy-icon">🏆</div>
+        <div class="trophy-subtitle">Ultimate Bias World Championship</div>
+        <div id="trophy-winner-name" class="trophy-winner-name"></div>
+        <div id="trophy-winner-group" class="trophy-winner-group"></div>
+        <div class="trophy-phrase">"The undisputed champion of my heart, reigning supreme over all groups and eras in a historic seasonal masterclass."</div>
+      </div>
+
+      <div class="actions-box">
+        <button class="main-btn btn-download" onclick="downloadImage()">📸 Descargar Tabla Completa</button>
+        <button class="main-btn btn-trophy" onclick="downloadTrophyImage()">🏆 Descargar Imagen de la Copa (Top 1)</button>
+        <button class="main-btn btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
+      </div>
     </div>
   </div>
 
   <script>
+    const popularGroups = [
+      { name: "BLACKPINK", members: ["Jisoo", "Jennie", "Rosé", "Lisa"] },
+      { name: "TWICE", members: ["Nayeon", "Jeongyeon", "Momo", "Sana", "Jihyo", "Mina", "Dahyun", "Chaeyoung", "Tzuyu"] },
+      { name: "NewJeans", members: ["Minji", "Hanni", "Danielle", "Haerin", "Hyein"] },
+      { name: "aespa", members: ["Karina", "Giselle", "Winter", "Ningning"] },
+      { name: "LE SSERAFIM", members: ["Sakura", "Kim Chaewon", "Huh Yunjin", "Kazuha", "Hong Eunchae"] },
+      { name: "(G)I-DLE", members: ["Miyeon", "Minnie", "Soyeon", "Yuqi", "Shuhua"] },
+      { name: "IVE", members: ["Gaeul", "An Yujin", "Rei", "Jang Wonyoung", "Liz", "Leeseo"] },
+      { name: "ITZY", members: ["Yeji", "Lia", "Ryujin", "Chaeryeong", "Yuna"] },
+      { name: "NMIXX", members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"] },
+      { name: "Purple Kiss", members: ["Na Go-eun", "Dosie", "Ireh", "Yuki", "Chaein", "Swan"] },
+      { name: "Kiss of Life", members: ["Julie", "Natty", "Belle", "Haneul"] },
+      { name: "BABYMONSTER", members: ["Ruka", "Pharita", "Asa", "Rora", "Chiquita", "Rami", "Ahyeon"] }
+    ];
+
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+      const isLight = document.body.classList.contains('light-theme');
+      document.getElementById('theme-btn').innerText = isLight ? '🌙 Modo Oscuro' : '☀️ Modo Claro';
+    }
+
+    function renderGroupsList() {
+      const container = document.getElementById('groups-container');
+      const query = document.getElementById('group-search').value.toLowerCase();
+      container.innerHTML = '';
+
+      const filtered = popularGroups.filter(g => g.name.toLowerCase().includes(query));
+      const textareaVal = document.getElementById('bias-input').value;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">No se encontró el grupo</div>`;
+        return;
+      }
+
+      filtered.forEach((group, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'group-accordion-item';
+
+        const header = document.createElement('div');
+        header.className = 'group-header';
+        header.innerHTML = `
+          <span>${group.name} <span style="font-size:0.75rem; color:var(--text-muted);">(${group.members.length})</span></span>
+          <div>
+            <button class="btn-all-group" onclick="event.stopPropagation(); toggleAllGroup('${group.name}')">➕ Todo</button>
+            <span style="font-size: 0.8rem; margin-left: 5px;">▼</span>
+          </div>
+        `;
+        
+        const membersDiv = document.createElement('div');
+        membersDiv.className = 'members-container';
+        membersDiv.id = `group-members-${index}`;
+
+        group.members.forEach(member => {
+          const entryStr = `${member} - ${group.name}`;
+          const isAdded = textareaVal.includes(entryStr);
+
+          const mRow = document.createElement('div');
+          mRow.className = 'member-row';
+          mRow.innerHTML = `
+            <span>${member}</span>
+            <button class="btn-member-action ${isAdded ? 'added' : ''}" onclick="toggleMember('${member}', '${group.name}')">
+              ${isAdded ? '✓ Agregado' : '+ Agregar'}
+            </button>
+          `;
+          membersDiv.appendChild(mRow);
+        });
+
+        header.onclick = () => {
+          const display = membersDiv.style.display;
+          membersDiv.style.display = display === 'block' ? 'none' : 'block';
+        };
+
+        itemDiv.appendChild(header);
+        itemDiv.appendChild(membersDiv);
+        container.appendChild(itemDiv);
+      });
+    }
+
+    function toggleMember(memberName, groupName) {
+      const textarea = document.getElementById('bias-input');
+      const entry = `${memberName} - ${groupName}`;
+      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+      const index = lines.indexOf(entry);
+      if (index > -1) {
+        lines.splice(index, 1);
+      } else {
+        lines.push(entry);
+      }
+      textarea.value = lines.join('\n');
+      renderGroupsList();
+    }
+
+    function toggleAllGroup(groupName) {
+      const textarea = document.getElementById('bias-input');
+      const groupData = popularGroups.find(g => g.name === groupName);
+      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+      const allEntries = groupData.members.map(m => `${m} - ${groupName}`);
+      const allPresent = allEntries.every(entry => lines.includes(entry));
+
+      if (allPresent) {
+        lines = lines.filter(l => !allEntries.includes(l));
+      } else {
+        allEntries.forEach(entry => {
+          if (!lines.includes(entry)) lines.push(entry);
+        });
+      }
+      textarea.value = lines.join('\n');
+      renderGroupsList();
+    }
+
+    renderGroupsList();
+
     let unSortedList = [];
     let sortedList = [];
     let currentIdolToInsert = null;
@@ -266,107 +587,12 @@
       unSortedList = parseInput(input);
 
       if (unSortedList.length < 2) {
-        alert('Por favor, ingresa al menos 2 integrantes.');
+        alert('Por favor, ingresa al menos 2 integrantes para comparar.');
         return;
       }
 
-      // Mezclar la lista inicial
       unSortedList.sort(() => Math.random() - 0.5);
-
-      // Inicializar: la primera idol ya está "ordenada"
       sortedList = [unSortedList.shift()];
       
       document.getElementById('setup-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'none';
-      document.getElementById('battle-screen').style.display = 'flex';
-
-      startInsertionOfNextIdol();
-    }
-
-    function startInsertionOfNextIdol() {
-      if (unSortedList.length === 0) {
-        showResults();
-        return;
-      }
-
-      currentIdolToInsert = unSortedList.shift();
-      currentLow = 0;
-      currentHigh = sortedList.length - 1;
-
-      updateProgress();
-      showNextComparison();
-    }
-
-    function showNextComparison() {
-      // Búsqueda binaria interactiva
-      currentMid = Math.floor((currentLow + currentHigh) / 2);
-      const idolSortedMid = sortedList[currentMid];
-
-      // ¡AQUÍ ESTABA EL ERROR DE NOMBRES, YA CORREGIDO!
-      // Tarjeta 0: Idol a insertar
-      document.getElementById('idol-name-0').innerText = currentIdolToInsert.name;
-      document.getElementById('idol-group-0').innerText = currentIdolToInsert.group;
-
-      // Tarjeta 1: Idol ordenada media
-      document.getElementById('idol-name-1').innerText = idolSortedMid.name;
-      document.getElementById('idol-group-1').innerText = idolSortedMid.group;
-    }
-
-    function handleChoice(choice) {
-      // choice 0 = Gana IdolToInsert (va arriba), choice 1 = Gana IdolSortedMid (va arriba)
-      if (choice === 0) {
-        // IdolToInsert es mejor, va a índices más bajos
-        currentHigh = currentMid - 1;
-      } else {
-        // IdolSortedMid es mejor, IdolToInsert va a índices más altos
-        currentLow = currentMid + 1;
-      }
-
-      if (currentLow > currentHigh) {
-        // Posición encontrada
-        sortedList.splice(currentLow, 0, currentIdolToInsert);
-        startInsertionOfNextIdol();
-      } else {
-        // Continuar buscando para esta idol
-        showNextComparison();
-      }
-    }
-
-    function updateProgress() {
-      const totalIdols = sortedList.length + unSortedList.length;
-      const currentOrderedCount = sortedList.length;
-      const pct = Math.round((currentOrderedCount / totalIdols) * 100);
-
-      document.getElementById('progress-bar').style.width = `${pct}%`;
-      document.getElementById('progress-text').innerText = `Posicionando idol ${currentOrderedCount} de ${totalIdols}`;
-      document.getElementById('progress-pct').innerText = `${pct}%`;
-    }
-
-    function showResults() {
-      document.getElementById('progress-bar').style.width = '100%';
-      document.getElementById('battle-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'flex';
-
-      const tbody = document.getElementById('results-body');
-      tbody.innerHTML = '';
-
-      sortedList.forEach((item, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="rank">${index + 1}</td>
-          <td class="name-col">${item.name}</td>
-          <td class="group-col">${item.group}</td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    function resetSorter() {
-      document.getElementById('results-screen').style.display = 'none';
-      document.getElementById('setup-screen').style.display = 'block';
-      unSortedList = [];
-      sortedList = [];
-    }
-  </script>
-</body>
-</html>
+      document.getEleme
