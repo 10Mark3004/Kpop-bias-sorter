@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>K-pop Bias Sorter - Preciso</title>
+  <title>K-pop Bias Sorter - ¡Arreglado!</title>
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
@@ -210,16 +210,18 @@
       </div>
 
       <div class="vs-container">
+        <!-- Tarjeta 0 -->
         <div class="card" onclick="handleChoice(0)">
-          <div id="name-0" class="name"></div>
-          <div id="group-0" class="group"></div>
+          <div id="idol-name-0" class="name"></div>
+          <div id="idol-group-0" class="group"></div>
         </div>
         
         <div class="vs-text">VS</div>
 
+        <!-- Tarjeta 1 -->
         <div class="card" onclick="handleChoice(1)">
-          <div id="name-1" class="name"></div>
-          <div id="group-group-1" class="group"></div>
+          <div id="idol-name-1" class="name"></div>
+          <div id="idol-group-1" class="group"></div>
         </div>
       </div>
     </div>
@@ -268,17 +270,16 @@
         return;
       }
 
-      // Mezclar la lista inicial para que no influya el orden de entrada
+      // Mezclar la lista inicial
       unSortedList.sort(() => Math.random() - 0.5);
 
-      // Inicializar: la primera idol ya está "ordenada" en su propia lista
+      // Inicializar: la primera idol ya está "ordenada"
       sortedList = [unSortedList.shift()];
       
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('results-screen').style.display = 'none';
       document.getElementById('battle-screen').style.display = 'flex';
 
-      // Empezar a insertar la siguiente idol
       startInsertionOfNextIdol();
     }
 
@@ -288,51 +289,45 @@
         return;
       }
 
-      // Tomar la siguiente idol a posicionar
       currentIdolToInsert = unSortedList.shift();
-      
-      // Reiniciar los índices para la búsqueda binaria interactiva
       currentLow = 0;
       currentHigh = sortedList.length - 1;
 
-      // Actualizar progreso (basado en cuántas idols hemos ordenado del total)
       updateProgress();
-      
-      // Mostrar el primer duelo para esta idol
       showNextComparison();
     }
 
     function showNextComparison() {
-      // Calcular el punto medio de la lista ordenada actual
+      // Búsqueda binaria interactiva
       currentMid = Math.floor((currentLow + currentHigh) / 2);
       const idolSortedMid = sortedList[currentMid];
 
-      // Mostrar el duelo: Idol a insertar VS Idol en la posición media
-      document.getElementById('name-0').innerText = currentIdolToInsert.name;
-      document.getElementById('group-0').innerText = currentIdolToInsert.group;
+      // ¡AQUÍ ESTABA EL ERROR DE NOMBRES, YA CORREGIDO!
+      // Tarjeta 0: Idol a insertar
+      document.getElementById('idol-name-0').innerText = currentIdolToInsert.name;
+      document.getElementById('idol-group-0').innerText = currentIdolToInsert.group;
 
-      document.getElementById('name-group-1').innerText = idolSortedMid.name;
-      document.getElementById('group-group-1').innerText = idolSortedMid.group;
+      // Tarjeta 1: Idol ordenada media
+      document.getElementById('idol-name-1').innerText = idolSortedMid.name;
+      document.getElementById('idol-group-1').innerText = idolSortedMid.group;
     }
 
     function handleChoice(choice) {
-      // choice 0 = Gana IdolToInsert, choice 1 = Gana IdolSortedMid
+      // choice 0 = Gana IdolToInsert (va arriba), choice 1 = Gana IdolSortedMid (va arriba)
       if (choice === 0) {
-        // IdolToInsert es mejor, debe ir ANTES en el ranking (índices más bajos)
+        // IdolToInsert es mejor, va a índices más bajos
         currentHigh = currentMid - 1;
       } else {
-        // IdolSortedMid es mejor, IdolToInsert debe ir DESPUÉS (índices más altos)
+        // IdolSortedMid es mejor, IdolToInsert va a índices más altos
         currentLow = currentMid + 1;
       }
 
-      // Verificar si ya encontramos la posición exacta
       if (currentLow > currentHigh) {
-        // Insertar en la posición final calculada (currentLow)
+        // Posición encontrada
         sortedList.splice(currentLow, 0, currentIdolToInsert);
-        // Pasar a la siguiente idol
         startInsertionOfNextIdol();
       } else {
-        // Continuar la búsqueda binaria para esta idol
+        // Continuar buscando para esta idol
         showNextComparison();
       }
     }
@@ -355,7 +350,6 @@
       const tbody = document.getElementById('results-body');
       tbody.innerHTML = '';
 
-      // sortedList ya está perfectamente ordenada del 1 al N
       sortedList.forEach((item, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
