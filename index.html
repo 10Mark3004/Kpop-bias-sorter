@@ -3,516 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-pop Bias Sorter</title>
-  <!-- html2canvas para descargar imágenes -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- canvas-confetti para la celebración -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <title>K-pop Bias Sorter Sencillo</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-      background-attachment: fixed;
-      color: #f8fafc;
-      padding: 20px 10px;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      width: 100%;
+      padding: 20px;
+      margin: 0;
     }
-
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      background: linear-gradient(to right, #f472b6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: center;
-      margin-bottom: 6px;
-      margin-top: 10px;
-    }
-
-    p.description {
-      color: #cbd5e1;
-      text-align: center;
-      max-width: 500px;
-      font-size: 0.95rem;
-      margin-bottom: 20px;
-      line-height: 1.4;
-      padding: 0 10px;
-    }
-
     .container {
       width: 100%;
-      max-width: 550px;
-      background: rgba(30, 41, 59, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 25px 15px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      max-width: 500px;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-
-    .section-title {
-      font-size: 0.95rem;
-      color: #ec4899;
-      margin-bottom: 8px;
-      font-weight: 700;
-      width: 100%;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #f8fafc;
-      border-radius: 10px;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .search-input:focus { outline: none; border-color: #ec4899; }
-
-    .groups-list-box {
-      width: 100%;
-      max-height: 220px;
-      overflow-y: auto;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .group-accordion-item {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .group-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 14px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-    .group-header:hover { background: rgba(236, 72, 153, 0.1); }
-
-    .members-container {
-      display: none;
-      padding: 8px 14px 12px 14px;
-      background: rgba(0, 0, 0, 0.2);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .member-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-    }
-
-    .btn-member-action {
-      background: #8b5cf6;
-      color: white;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-member-action.added { background: #10b981; }
-
-    .btn-all-group {
-      background: transparent;
-      border: 1px solid #8b5cf6;
-      color: #a78bfa;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-    .btn-all-group:hover { background: #8b5cf6; color: white; }
-
     textarea {
       width: 100%;
-      height: 120px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #f8fafc;
-      padding: 12px;
-      border-radius: 10px;
-      resize: vertical;
-      font-family: inherit;
+      height: 150px;
+      background: #0f172a;
+      color: #fff;
+      border: 1px solid #475569;
+      padding: 10px;
+      border-radius: 6px;
       font-size: 14px;
-      margin-bottom: 20px;
-      line-height: 1.4;
+      box-sizing: border-box;
+      margin-bottom: 15px;
     }
-    textarea:focus { outline: none; border-color: #ec4899; box-shadow: 0 0 15px rgba(236, 72, 153, 0.3); }
-
-    button.main-btn {
+    button {
       width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      padding: 12px;
+      background: #ec4899;
       color: white;
       border: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 17px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
-    button.main-btn:hover { opacity: 0.95; transform: translateY(-1px); }
-
-    .battle-area { display: none; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
-
-    .progress-bar-container {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      border-radius: 10px;
-      height: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-      transition: width 0.3s ease;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      font-weight: 600;
-      margin-top: 5px;
-    }
-
-    .vs-container { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px; }
-
+    button:hover { background: #db2777; }
     .card {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 25px 15px;
+      background: #334155;
+      padding: 20px;
       text-align: center;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      margin: 10px 0;
+      font-size: 20px;
+      font-weight: bold;
     }
-    .card:hover { border-color: #ec4899; box-shadow: 0 0 20px rgba(236, 72, 153, 0.4); background: rgba(30, 41, 59, 0.95); transform: translateY(-2px); }
-    .card .name { font-size: 1.5rem; font-weight: 800; color: #f8fafc; }
-    .card .group { font-size: 1rem; color: #a78bfa; margin-top: 8px; font-weight: 600; }
-    .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 5px 0; }
-
-    .results-area { display: none; width: 100%; flex-direction: column; align-items: center; }
-    .results-title {
-      font-size: 1.7rem;
-      text-align: center;
-      margin-bottom: 20px;
-      background: linear-gradient(to right, #f472b6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    #capture-area {
-      width: 100%;
-      background: rgba(30, 41, 59, 0.95);
-      border-radius: 16px;
-      padding: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; table-layout: fixed; }
-    th, td { padding: 14px 10px; text-align: left; }
-    th { background: rgba(15, 23, 42, 0.8); color: #ec4899; font-size: 0.85rem; text-transform: uppercase; font-weight: 700; }
-    tr { border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-    tr:last-child { border-bottom: none; }
-
-    th.r1, td.rank { width: 20%; text-align: center; }
-    th.r2, td.name-col { width: 45%; }
-    th.r3, td.group-col { width: 35%; }
-
-    td.rank { font-weight: 800; font-size: 1.2rem; color: #f472b6; }
-    td.name-col { font-weight: 700; font-size: 1.1rem; color: #f8fafc; }
-    td.group-col { color: #cbd5e1; font-size: 0.9rem; }
-
-    #trophy-card-area {
-      display: none;
-      width: 100%;
-      background: rgba(30, 41, 59, 0.95);
-      border-radius: 16px;
-      padding: 25px 15px;
-      border: 2px solid #fbbf24;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
-      margin-top: 15px;
-    }
-
-    .trophy-icon { font-size: 3.5rem; margin-bottom: 10px; }
-    .trophy-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #fbbf24; font-weight: 800; margin-bottom: 5px; }
-    .trophy-winner-name { font-size: 2rem; font-weight: 900; color: #f8fafc; margin-bottom: 2px; }
-    .trophy-winner-group { font-size: 1.1rem; color: #a78bfa; font-weight: 700; margin-bottom: 15px; }
-    .trophy-phrase { font-size: 0.85rem; color: #cbd5e1; font-style: italic; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 12px; line-height: 1.3; }
-
-    .actions-box { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 20px; }
-    .btn-download { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
-    .btn-trophy { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-    .btn-restart { background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; }
-    .btn-restart:hover { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; border-color: transparent; }
+    .card:hover { background: #475569; border: 2px solid #ec4899; }
+    #battle-screen, #results-screen { display: none; }
+    ol { padding-left: 20px; }
+    li { margin: 5px 0; }
   </style>
 </head>
 <body>
 
   <h1>K-pop Bias Sorter</h1>
-  <p class="description">Buscá tus grupos favoritos o escribí tus integrantes a mano.</p>
 
   <div class="container">
-    <!-- Pantalla 1: Setup -->
-    <div id="setup-screen" style="width: 100%;">
-      
-      <div class="section-title">🔍 Buscar y seleccionar grupos:</div>
-      <input type="text" id="group-search" class="search-input" placeholder="Buscar grupo (Ej: Purple Kiss, BTS, Twice...)" oninput="renderGroupsList()">
-      
-      <div id="groups-container" class="groups-list-box"></div>
-
-      <div class="section-title">✍️ Integrantes seleccionadas (o escribí a mano):</div>
-      <textarea id="bias-input" placeholder="Nombre - Grupo (un integrante por línea)"></textarea>
-      
-      <button class="main-btn" onclick="startSorter()">¡Comenzar Sorter!</button>
+    <!-- PANTALLA 1: CARGA -->
+    <div id="setup-screen">
+      <p>Escribí o pegá tus integrantes (Formato: <b>Nombre - Grupo</b>):</p>
+      <textarea id="input-data">Jisoo - BLACKPINK
+Jennie - BLACKPINK
+Nayeon - TWICE
+Sana - TWICE
+Karina - aespa
+Winter - aespa</textarea>
+      <button onclick="comenzar()">¡Comenzar Sorter!</button>
     </div>
 
-    <!-- Pantalla 2: Batalla -->
-    <div id="battle-screen" class="battle-area">
-      <div class="progress-bar-container">
-        <div id="progress-bar" class="progress-bar"></div>
-      </div>
-      <div class="progress-info">
-        <span id="progress-text">Ordenando...</span>
-        <span id="progress-pct">0%</span>
-      </div>
-
-      <div class="vs-container">
-        <div class="card" onclick="handleChoice(0)">
-          <div id="idol-name-0" class="name"></div>
-          <div id="idol-group-0" class="group"></div>
-        </div>
-        
-        <div class="vs-text">VS</div>
-
-        <div class="card" onclick="handleChoice(1)">
-          <div id="idol-name-1" class="name"></div>
-          <div id="idol-group-1" class="group"></div>
-        </div>
-      </div>
+    <!-- PANTALLA 2: BATALLA -->
+    <div id="battle-screen">
+      <p id="progreso" style="text-align: center; color: #94a3b8;"></p>
+      <p style="text-align: center; font-weight: bold; margin-bottom: 5px;">¿Quién te gusta más?</p>
+      
+      <div class="card" id="btn-0" onclick="elegir(0)"></div>
+      <div style="text-align: center; font-weight: bold; color: #ec4899;">VS</div>
+      <div class="card" id="btn-1" onclick="elegir(1)"></div>
     </div>
 
-    <!-- Pantalla 3: Resultados -->
-    <div id="results-screen" class="results-area">
-      <div id="capture-area">
-        <h2 class="results-title">👑 Tu Ranking Definitivo 👑</h2>
-        <table>
-          <thead>
-            <tr>
-              <th class="r1">#</th>
-              <th class="r2">Nombre</th>
-              <th class="r3">Grupo</th>
-            </tr>
-          </thead>
-          <tbody id="results-body"></tbody>
-        </table>
-      </div>
-
-      <!-- Tarjeta oculta para exportar copa -->
-      <div id="trophy-card-area">
-        <div class="trophy-icon">🏆</div>
-        <div class="trophy-subtitle">Ultimate Bias World Championship</div>
-        <div id="trophy-winner-name" class="trophy-winner-name"></div>
-        <div id="trophy-winner-group" class="trophy-winner-group"></div>
-        <div class="trophy-phrase">"The undisputed champion of my heart, reigning supreme over all groups and eras in a historic seasonal masterclass."</div>
-      </div>
-
-      <div class="actions-box">
-        <button class="main-btn btn-download" onclick="downloadImage()">📸 Descargar Tabla Completa</button>
-        <button class="main-btn btn-trophy" onclick="downloadTrophyImage()">🏆 Descargar Imagen de la Copa (Top 1)</button>
-        <button class="main-btn btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
-      </div>
+    <!-- PANTALLA 3: RESULTADOS -->
+    <div id="results-screen">
+      <h2>👑 Tu Ranking Definitivo 👑</h2>
+      <ol id="lista-resultados"></ol>
+      <button onclick="location.reload()" style="margin-top: 15px;">Hacer otro</button>
     </div>
   </div>
 
   <script>
-    // Base de datos extendida de grupos
-    const popularGroups = [
-      { name: "Purple Kiss", members: ["Na Go-eun", "Dosie", "Ireh", "Yuki", "Chaein", "Swan"] },
-      { name: "TWICE", members: ["Nayeon", "Jeongyeon", "Momo", "Sana", "Jihyo", "Mina", "Dahyun", "Chaeyoung", "Tzuyu"] },
-      { name: "BLACKPINK", members: ["Jisoo", "Jennie", "Rosé", "Lisa"] },
-      { name: "NewJeans", members: ["Minji", "Hanni", "Danielle", "Haerin", "Hyein"] },
-      { name: "aespa", members: ["Karina", "Giselle", "Winter", "Ningning"] },
-      { name: "LE SSERAFIM", members: ["Sakura", "Kim Chaewon", "Huh Yunjin", "Kazuha", "Hong Eunchae"] },
-      { name: "IVE", members: ["Gaeul", "An Yujin", "Rei", "Jang Wonyoung", "Liz", "Leeseo"] },
-      { name: "(G)I-DLE", members: ["Miyeon", "Minnie", "Soyeon", "Yuqi", "Shuhua"] },
-      { name: "ITZY", members: ["Yeji", "Lia", "Ryujin", "Chaeryeong", "Yuna"] },
-      { name: "NMIXX", members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"] },
-      { name: "Kiss of Life", members: ["Julie", "Natty", "Belle", "Haneul"] },
-      { name: "BABYMONSTER", members: ["Ruka", "Pharita", "Asa", "Ahyeon", "Rami", "Rora", "Chiquita"] },
-      { name: "ILLIT", members: ["Yunah", "Minju", "Moka", "Wonhee", "Iroha"] },
-      { name: "RED VELVET", members: ["Irene", "Seulgi", "Wendy", "Joy", "Yeri"] },
-      { name: "MAMAMOO", members: ["Solar", "Moonbyul", "Wheein", "Hwasa"] },
-      { name: "STAYC", members: ["Sumin", "Sieun", "ISA", "Seeun", "Yoon", "J"] },
-      { name: "LOONA / ARTMS / Loossemble", members: ["HeeJin", "HyunJin", "HaSeul", "Yeojin", "ViVi", "Kim Lip", "JinSoul", "Choerry", "Yves", "Chuu", "Go Won", "HyeJu"] },
-      { name: "Dreamcatcher", members: ["JiU", "SuA", "Siyeon", "Handong", "Yoohyeon", "Dami", "Gahyeon"] },
-      { name: "tripleS", members: ["SeoDahyun", "Yubin", "Kaede", "Yooyeon", "Kotone", "SoHyun", "Nien", "Xinyu", "Mayu", "Lynn", "Soyeon", "JiWoo"] },
-      { name: "BTS", members: ["Jin", "Suga", "J-Hope", "RM", "Jimin", "V", "Jungkook"] },
-      { name: "Stray Kids", members: ["Bang Chan", "Lee Know", "Changbin", "Hyunjin", "Han", "Felix", "Seungmin", "I.N"] },
-      { name: "SEVENTEEN", members: ["S.Coups", "Jeonghan", "Joshua", "Jun", "Hoshi", "Wonwoo", "Woozi", "DK", "Mingyu", "The8", "Seungkwan", "Vernon", "Dino"] },
-      { name: "TXT", members: ["Soobin", "Yeonjun", "Beomgyu", "Taehyun", "Hueningkai"] },
-      { name: "ENHYPEN", members: ["Jungwon", "Heeseung", "Jay", "Jake", "Sunghoon", "Sunoo", "Ni-ki"] },
-      { name: "ATEEZ", members: ["Hongjoong", "Seonghwa", "Yunho", "Yeosang", "San", "Mingi", "Wooyoung", "Jongho"] },
-      { name: "NCT 127", members: ["Taeil", "Taeyong", "Yuta", "Jaehyun", "Jungwoo", "Mark", "Haechan", "Doyoung"] },
-      { name: "NCT DREAM", members: ["Mark", "Renjun", "Jeno", "Haechan", "Jaemin", "Chenle", "Jisung"] },
-      { name: "RIIZE", members: ["Shotaro", "Eunseok", "Sungchan", "Wonbin", "Sohee", "Anton"] },
-      { name: "BOYNEXTDOOR", members: ["Jaehyun", "Sungho", "Riwoo", "Taesan", "Leehan", "Woonhak"] },
-      { name: "ZEROBASEONE", members: ["Jiwoong", "Zhang Hao", "Hanbin", "Seok Matthew", "Taerae", "Ricky", "Gyuvin", "Gunwook", "Yujin"] },
-      { name: "EXO", members: ["Xiumin", "Suho", "Lay", "Baekhyun", "Chen", "Chanyeol", "D.O.", "Kai", "Sehun"] },
-      { name: "SHINee", members: ["Onew", "Key", "Minho", "Taemin"] },
-      { name: "GOT7", members: ["Mark", "JB", "Jackson", "Jinyoung", "Youngjae", "BamBam", "Yugyeom"] },
-      { name: "MONSTA X", members: ["Shownu", "Minhyuk", "Kihyun", "Hyungwon", "Joohoney", "I.M"] },
-      { name: "Girls' Generation (SNSD)", members: ["Taeyeon", "Sunny", "Tiffany", "Hyoyeon", "Yuri", "Sooyoung", "Yoona", "Seohyun"] },
-      { name: "2NE1", members: ["CL", "Dara", "Park Bom", "Minzy"] }
-    ];
+    let pendientes = [];
+    let ordenados = [];
+    let actual = null;
+    let low = 0, high = 0, mid = 0;
 
-    function renderGroupsList() {
-      const container = document.getElementById('groups-container');
-      const searchInput = document.getElementById('group-search');
-      if (!container || !searchInput) return;
+    function comenzar() {
+      let texto = document.getElementById('input-data').value.trim();
+      let lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-      const query = searchInput.value.toLowerCase().trim();
-      container.innerHTML = '';
-
-      const filtered = popularGroups.filter(g => g.name.toLowerCase().includes(query));
-      const textareaVal = document.getElementById('bias-input').value;
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="padding: 12px; text-align: center; color: #cbd5e1; font-size: 0.85rem;">No se encontró ningún grupo. Podés escribirlo manualmente abajo.</div>`;
+      if (lineas.length < 2) {
+        alert("Meté al menos 2 líneas.");
         return;
       }
 
-      filtered.forEach((group, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'group-accordion-item';
-
-        const header = document.createElement('div');
-        header.className = 'group-header';
-        header.innerHTML = `
-          <span>${group.name} <span style="font-size:0.75rem; color:#cbd5e1;">(${group.members.length})</span></span>
-          <div>
-            <button class="btn-all-group" onclick="event.stopPropagation(); toggleAllGroup('${group.name}')">➕ Todo</button>
-            <span style="font-size: 0.8rem; margin-left: 5px;">▼</span>
-          </div>
-        `;
-        
-        const membersDiv = document.createElement('div');
-        membersDiv.className = 'members-container';
-        membersDiv.id = `group-members-${index}`;
-
-        group.members.forEach(member => {
-          const entryStr = `${member} - ${group.name}`;
-          const isAdded = textareaVal.includes(entryStr);
-
-          const mRow = document.createElement('div');
-          mRow.className = 'member-row';
-          mRow.innerHTML = `
-            <span>${member}</span>
-            <button class="btn-member-action ${isAdded ? 'added' : ''}" onclick="toggleMember('${member}', '${group.name}')">
-              ${isAdded ? '✓ Agregado' : '+ Agregar'}
-            </button>
-          `;
-          membersDiv.appendChild(mRow);
-        });
-
-        header.onclick = () => {
-          const isVisible = membersDiv.style.display === 'block';
-          membersDiv.style.display = isVisible ? 'none' : 'block';
-        };
-
-        itemDiv.appendChild(header);
-        itemDiv.appendChild(membersDiv);
-        container.appendChild(itemDiv);
+      // Convertir a objetos {name, group}
+      pendientes = lineas.map(l => {
+        let partes = l.split('-');
+        return { name: partes[0].trim(), group: partes[1] ? partes.trim() : '' };
       });
+
+      // Mezclar aleatoriamente
+      pendientes.sort(() => Math.random() - 0.5);
+
+      // Iniciar con el primero ordenado
+      ordenados = [pendientes.shift()];
+
+      document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('battle-screen').style.display = 'block';
+
+      siguienteSiguiente();
     }
 
-    function toggleMember(memberName, groupName) {
-      const textarea = document.getElementById('bias-input');
-      const entry = `${memberName} - ${groupName}`;
-      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-
-      const index = lines.indexOf(entry);
-      if (index > -1) {
-        lines.splice(index, 1);
-      } else {
-        lines.push(entry);
+    function siguienteSiguiente() {
+      if (pendientes.length === 0) {
+        mostrarResultados();
+        return;
       }
-      textarea.value = lines.join('\n');
-      renderGroupsList();
+
+      actual = pendientes.shift();
+      low = 0;
+      high = ordenados.length - 1;
+
+      actualizarProgreso();
+      mostrarBatalla();
     }
 
-    function toggleAllGroup(groupName) {
-      const textarea = document.getElementById('bias-input');
-      const groupData = popularGroups.find(g => g.name === groupName);
-      if (!groupData) return;
+    function mostrarBatalla() {
+      mid = Math.floor((low + high) / 2);
+      let op = ordenados[mid];
 
-      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      const allEntries = groupData.members.map(m => `${m} - ${groupName}`);
-      const allPresent = allEntries.every(entry => lines.includes(entry));
+      // Mostramos en los botones el idol actual vs el del medio del ranking ordenado
+      document.getElementById('btn-0').innerText = `${actual.name} (${actual.group})`;
+      document.getElementById('btn-1').innerText = `${op.name} (${op.group})`;
+    }
 
-      if (allPresent) {
-        lines = lines.filter(l => !allEntries.includes(l));
+    function elegir(opcion) {
+      // Si elige 0, significa que 'actual' es mejor que 'op', buscamos hacia la izquierda
+      if (opcion === 0) {
+        high = mid - 1;
       } else {
-        allEntries.forEach(entry => {
-          if (!lines.includes(entry)) lines.push(entry);
-        });
+        // Si elige 1, 'op' es mejor, buscamos hacia la derecha
+        low = mid + 1;
       }
-      textarea.value = lines.join('\n');
-      renderGroupsList();
+
+      if (low > high) {
+        ordenados.splice(low, 0, actual);
+        siguienteSiguiente();
+      } else {
+        mostrarBatalla();
+      }
     }
 
-    // Algoritmo del Sorter
-    let unSortedList = [];
-    let sortedList = [];
-    let currentIdolToInsert = null;
-    let currentLow = 0;
-    let currentHigh = 0;
-    let currentMid = 0;
-
-    function parseInput(text) {
-      return text.split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0)
-        .map(line => {
-          const parts = line.split('-').map(p => p.trim());
-          return { name: parts[0], group: parts[1] || '' };
-        });
+    function actualizarProgreso() {
+      let total = ordenados.length + pendientes.length;
+      let actualNum = ordenados.length;
+      document.getElementById('progreso').innerText = `Posicionando idol ${actualNum} de ${total}`;
     }
 
-    function startSorter() {
-      const input = document.getElementById('bias-input').value;
-      unSortedList = p
+    function mostrarResultados() {
+      document.getElementById('battle-screen').style.display = 'none';
+      document.getElementById('results-screen').style.display = 'block';
+
+      let listaHTML = '';
+      ordenados.forEach((item, index) => {
+        listaHTML += `<li><b>${item.name}</b> (${item.group})</li>`;
+      });
+      document.getElementById('lista-resultados').innerHTML = listaHTML;
+    }
+  </script>
+</body>
+</html>
