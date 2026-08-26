@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>K-pop Bias Sorter</title>
-  <!-- Librería canvas-confetti para la celebración final -->
+  <!-- Librería canvas-confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
@@ -94,9 +94,62 @@
 
     select.preset-select:focus { border-color: #ec4899; }
 
+    /* Contenedor de checkboxes para elegir integrantes */
+    .checkbox-container {
+      width: 100%;
+      max-height: 160px;
+      overflow-y: auto;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #f8fafc;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      accent-color: #ec4899;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .btn-action-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .btn-secondary {
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid #8b5cf6;
+      color: #c4b5fd;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      flex: 1;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover { background: rgba(139, 92, 246, 0.4); color: white; }
+
     textarea {
       width: 100%;
-      height: 180px;
+      height: 140px;
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid #475569;
       color: #fff;
@@ -111,7 +164,7 @@
 
     textarea:focus { outline: none; border-color: #ec4899; box-shadow: var(--glow); }
 
-    button {
+    button.btn-main {
       width: 100%;
       padding: 16px;
       background: var(--accent-gradient);
@@ -124,7 +177,7 @@
       transition: all 0.2s ease;
     }
 
-    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    button.btn-main:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
     .battle-area { display: none; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
 
@@ -202,40 +255,50 @@
 
     tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
 
-    th.r1, td.rank { width: 15%; text-align: center; }
-    th.r2, td.name-col { width: 45%; }
+    th.r1, td.rank { width: 18%; text-align: center; }
+    th.r2, td.name-col { width: 42%; }
     th.r3, td.group-col { width: 40%; }
 
-    td.rank { font-weight: 800; font-size: 1.3rem; color: #f472b6; }
+    td.rank { font-weight: 800; font-size: 1.2rem; color: #f472b6; text-align: center; }
 
-    td.name-col { font-weight: 700; font-size: 1.2rem; color: #fff; }
+    td.name-col { font-weight: 700; font-size: 1.1rem; color: #fff; }
 
-    td.group-col { color: var(--text-muted); font-size: 1rem; }
+    td.group-col { color: var(--text-muted); font-size: 0.95rem; }
 
-    .btn-restart { margin-top: 30px; background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; }
+    .btn-restart { margin-top: 30px; background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; width: 100%; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 17px; cursor: pointer; }
     .btn-restart:hover { background: var(--accent-gradient); color: white; border-color: transparent; }
   </style>
 </head>
 <body>
 
   <h1>K-pop Bias Sorter</h1>
-  <p class="description">Sistema de Inserción Preciso: Ordena tu lista idol por idol de forma infalible.</p>
+  <p class="description">Selecciona tus grupos, elige qué integrantes participan y arma tu ranking definitivo.</p>
 
   <div class="container">
     <!-- Pantalla 1 -->
     <div id="setup-screen" style="width: 100%;">
       
-      <!-- Menú desplegable para cargar grupos guardados -->
+      <!-- Menú desplegable -->
       <div class="preset-section">
-        <label class="preset-label">⚡ Cargar grupo guardado en el código:</label>
-        <select id="preset-select" class="preset-select" onchange="cargarGrupoGuardado()">
-          <option value="">-- Seleccionar un grupo --</option>
+        <label class="preset-label">⚡ Seleccionar grupo para añadir:</label>
+        <select id="preset-select" class="preset-select" onchange="mostrarSelectorIntegrantes()">
+          <option value="">-- Elige un grupo --</option>
         </select>
       </div>
 
-      <textarea id="bias-input" placeholder="Escribe un nombre por línea&#10;Ejemplo:&#10;Na Go-eun - Purple Kiss&#10;Dosie - Purple Kiss&#10;Ireh - Purple Kiss&#10;Yuki - Purple Kiss&#10;Chaein - Purple Kiss&#10;Swan - Purple Kiss"></textarea>
+      <!-- Panel de selección de integrantes individuales -->
+      <div id="checkbox-panel" class="checkbox-container">
+        <!-- Se llena por JavaScript -->
+      </div>
+
+      <div id="panel-actions" class="btn-action-group" style="display: none;">
+        <button class="btn-secondary" onclick="agregarSeleccionadasAlTextarea()">➕ Añadir seleccionadas</button>
+        <button class="btn-secondary" style="border-color: #f43362; color: #fda4af;" onclick="cerrarPanelIntegrantes()">Cancelar</button>
+      </div>
+
+      <textarea id="bias-input" placeholder="O escribe/pega tus integrantes aquí (una por línea)&#10;Ej: Na Go-eun - Purple Kiss"></textarea>
       
-      <button onclick="startSorter()">¡Comenzar Sorter!</button>
+      <button class="btn-main" onclick="startSorter()">¡Comenzar Sorter!</button>
     </div>
 
     <!-- Pantalla 2 -->
@@ -267,7 +330,7 @@
 
     <!-- Pantalla 3 -->
     <div id="results-screen" class="results-area">
-      <h2 class="results-title">👑 Tu Ranking Perfecto 👑</h2>
+      <h2 class="results-title">👑 Tu Ranking Definitivo 👑</h2>
       <table>
         <thead>
           <tr>
@@ -284,11 +347,10 @@
 
   <script>
     /* ==============================================================================
-       MIS GRUPOS GUARDADOS 
-       Podés agregar, quitar o editar todos los grupos que quieras en este objeto.
+       MIS GRUPOS GUARDADOS (Bloque 1 de 5 - Del 1 al 10)
        ============================================================================== */
     const misGruposGuardados = {
-      "Purple Kiss": [
+    "Purple Kiss": [
         "Na Go-eun - Purple Kiss",
         "Dosie - Purple Kiss",
         "Ireh - Purple Kiss",
@@ -307,18 +369,6 @@
         "Chaeyoung - TWICE",
         "Tzuyu - TWICE"
       ],
-      "BLACKPINK": [
-        "Jisoo - BLACKPINK",
-        "Jennie - BLACKPINK",
-        "Rosé - BLACKPINK",
-        "Lisa - BLACKPINK"
-      ],
-      "aespa": [
-        "Karina - aespa",
-        "Giselle - aespa",
-        "Winter - aespa",
-        "Ningning - aespa"
-      ],
       "NMIXX": [
         "Lily - NMIXX",
         "Haewon - NMIXX",
@@ -336,97 +386,46 @@
         "Sasha - ifeye"
       ],
       "ILLIT": [
-        "Yunah - ILLIT",
-        "Minju - ILLIT",
-        "Moka - ILLIT",
-        "Wonhee - ILLIT",
-        "Iroha - ILLIT"
+        "Yunah - ILLIT", "Minju - ILLIT", "Moka - ILLIT", "Wonhee - ILLIT", "Iroha - ILLIT"
       ],
       "MEOVV": [
-        "Sooin - MEOVV",
-        "Gawon - MEOVV",
-        "Anna - MEOVV",
-        "Narin - MEOVV",
-        "Ella - MEOVV"
+        "Sooin - MEOVV", "Gawon - MEOVV", "Anna - MEOVV", "Narin - MEOVV", "Ella - MEOVV"
       ],
       "Red Velvet": [
-        "Irene - Red Velvet",
-        "Seulgi - Red Velvet",
-        "Wendy - Red Velvet",
-        "Joy - Red Velvet",
-        "Yeri - Red Velvet"
+        "Irene - Red Velvet", "Seulgi - Red Velvet", "Wendy - Red Velvet", "Joy - Red Velvet", "Yeri - Red Velvet"
       ],
       "KISS OF LIFE": [
-        "Julie - KISS OF LIFE",
-        "Natty - KISS OF LIFE",
-        "Belle - KISS OF LIFE",
-        "Haneul - KISS OF LIFE"
+        "Julie - KISS OF LIFE", "Natty - KISS OF LIFE", "Belle - KISS OF LIFE", "Haneul - KISS OF LIFE"
       ],
       "LOONA": [
-        "HeeJin - LOONA",
-        "HyunJin - LOONA",
-        "HaSeul - LOONA",
-        "YeoJin - LOONA",
-        "ViVi - LOONA",
-        "Kim Lip - LOONA",
-        "JinSoul - LOONA",
-        "Choerry - LOONA",
-        "Yves - LOONA",
-        "Chuu - LOONA",
-        "Go Won - LOONA",
-        "Olivia Hye - LOONA"
+        "HeeJin - LOONA", "HyunJin - LOONA", "HaSeul - LOONA", "YeoJin - LOONA", "ViVi - LOONA", 
+        "Kim Lip - LOONA", "JinSoul - LOONA", "Choerry - LOONA", "Yves - LOONA", "Chuu - LOONA", 
+        "Go Won - LOONA", "Olivia Hye - LOONA"
       ],
       "ARTMS": [
-        "HeeJin - ARTMS",
-        "Kim Lip - ARTMS",
-        "JinSoul - ARTMS",
-        "Choerry - ARTMS",
-        "HaSeul - ARTMS"
+        "HeeJin - ARTMS", "Kim Lip - ARTMS", "JinSoul - ARTMS", "Choerry - ARTMS", "HaSeul - ARTMS"
       ],
       "Loossemble": [
-        "HyunJin - Loossemble",
-        "YeoJin - Loossemble",
-        "ViVi - Loossemble",
-        "Go Won - Loossemble",
-        "HyeJu - Loossemble"
+        "HyunJin - Loossemble", "Yeojin - Loossemble", "ViVi - Loossemble", "Go Won - Loossemble", "HyeJu - Loossemble"
       ],
       "ITZY": [
-        "Yeji - ITZY",
-        "Lia - ITZY",
-        "Ryujin - ITZY",
-        "Chaeryeong - ITZY",
-        "Yuna - ITZY"
+        "Yeji - ITZY", "Lia - ITZY", "Ryujin - ITZY", "Chaeryeong - ITZY", "Yuna - ITZY"
       ],
       "GFRIEND": [
-        "Sowon - GFRIEND",
-        "Yerin - GFRIEND",
-        "Eunha - GFRIEND",
-        "Yuju - GFRIEND",
-        "SinB - GFRIEND",
-        "Umji - GFRIEND"
+        "Sowon - GFRIEND", "Yerin - GFRIEND", "Eunha - GFRIEND", "Yuju - GFRIEND", "SinB - GFRIEND", "Umji - GFRIEND"
       ],
       "VIVIZ": [
-        "Eunha - VIVIZ",
-        "SinB - VIVIZ",
-        "Umji - VIVIZ"
+        "Eunha - VIVIZ", "SinB - VIVIZ", "Umji - VIVIZ"
       ],
       "STAYC": [
-        "Sumin - STAYC",
-        "Sieun - STAYC",
-        "ISA - STAYC",
-        "Seeun - STAYC",
-        "Yoon - STAYC",
-        "J - STAYC"
+        "Sumin - STAYC", "Sieun - STAYC", "ISA - STAYC", "Seeun - STAYC", "Yoon - STAYC", "J - STAYC"
       ],
       "H1-KEY": [
-        "Seoi - H1-KEY",
-        "Riina - H1-KEY",
-        "Hwiseo - H1-KEY",
-        "Yel - H1-KEY"
+        "Seoi - H1-KEY", "Riina - H1-KEY", "Hwiseo - H1-KEY", "Yel - H1-KEY"
       ]
     };
 
-    // Función para poblar el menú desplegable al cargar la página
+    // Poblar el menú desplegable
     window.onload = function() {
       const select = document.getElementById('preset-select');
       for (let nombreGrupo in misGruposGuardados) {
@@ -437,19 +436,59 @@
       }
     };
 
-    // Carga los integrantes del grupo seleccionado al cuadro de texto
-    function cargarGrupoGuardado() {
+    // Muestra el panel interactivo con checkboxes para elegir integrantes de ese grupo
+    function mostrarSelectorIntegrantes() {
       const select = document.getElementById('preset-select');
-      const grupoSeleccionado = select.value;
-      const input = document.getElementById('bias-input');
+      const grupo = select.value;
+      const panel = document.getElementById('checkbox-panel');
+      const actions = document.getElementById('panel-actions');
 
-      if (grupoSeleccionado && misGruposGuardados[grupoSeleccionado]) {
-        input.value = misGruposGuardados[grupoSeleccionado].join('\n');
+      if (!grupo) {
+        panel.style.display = 'none';
+        actions.style.display = 'none';
+        return;
       }
+
+      panel.innerHTML = '';
+      misGruposGuardados[grupo].forEach((integrante, index) => {
+        const div = document.createElement('label');
+        div.className = 'checkbox-item';
+        div.innerHTML = `<input type="checkbox" value="${integrante}" checked> ${integrante}`;
+        panel.appendChild(div);
+      });
+
+      panel.style.display = 'flex';
+      actions.style.display = 'flex';
+    }
+
+    // Añade solo las integrantes tildadas al cuadro de texto (acumulando si ya había datos)
+    function agregarSeleccionadasAlTextarea() {
+      const checkboxes = document.querySelectorAll('#checkbox-panel input[type="checkbox"]:checked');
+      const input = document.getElementById('bias-input');
+      
+      let nuevasLineas = [];
+      checkboxes.forEach(cb => nuevasLineas.push(cb.value));
+
+      if (nuevasLineas.length > 0) {
+        let textoActual = input.value.trim();
+        if (textoActual.length > 0) {
+          input.value = textoActual + '\n' + nuevasLineas.join('\n');
+        } else {
+          input.value = nuevasLineas.join('\n');
+        }
+      }
+
+      cerrarPanelIntegrantes();
+    }
+
+    function cerrarPanelIntegrantes() {
+      document.getElementById('checkbox-panel').style.display = 'none';
+      document.getElementById('panel-actions').style.display = 'none';
+      document.getElementById('preset-select').value = '';
     }
 
     /* ==============================================================================
-       LÓGICA DEL SORTER (TU CÓDIGO ORIGINAL INTACTO)
+       LÓGICA DEL SORTER
        ============================================================================== */
     let unSortedList = [];
     let sortedList = [];
@@ -473,14 +512,12 @@
       unSortedList = parseInput(input);
 
       if (unSortedList.length < 2) {
-        alert('Por favor, ingresa al menos 2 integrantes.');
+        alert('Por favor, selecciona o ingresa al menos 2 integrantes.');
         return;
       }
 
-      // Mezclar la lista inicial
       unSortedList.sort(() => Math.random() - 0.5);
 
-      // Inicializar: la primera idol ya está "ordenada"
       sortedList = [unSortedList.shift()];
       
       document.getElementById('setup-screen').style.display = 'none';
@@ -545,7 +582,6 @@
       document.getElementById('battle-screen').style.display = 'none';
       document.getElementById('results-screen').style.display = 'flex';
 
-      // 🎉 Lanza el confetti al terminar 🎉
       confetti({
         particleCount: 100,
         spread: 70,
@@ -557,8 +593,15 @@
 
       sortedList.forEach((item, index) => {
         const row = document.createElement('tr');
+        
+        // Asignación de medallas / coronas para el podio
+        let rankDisplay = `${index + 1}`;
+        if (index === 0) rankDisplay = '👑 1';
+        else if (index === 1) rankDisplay = '🥈 2';
+        else if (index === 2) rankDisplay = '🥉 3';
+
         row.innerHTML = `
-          <td class="rank">${index + 1}</td>
+          <td class="rank">${rankDisplay}</td>
           <td class="name-col">${item.name}</td>
           <td class="group-col">${item.group}</td>
         `;
@@ -570,6 +613,8 @@
       document.getElementById('results-screen').style.display = 'none';
       document.getElementById('setup-screen').style.display = 'block';
       document.getElementById('preset-select').value = '';
+      document.getElementById('checkbox-panel').style.display = 'none';
+      document.getElementById('panel-actions').style.display = 'none';
       unSortedList = [];
       sortedList = [];
     }
