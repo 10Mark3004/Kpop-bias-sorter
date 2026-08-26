@@ -94,7 +94,6 @@
 
     select.preset-select:focus { border-color: #ec4899; }
 
-    /* Contenedor de checkboxes para elegir integrantes */
     .checkbox-container {
       width: 100%;
       max-height: 160px;
@@ -207,7 +206,7 @@
       margin-top: 5px;
     }
 
-    .vs-container { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px; }
+    .vs-container { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 5px; }
 
     .card {
       width: 100%;
@@ -230,7 +229,24 @@
 
     .card .group { font-size: 1rem; color: #a78bfa; margin-top: 8px; font-weight: 600; }
 
-    .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 5px 0; }
+    .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 3px 0; }
+
+    /* Estilos para el botón de retroceso */
+    .btn-undo {
+      background: rgba(236, 72, 153, 0.15);
+      border: 1px solid #ec4899;
+      color: #f472b6;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 5px;
+    }
+    .btn-undo:hover:not(:disabled) { background: rgba(236, 72, 153, 0.3); color: white; }
+    .btn-undo:disabled { opacity: 0.4; border-color: #475569; color: #64748b; cursor: not-allowed; }
 
     .results-area { display: none; width: 100%; flex-direction: column; align-items: center; }
 
@@ -287,9 +303,7 @@
       </div>
 
       <!-- Panel de selección de integrantes individuales -->
-      <div id="checkbox-panel" class="checkbox-container">
-        <!-- Se llena por JavaScript -->
-      </div>
+      <div id="checkbox-panel" class="checkbox-container"></div>
 
       <div id="panel-actions" class="btn-action-group" style="display: none;">
         <button class="btn-secondary" onclick="agregarSeleccionadasAlTextarea()">➕ Añadir seleccionadas</button>
@@ -325,6 +339,9 @@
           <div id="idol-name-1" class="name"></div>
           <div id="idol-group-1" class="group"></div>
         </div>
+
+        <!-- Botón Volver Atrás -->
+        <button id="btn-undo" class="btn-undo" onclick="undoLastChoice()" disabled>↩️ Volver atrás (3 disponibles)</button>
       </div>
     </div>
 
@@ -347,52 +364,23 @@
 
   <script>
     /* ==============================================================================
-       MIS GRUPOS GUARDADOS (Bloque 1 de 5 - Del 1 al 10)
+       MIS GRUPOS GUARDADOS (Bloque 1 de 5 - Del 1 al 10 - Ordenados alfabéticamente)
        ============================================================================== */
     const misGruposGuardados = {
-    "Purple Kiss": [
-        "Na Go-eun - Purple Kiss",
-        "Dosie - Purple Kiss",
-        "Ireh - Purple Kiss",
-        "Yuki - Purple Kiss",
-        "Chaein - Purple Kiss",
-        "Swan - Purple Kiss"
+      "ARTMS": [
+        "HeeJin - ARTMS", "Kim Lip - ARTMS", "JinSoul - ARTMS", "Choerry - ARTMS", "HaSeul - ARTMS"
       ],
-      "TWICE": [
-        "Nayeon - TWICE",
-        "Jeongyeon - TWICE",
-        "Momo - TWICE",
-        "Sana - TWICE",
-        "Jihyo - TWICE",
-        "Mina - TWICE",
-        "Dahyun - TWICE",
-        "Chaeyoung - TWICE",
-        "Tzuyu - TWICE"
+      "GFRIEND": [
+        "Sowon - GFRIEND", "Yerin - GFRIEND", "Eunha - GFRIEND", "Yuju - GFRIEND", "SinB - GFRIEND", "Umji - GFRIEND"
       ],
-      "NMIXX": [
-        "Lily - NMIXX",
-        "Haewon - NMIXX",
-        "Sullyoon - NMIXX",
-        "Bae - NMIXX",
-        "Jiwoo - NMIXX",
-        "Kyujin - NMIXX"
-      ],
-      "ifeye": [
-        "Kasia - ifeye",
-        "Won Hwayeon - ifeye",
-        "Taerin - ifeye",
-        "Rahee - ifeye",
-        "Meu - ifeye",
-        "Sasha - ifeye"
+      "H1-KEY": [
+        "Seoi - H1-KEY", "Riina - H1-KEY", "Hwiseo - H1-KEY", "Yel - H1-KEY"
       ],
       "ILLIT": [
         "Yunah - ILLIT", "Minju - ILLIT", "Moka - ILLIT", "Wonhee - ILLIT", "Iroha - ILLIT"
       ],
-      "MEOVV": [
-        "Sooin - MEOVV", "Gawon - MEOVV", "Anna - MEOVV", "Narin - MEOVV", "Ella - MEOVV"
-      ],
-      "Red Velvet": [
-        "Irene - Red Velvet", "Seulgi - Red Velvet", "Wendy - Red Velvet", "Joy - Red Velvet", "Yeri - Red Velvet"
+      "ITZY": [
+        "Yeji - ITZY", "Lia - ITZY", "Ryujin - ITZY", "Chaeryeong - ITZY", "Yuna - ITZY"
       ],
       "KISS OF LIFE": [
         "Julie - KISS OF LIFE", "Natty - KISS OF LIFE", "Belle - KISS OF LIFE", "Haneul - KISS OF LIFE"
@@ -402,41 +390,115 @@
         "Kim Lip - LOONA", "JinSoul - LOONA", "Choerry - LOONA", "Yves - LOONA", "Chuu - LOONA", 
         "Go Won - LOONA", "Olivia Hye - LOONA"
       ],
-      "ARTMS": [
-        "HeeJin - ARTMS", "Kim Lip - ARTMS", "JinSoul - ARTMS", "Choerry - ARTMS", "HaSeul - ARTMS"
-      ],
       "Loossemble": [
         "HyunJin - Loossemble", "Yeojin - Loossemble", "ViVi - Loossemble", "Go Won - Loossemble", "HyeJu - Loossemble"
       ],
-      "ITZY": [
-        "Yeji - ITZY", "Lia - ITZY", "Ryujin - ITZY", "Chaeryeong - ITZY", "Yuna - ITZY"
+      "MEOVV": [
+        "Sooin - MEOVV", "Gawon - MEOVV", "Anna - MEOVV", "Narin - MEOVV", "Ella - MEOVV"
       ],
-      "GFRIEND": [
-        "Sowon - GFRIEND", "Yerin - GFRIEND", "Eunha - GFRIEND", "Yuju - GFRIEND", "SinB - GFRIEND", "Umji - GFRIEND"
-      ],
-      "VIVIZ": [
-        "Eunha - VIVIZ", "SinB - VIVIZ", "Umji - VIVIZ"
+      "Red Velvet": [
+        "Irene - Red Velvet", "Seulgi - Red Velvet", "Wendy - Red Velvet", "Joy - Red Velvet", "Yeri - Red Velvet"
       ],
       "STAYC": [
         "Sumin - STAYC", "Sieun - STAYC", "ISA - STAYC", "Seeun - STAYC", "Yoon - STAYC", "J - STAYC"
       ],
-      "H1-KEY": [
-        "Seoi - H1-KEY", "Riina - H1-KEY", "Hwiseo - H1-KEY", "Yel - H1-KEY"
+      "VIVIZ": [
+        "Eunha - VIVIZ", "SinB - VIVIZ", "Umji - VIVIZ"
+      ],
+      "Purple Kiss": [
+        "Na Go-eun - Purple Kiss", "Dosie - Purple Kiss", "Ireh - Purple Kiss", "Yuki - Purple Kiss", "Chaein - Purple Kiss", "Swan - Purple Kiss"
+      ],
+      "TWICE": [
+        "Nayeon - TWICE", "Jeongyeon - TWICE", "Momo - TWICE", "Sana - TWICE", "Jihyo - TWICE", "Mina - TWICE", "Dahyun - TWICE", "Chaeyoung - TWICE", "Tzuyu - TWICE"
+      ],
+      "NMIXX": [
+        "Lily - NMIXX", "Haewon - NMIXX", "Sullyoon - NMIXX", "Bae - NMIXX", "Jiwoo - NMIXX", "Kyujin - NMIXX"
+      ],
+      "ifeye": [
+        "Kasia - ifeye", "Won Hwayeon - ifeye", "Taerin - ifeye", "Rahee - ifeye", "Meu - ifeye", "Sasha - ifeye"
+      ],
+      "aespa": [
+        "Karina - aespa", "Giselle - aespa", "Winter - aespa", "NingNing - aespa"
+      ],
+      "BABYMONSTER": [
+        "Ruka - BABYMONSTER", "Pharita - BABYMONSTER", "Asa - BABYMONSTER", "Ahyeon - BABYMONSTER", "Rami - BABYMONSTER", "Rora - BABYMONSTER", "Chiquita - BABYMONSTER"
+      ],
+      "BLACKPINK": [
+        "Jisoo - BLACKPINK", "Jennie - BLACKPINK", "Rosé - BLACKPINK", "Lisa - BLACKPINK"
+      ],
+      "IVE": [
+        "Gaeul - IVE", "Yujin - IVE", "Rei - IVE", "Wonyoung - IVE", "Liz - IVE", "Leeseo - IVE"
+      ],
+      "LE SSERAFIM": [
+        "Sakura - LE SSERAFIM", "Chaewon - LE SSERAFIM", "Yunjin - LE SSERAFIM", "Kazuha - LE SSERAFIM", "Eunchae - LE SSERAFIM"
+      ],
+      "NewJeans": [
+        "Minji - NewJeans", "Hanni - NewJeans", "Danielle - NewJeans", "Haerin - NewJeans", "Hyein - NewJeans"
+      ],
+      "UNIS": [
+        "Hyeonju - UNIS", "Nana - UNIS", "Gehlee - UNIS", "Kotoko - UNIS", "Yunha - UNIS", "Elisia - UNIS", "Yoona - UNIS", "Seowon - UNIS"
+      ],
+      "YOUNG POSSE": [
+        "Sunhye - YOUNG POSSE", "We Yeonjung - YOUNG POSSE", "Jiana - YOUNG POSSE", "Doeun - YOUNG POSSE", "Jieun - YOUNG POSSE"
+      ],
+      "Billlie": [
+        "Moon Sua - Billlie", "Suhyeon - Billlie", "Haram - Billlie", "Tsuki - Billlie", "Sheon - Billlie", "Siyoon - Billlie", "Haruna - Billlie"
+      ],
+      "Dreamcatcher": [
+        "JiU - Dreamcatcher", "SuA - Dreamcatcher", "Siyeon - Dreamcatcher", "Handong - Dreamcatcher", "Yoohyeon - Dreamcatcher", "Dami - Dreamcatcher", "Gahyun - Dreamcatcher"
+      ],
+      "EVERGLOW": [
+        "E:U - EVERGLOW", "Sihyeon - EVERGLOW", "Mia - EVERGLOW", "Onda - EVERGLOW", "Aisha - EVERGLOW", "Yiren - EVERGLOW"
+      ],
+      "FIFTY FIFTY": [
+        "Keena - FIFTY FIFTY", "Chanelle - FIFTY FIFTY", "Yewon - FIFTY FIFTY", "Hana - FIFTY FIFTY", "Athena - FIFTY FIFTY"
+      ],
+      "izna": [
+        "Mai - izna", "Bang Jeemin - izna", "Yoon Jiyoon - izna", "Koko - izna", "Ryu Sarang - izna", "Choi Jungeun - izna", "Jeong Saebi - izna"
+      ],
+      "Kep1er": [
+        "Yujin - Kep1er", "Xiaoting - Kep1er", "Chaehyun - Kep1er", "Dayeon - Kep1er", "Hikaru - Kep1er", "Huening Bahiyyih - Kep1er"
+      ],
+      "SAY MY NAME": [
+        "Hitomi - SAY MY NAME", "Shuie - SAY MY NAME", "Mei - SAY MY NAME", "Kanny - SAY MY NAME", "Soha - SAY MY NAME", "Dohee - SAY MY NAME", "Junhwi - SAY MY NAME", "Seungjoo - SAY MY NAME"
+      ],
+      "WJSN": [
+        "Seola - WJSN", "Bona - WJSN", "Exy - WJSN", "Soobin - WJSN", "Luda - WJSN", "Dawon - WJSN", "Eunseo - WJSN", "Yeoreum - WJSN", "Dayoung - WJSN", "Yeonjung - WJSN"
+      ],
+      "BABY DONT CRY": [
+        "Yihyun - BABYMONSTER", "Kumi - BABY DONT CRY", "Mia - BABY DONT CRY", "Beni - BABY DONT CRY"
+      ],
+      "KiiiKiii": [
+        "Jiyu - KiiiKiii", "Leesol - KiiiKiii", "Sui - KiiiKiii", "Haum - KiiiKiii", "Kya - KiiiKiii"
+      ],
+      "QWER": [
+        "Chodan - QWER", "Magenta - QWER", "Hina - QWER", "Siyeon - QWER"
+      ],
+      "RESCENE": [
+        "Woni - RESCENE", "Minami - RESCENE", "Liv - RESCENE", "May - RESCENE", "Zena - RESCENE"
+      ],
+      "WOOAH": [
+        "Nana - WOOAH", "Wooyeon - WOOAH", "Sora - WOOAH", "Lucy - WOOAH", "Minseo - WOOAH"
+      ],
+      "tripleS": [
+        "Seoyeon - TripleS", "Hyerin - TripleS", "Jiwoo - TripleS", "Chaeyeon - TripleS", "Yooyeon - TripleS", "Soomin - TripleS", "Nakyoung - TripleS", "Yubin - TripleS", "Kaede - TripleS", "Dahyun - TripleS", "Kotone - TripleS", "Yeonji - TripleS", "Nien - TripleS", "Sohyun - TripleS" "Xinyu - TripleS", "Mayu - TripleS", "Lynn - TripleS", "Joobin - TripleS", "Hayeon - TripleS", "Shion - TripleS", "Chaewon - TripleS", "Sullin - TripleS", "SeoAh - TripleS", "JiYeon - TripleS"
       ]
+    
     };
 
-    // Poblar el menú desplegable
+    // Poblar el menú desplegable ordenado alfabéticamente
     window.onload = function() {
       const select = document.getElementById('preset-select');
-      for (let nombreGrupo in misGruposGuardados) {
+      const gruposOrdenados = Object.keys(misGruposGuardados).sort();
+      
+      gruposOrdenados.forEach(nombreGrupo => {
         let opt = document.createElement('option');
         opt.value = nombreGrupo;
         opt.innerText = nombreGrupo;
         select.appendChild(opt);
-      }
+      });
     };
 
-    // Muestra el panel interactivo con checkboxes para elegir integrantes de ese grupo
     function mostrarSelectorIntegrantes() {
       const select = document.getElementById('preset-select');
       const grupo = select.value;
@@ -450,7 +512,7 @@
       }
 
       panel.innerHTML = '';
-      misGruposGuardados[grupo].forEach((integrante, index) => {
+      misGruposGuardados[grupo].forEach((integrante) => {
         const div = document.createElement('label');
         div.className = 'checkbox-item';
         div.innerHTML = `<input type="checkbox" value="${integrante}" checked> ${integrante}`;
@@ -461,7 +523,6 @@
       actions.style.display = 'flex';
     }
 
-    // Añade solo las integrantes tildadas al cuadro de texto (acumulando si ya había datos)
     function agregarSeleccionadasAlTextarea() {
       const checkboxes = document.querySelectorAll('#checkbox-panel input[type="checkbox"]:checked');
       const input = document.getElementById('bias-input');
@@ -488,7 +549,7 @@
     }
 
     /* ==============================================================================
-       LÓGICA DEL SORTER
+       LÓGICA DEL SORTER CON HISTORIAL (UNDO)
        ============================================================================== */
     let unSortedList = [];
     let sortedList = [];
@@ -496,6 +557,11 @@
     let currentLow = 0;
     let currentHigh = 0;
     let currentMid = 0;
+    
+    // Variables para el historial de retroceso
+    let historyStack = [];
+    const maxUndos = 3;
+    let remainingUndos = maxUndos;
 
     function parseInput(text) {
       return text.split('\n')
@@ -519,6 +585,9 @@
       unSortedList.sort(() => Math.random() - 0.5);
 
       sortedList = [unSortedList.shift()];
+      historyStack = [];
+      remainingUndos = maxUndos;
+      updateUndoButton();
       
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('results-screen').style.display = 'none';
@@ -553,6 +622,19 @@
     }
 
     function handleChoice(choice) {
+      // Guardar estado actual en el historial antes de avanzar
+      historyStack.push({
+        unSortedList: JSON.parse(JSON.stringify(unSortedList)),
+        sortedList: JSON.parse(JSON.stringify(sortedList)),
+        currentIdolToInsert: JSON.parse(JSON.stringify(currentIdolToInsert)),
+        currentLow: currentLow,
+        currentHigh: currentHigh,
+        currentMid: currentMid
+      });
+
+      // Si el historial supera un tamaño razonable, limpiamos los más viejos, pero controlamos el límite de 3 permitidos del usuario con `remainingUndos`
+      if (historyStack.length > 20) historyStack.shift();
+
       if (choice === 0) {
         currentHigh = currentMid - 1;
       } else {
@@ -565,59 +647,49 @@
       } else {
         showNextComparison();
       }
+
+      updateUndoButton();
+    }
+
+    function undoLastChoice() {
+      if (historyStack.length === 0 || remainingUndos <= 0) return;
+
+      const prevState = historyStack.pop();
+      unSortedList = prevState.unSortedList;
+      sortedList = prevState.sortedList;
+      currentIdolToInsert = prevState.currentIdolToInsert;
+      currentLow = prevState.currentLow;
+      currentHigh = prevState.currentHigh;
+      currentMid = prevState.currentMid;
+
+      remainingUndos--;
+      updateProgress();
+      showNextComparison();
+      updateUndoButton();
+    }
+
+    function updateUndoButton() {
+      const btn = document.getElementById('btn-undo');
+      if (historyStack.length > 0 && remainingUndos > 0) {
+        btn.disabled = false;
+        btn.innerText = `↩️ Volver atrás (${remainingUndos} ${remainingUndos === 1 ? 'restante' : 'restantes'})`;
+      } else {
+        btn.disabled = true;
+        btn.innerText = remainingUndos === 0 ? '↩️ Sin retrocesos disponibles' : '↩️ Volver atrás';
+      }
     }
 
     function updateProgress() {
-      const totalIdols = sortedList.length + unSortedList.length;
+      const totalIdols = sortedList.length + unSortedList.length + (currentIdolToInsert ? 1 : 0);
       const currentOrderedCount = sortedList.length;
-      const pct = Math.round((currentOrderedCount / totalIdols) * 100);
+      const pct = Math.min(100, Math.round((currentOrderedCount / totalIdols) * 100));
 
       document.getElementById('progress-bar').style.width = `${pct}%`;
-      document.getElementById('progress-text').innerText = `Posicionando idol ${currentOrderedCount} de ${totalIdols}`;
+      document.getElementById('progress-text').innerText = `Posicionando idol ${currentOrderedCount + 1} de ${totalIdols}`;
       document.getElementById('progress-pct').innerText = `${pct}%`;
     }
 
     function showResults() {
       document.getElementById('progress-bar').style.width = '100%';
       document.getElementById('battle-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'flex';
-
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
-      const tbody = document.getElementById('results-body');
-      tbody.innerHTML = '';
-
-      sortedList.forEach((item, index) => {
-        const row = document.createElement('tr');
-        
-        // Asignación de medallas / coronas para el podio
-        let rankDisplay = `${index + 1}`;
-        if (index === 0) rankDisplay = '👑 1';
-        else if (index === 1) rankDisplay = '🥈 2';
-        else if (index === 2) rankDisplay = '🥉 3';
-
-        row.innerHTML = `
-          <td class="rank">${rankDisplay}</td>
-          <td class="name-col">${item.name}</td>
-          <td class="group-col">${item.group}</td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    function resetSorter() {
-      document.getElementById('results-screen').style.display = 'none';
-      document.getElementById('setup-screen').style.display = 'block';
-      document.getElementById('preset-select').value = '';
-      document.getElementById('checkbox-panel').style.display = 'none';
-      document.getElementById('panel-actions').style.display = 'none';
-      unSortedList = [];
-      sortedList = [];
-    }
-  </script>
-</body>
-</html>
+      document.getElementById('results-screen').s
