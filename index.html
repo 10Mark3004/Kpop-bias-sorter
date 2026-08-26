@@ -704,7 +704,7 @@
       stepBinarySearch();
     }
 
-    function showResults() {
+        function showResults() {
       document.getElementById('battle-screen').style.display = 'none';
       document.getElementById('results-screen').style.display = 'flex';
 
@@ -712,9 +712,15 @@
       tbody.innerHTML = '';
 
       sortedList.forEach((idol, index) => {
+        // Asignación de medallas para los primeros 3 puestos
+        let rankDisplay = index + 1;
+        if (index === 0) rankDisplay = '🥇 1';
+        else if (index === 1) rankDisplay = '🥈 2';
+        else if (index === 2) rankDisplay = '🥉 3';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td class="rank">${index + 1}</td>
+          <td class="rank">${rankDisplay}</td>
           <td class="name-col">${idol.name}</td>
           <td class="group-col">${idol.group}</td>
         `;
@@ -730,6 +736,7 @@
         });
       }
     }
+    
 
     function resetSorter() {
       document.getElementById('results-screen').style.display = 'none';
