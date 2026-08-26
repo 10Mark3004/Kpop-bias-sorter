@@ -2,190 +2,576 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-pop Bias Sorter Sencillo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>K-pop Bias Sorter</title>
+  <!-- Librería canvas-confetti para la celebración final -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+      --card-bg: rgba(30, 41, 59, 0.8);
+      --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      --accent-hover: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
+      --glow: 0 0 20px rgba(236, 72, 153, 0.4);
+      --text-color: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-color);
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
-      margin: 0;
+      min-height: 100vh;
+      width: 100%;
     }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #f472b6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 6px;
+      margin-top: 10px;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 500px;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      padding: 0 10px;
+    }
+
     .container {
       width: 100%;
-      max-width: 500px;
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      max-width: 550px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 25px 15px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    textarea {
+
+    .preset-section {
       width: 100%;
-      height: 150px;
-      background: #0f172a;
-      color: #fff;
-      border: 1px solid #475569;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      box-sizing: border-box;
       margin-bottom: 15px;
     }
+
+    .preset-label {
+      font-size: 0.85rem;
+      color: #a78bfa;
+      margin-bottom: 6px;
+      font-weight: 600;
+      display: block;
+    }
+
+    select.preset-select {
+      width: 100%;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #475569;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select.preset-select:focus { border-color: #ec4899; }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #475569;
+      color: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    textarea:focus { outline: none; border-color: #ec4899; box-shadow: var(--glow); }
+
     button {
       width: 100%;
-      padding: 12px;
-      background: #ec4899;
+      padding: 16px;
+      background: var(--accent-gradient);
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 17px;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
-    button:hover { background: #db2777; }
+
+    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+    .battle-area { display: none; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+
+    .progress-bar-container {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 10px;
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-gradient);
+      transition: width 0.3s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .vs-container { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px; }
+
     .card {
-      background: #334155;
-      padding: 20px;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid #334155;
+      border-radius: 16px;
+      padding: 25px 15px;
       text-align: center;
-      border-radius: 8px;
       cursor: pointer;
-      margin: 10px 0;
-      font-size: 20px;
-      font-weight: bold;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    .card:hover { background: #475569; border: 2px solid #ec4899; }
-    #battle-screen, #results-screen { display: none; }
-    ol { padding-left: 20px; }
-    li { margin: 5px 0; }
+
+    .card:hover { border-color: #ec4899; box-shadow: var(--glow); background: rgba(30, 41, 59, 0.95); transform: translateY(-2px); }
+
+    .card .name { font-size: 1.5rem; font-weight: 800; color: #fff; }
+
+    .card .group { font-size: 1rem; color: #a78bfa; margin-top: 8px; font-weight: 600; }
+
+    .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 5px 0; }
+
+    .results-area { display: none; width: 100%; flex-direction: column; align-items: center; }
+
+    .results-title {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 25px;
+      background: linear-gradient(to right, #f472b6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; table-layout: fixed; }
+
+    th, td { padding: 16px 10px; text-align: left; }
+
+    th { background: rgba(15, 23, 42, 0.9); color: #ec4899; font-size: 0.9rem; text-transform: uppercase; font-weight: 700; }
+
+    tr { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+    tr:last-child { border-bottom: none; }
+
+    tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
+
+    th.r1, td.rank { width: 15%; text-align: center; }
+    th.r2, td.name-col { width: 45%; }
+    th.r3, td.group-col { width: 40%; }
+
+    td.rank { font-weight: 800; font-size: 1.3rem; color: #f472b6; }
+
+    td.name-col { font-weight: 700; font-size: 1.2rem; color: #fff; }
+
+    td.group-col { color: var(--text-muted); font-size: 1rem; }
+
+    .btn-restart { margin-top: 30px; background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; }
+    .btn-restart:hover { background: var(--accent-gradient); color: white; border-color: transparent; }
   </style>
 </head>
 <body>
 
   <h1>K-pop Bias Sorter</h1>
+  <p class="description">Sistema de Inserción Preciso: Ordena tu lista idol por idol de forma infalible.</p>
 
   <div class="container">
-    <!-- PANTALLA 1: CARGA -->
-    <div id="setup-screen">
-      <p>Escribí o pegá tus integrantes (Formato: <b>Nombre - Grupo</b>):</p>
-      <textarea id="input-data">Jisoo - BLACKPINK
-Jennie - BLACKPINK
-Nayeon - TWICE
-Sana - TWICE
-Karina - aespa
-Winter - aespa</textarea>
-      <button onclick="comenzar()">¡Comenzar Sorter!</button>
-    </div>
-
-    <!-- PANTALLA 2: BATALLA -->
-    <div id="battle-screen">
-      <p id="progreso" style="text-align: center; color: #94a3b8;"></p>
-      <p style="text-align: center; font-weight: bold; margin-bottom: 5px;">¿Quién te gusta más?</p>
+    <!-- Pantalla 1 -->
+    <div id="setup-screen" style="width: 100%;">
       
-      <div class="card" id="btn-0" onclick="elegir(0)"></div>
-      <div style="text-align: center; font-weight: bold; color: #ec4899;">VS</div>
-      <div class="card" id="btn-1" onclick="elegir(1)"></div>
+      <!-- Menú desplegable para cargar grupos guardados -->
+      <div class="preset-section">
+        <label class="preset-label">⚡ Cargar grupo guardado en el código:</label>
+        <select id="preset-select" class="preset-select" onchange="cargarGrupoGuardado()">
+          <option value="">-- Seleccionar un grupo --</option>
+        </select>
+      </div>
+
+      <textarea id="bias-input" placeholder="Escribe un nombre por línea&#10;Ejemplo:&#10;Na Go-eun - Purple Kiss&#10;Dosie - Purple Kiss&#10;Ireh - Purple Kiss&#10;Yuki - Purple Kiss&#10;Chaein - Purple Kiss&#10;Swan - Purple Kiss"></textarea>
+      
+      <button onclick="startSorter()">¡Comenzar Sorter!</button>
     </div>
 
-    <!-- PANTALLA 3: RESULTADOS -->
-    <div id="results-screen">
-      <h2>👑 Tu Ranking Definitivo 👑</h2>
-      <ol id="lista-resultados"></ol>
-      <button onclick="location.reload()" style="margin-top: 15px;">Hacer otro</button>
+    <!-- Pantalla 2 -->
+    <div id="battle-screen" class="battle-area">
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <div class="progress-info">
+        <span id="progress-text">Ordenando idol 1 de 1</span>
+        <span id="progress-pct">0%</span>
+      </div>
+
+      <div class="vs-container">
+        <!-- Tarjeta 0 -->
+        <div class="card" onclick="handleChoice(0)">
+          <div id="idol-name-0" class="name"></div>
+          <div id="idol-group-0" class="group"></div>
+        </div>
+        
+        <div class="vs-text">VS</div>
+
+        <!-- Tarjeta 1 -->
+        <div class="card" onclick="handleChoice(1)">
+          <div id="idol-name-1" class="name"></div>
+          <div id="idol-group-1" class="group"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pantalla 3 -->
+    <div id="results-screen" class="results-area">
+      <h2 class="results-title">👑 Tu Ranking Perfecto 👑</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="r1">#</th>
+            <th class="r2">Nombre</th>
+            <th class="r3">Grupo</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <button class="btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
     </div>
   </div>
 
   <script>
-    let pendientes = [];
-    let ordenados = [];
-    let actual = null;
-    let low = 0, high = 0, mid = 0;
+    /* ==============================================================================
+       MIS GRUPOS GUARDADOS 
+       Podés agregar, quitar o editar todos los grupos que quieras en este objeto.
+       ============================================================================== */
+    const misGruposGuardados = {
+      "Purple Kiss": [
+        "Na Go-eun - Purple Kiss",
+        "Dosie - Purple Kiss",
+        "Ireh - Purple Kiss",
+        "Yuki - Purple Kiss",
+        "Chaein - Purple Kiss",
+        "Swan - Purple Kiss"
+      ],
+      "TWICE": [
+        "Nayeon - TWICE",
+        "Jeongyeon - TWICE",
+        "Momo - TWICE",
+        "Sana - TWICE",
+        "Jihyo - TWICE",
+        "Mina - TWICE",
+        "Dahyun - TWICE",
+        "Chaeyoung - TWICE",
+        "Tzuyu - TWICE"
+      ],
+      "BLACKPINK": [
+        "Jisoo - BLACKPINK",
+        "Jennie - BLACKPINK",
+        "Rosé - BLACKPINK",
+        "Lisa - BLACKPINK"
+      ],
+      "aespa": [
+        "Karina - aespa",
+        "Giselle - aespa",
+        "Winter - aespa",
+        "Ningning - aespa"
+      ],
+      "NMIXX": [
+        "Lily - NMIXX",
+        "Haewon - NMIXX",
+        "Sullyoon - NMIXX",
+        "Bae - NMIXX",
+        "Jiwoo - NMIXX",
+        "Kyujin - NMIXX"
+      ],
+      "ifeye": [
+        "Kasia - ifeye",
+        "Won Hwayeon - ifeye",
+        "Taerin - ifeye",
+        "Rahee - ifeye",
+        "Meu - ifeye",
+        "Sasha - ifeye"
+      ],
+      "ILLIT": [
+        "Yunah - ILLIT",
+        "Minju - ILLIT",
+        "Moka - ILLIT",
+        "Wonhee - ILLIT",
+        "Iroha - ILLIT"
+      ],
+      "MEOVV": [
+        "Sooin - MEOVV",
+        "Gawon - MEOVV",
+        "Anna - MEOVV",
+        "Narin - MEOVV",
+        "Ella - MEOVV"
+      ],
+      "Red Velvet": [
+        "Irene - Red Velvet",
+        "Seulgi - Red Velvet",
+        "Wendy - Red Velvet",
+        "Joy - Red Velvet",
+        "Yeri - Red Velvet"
+      ],
+      "KISS OF LIFE": [
+        "Julie - KISS OF LIFE",
+        "Natty - KISS OF LIFE",
+        "Belle - KISS OF LIFE",
+        "Haneul - KISS OF LIFE"
+      ],
+      "LOONA": [
+        "HeeJin - LOONA",
+        "HyunJin - LOONA",
+        "HaSeul - LOONA",
+        "YeoJin - LOONA",
+        "ViVi - LOONA",
+        "Kim Lip - LOONA",
+        "JinSoul - LOONA",
+        "Choerry - LOONA",
+        "Yves - LOONA",
+        "Chuu - LOONA",
+        "Go Won - LOONA",
+        "Olivia Hye - LOONA"
+      ],
+      "ARTMS": [
+        "HeeJin - ARTMS",
+        "Kim Lip - ARTMS",
+        "JinSoul - ARTMS",
+        "Choerry - ARTMS",
+        "HaSeul - ARTMS"
+      ],
+      "Loossemble": [
+        "HyunJin - Loossemble",
+        "YeoJin - Loossemble",
+        "ViVi - Loossemble",
+        "Go Won - Loossemble",
+        "HyeJu - Loossemble"
+      ],
+      "ITZY": [
+        "Yeji - ITZY",
+        "Lia - ITZY",
+        "Ryujin - ITZY",
+        "Chaeryeong - ITZY",
+        "Yuna - ITZY"
+      ],
+      "GFRIEND": [
+        "Sowon - GFRIEND",
+        "Yerin - GFRIEND",
+        "Eunha - GFRIEND",
+        "Yuju - GFRIEND",
+        "SinB - GFRIEND",
+        "Umji - GFRIEND"
+      ],
+      "VIVIZ": [
+        "Eunha - VIVIZ",
+        "SinB - VIVIZ",
+        "Umji - VIVIZ"
+      ],
+      "STAYC": [
+        "Sumin - STAYC",
+        "Sieun - STAYC",
+        "ISA - STAYC",
+        "Seeun - STAYC",
+        "Yoon - STAYC",
+        "J - STAYC"
+      ],
+      "H1-KEY": [
+        "Seoi - H1-KEY",
+        "Riina - H1-KEY",
+        "Hwiseo - H1-KEY",
+        "Yel - H1-KEY"
+      ]
+    };
 
-    function comenzar() {
-      let texto = document.getElementById('input-data').value.trim();
-      let lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    // Función para poblar el menú desplegable al cargar la página
+    window.onload = function() {
+      const select = document.getElementById('preset-select');
+      for (let nombreGrupo in misGruposGuardados) {
+        let opt = document.createElement('option');
+        opt.value = nombreGrupo;
+        opt.innerText = nombreGrupo;
+        select.appendChild(opt);
+      }
+    };
 
-      if (lineas.length < 2) {
-        alert("Meté al menos 2 líneas.");
+    // Carga los integrantes del grupo seleccionado al cuadro de texto
+    function cargarGrupoGuardado() {
+      const select = document.getElementById('preset-select');
+      const grupoSeleccionado = select.value;
+      const input = document.getElementById('bias-input');
+
+      if (grupoSeleccionado && misGruposGuardados[grupoSeleccionado]) {
+        input.value = misGruposGuardados[grupoSeleccionado].join('\n');
+      }
+    }
+
+    /* ==============================================================================
+       LÓGICA DEL SORTER (TU CÓDIGO ORIGINAL INTACTO)
+       ============================================================================== */
+    let unSortedList = [];
+    let sortedList = [];
+    let currentIdolToInsert = null;
+    let currentLow = 0;
+    let currentHigh = 0;
+    let currentMid = 0;
+
+    function parseInput(text) {
+      return text.split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .map(line => {
+          const parts = line.split('-').map(p => p.trim());
+          return { name: parts[0], group: parts[1] || '' };
+        });
+    }
+
+    function startSorter() {
+      const input = document.getElementById('bias-input').value;
+      unSortedList = parseInput(input);
+
+      if (unSortedList.length < 2) {
+        alert('Por favor, ingresa al menos 2 integrantes.');
         return;
       }
 
-      // Convertir a objetos {name, group}
-      pendientes = lineas.map(l => {
-        let partes = l.split('-');
-        return { name: partes[0].trim(), group: partes[1] ? partes.trim() : '' };
-      });
+      // Mezclar la lista inicial
+      unSortedList.sort(() => Math.random() - 0.5);
 
-      // Mezclar aleatoriamente
-      pendientes.sort(() => Math.random() - 0.5);
-
-      // Iniciar con el primero ordenado
-      ordenados = [pendientes.shift()];
-
+      // Inicializar: la primera idol ya está "ordenada"
+      sortedList = [unSortedList.shift()];
+      
       document.getElementById('setup-screen').style.display = 'none';
-      document.getElementById('battle-screen').style.display = 'block';
+      document.getElementById('results-screen').style.display = 'none';
+      document.getElementById('battle-screen').style.display = 'flex';
 
-      siguienteSiguiente();
+      startInsertionOfNextIdol();
     }
 
-    function siguienteSiguiente() {
-      if (pendientes.length === 0) {
-        mostrarResultados();
+    function startInsertionOfNextIdol() {
+      if (unSortedList.length === 0) {
+        showResults();
         return;
       }
 
-      actual = pendientes.shift();
-      low = 0;
-      high = ordenados.length - 1;
+      currentIdolToInsert = unSortedList.shift();
+      currentLow = 0;
+      currentHigh = sortedList.length - 1;
 
-      actualizarProgreso();
-      mostrarBatalla();
+      updateProgress();
+      showNextComparison();
     }
 
-    function mostrarBatalla() {
-      mid = Math.floor((low + high) / 2);
-      let op = ordenados[mid];
+    function showNextComparison() {
+      currentMid = Math.floor((currentLow + currentHigh) / 2);
+      const idolSortedMid = sortedList[currentMid];
 
-      // Mostramos en los botones el idol actual vs el del medio del ranking ordenado
-      document.getElementById('btn-0').innerText = `${actual.name} (${actual.group})`;
-      document.getElementById('btn-1').innerText = `${op.name} (${op.group})`;
+      document.getElementById('idol-name-0').innerText = currentIdolToInsert.name;
+      document.getElementById('idol-group-0').innerText = currentIdolToInsert.group;
+
+      document.getElementById('idol-name-1').innerText = idolSortedMid.name;
+      document.getElementById('idol-group-1').innerText = idolSortedMid.group;
     }
 
-    function elegir(opcion) {
-      // Si elige 0, significa que 'actual' es mejor que 'op', buscamos hacia la izquierda
-      if (opcion === 0) {
-        high = mid - 1;
+    function handleChoice(choice) {
+      if (choice === 0) {
+        currentHigh = currentMid - 1;
       } else {
-        // Si elige 1, 'op' es mejor, buscamos hacia la derecha
-        low = mid + 1;
+        currentLow = currentMid + 1;
       }
 
-      if (low > high) {
-        ordenados.splice(low, 0, actual);
-        siguienteSiguiente();
+      if (currentLow > currentHigh) {
+        sortedList.splice(currentLow, 0, currentIdolToInsert);
+        startInsertionOfNextIdol();
       } else {
-        mostrarBatalla();
+        showNextComparison();
       }
     }
 
-    function actualizarProgreso() {
-      let total = ordenados.length + pendientes.length;
-      let actualNum = ordenados.length;
-      document.getElementById('progreso').innerText = `Posicionando idol ${actualNum} de ${total}`;
+    function updateProgress() {
+      const totalIdols = sortedList.length + unSortedList.length;
+      const currentOrderedCount = sortedList.length;
+      const pct = Math.round((currentOrderedCount / totalIdols) * 100);
+
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+      document.getElementById('progress-text').innerText = `Posicionando idol ${currentOrderedCount} de ${totalIdols}`;
+      document.getElementById('progress-pct').innerText = `${pct}%`;
     }
 
-    function mostrarResultados() {
+    function showResults() {
+      document.getElementById('progress-bar').style.width = '100%';
       document.getElementById('battle-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'block';
+      document.getElementById('results-screen').style.display = 'flex';
 
-      let listaHTML = '';
-      ordenados.forEach((item, index) => {
-        listaHTML += `<li><b>${item.name}</b> (${item.group})</li>`;
+      // 🎉 Lanza el confetti al terminar 🎉
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
       });
-      document.getElementById('lista-resultados').innerHTML = listaHTML;
+
+      const tbody = document.getElementById('results-body');
+      tbody.innerHTML = '';
+
+      sortedList.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="rank">${index + 1}</td>
+          <td class="name-col">${item.name}</td>
+          <td class="group-col">${item.group}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function resetSorter() {
+      document.getElementById('results-screen').style.display = 'none';
+      document.getElementById('setup-screen').style.display = 'block';
+      document.getElementById('preset-select').value = '';
+      unSortedList = [];
+      sortedList = [];
     }
   </script>
 </body>
