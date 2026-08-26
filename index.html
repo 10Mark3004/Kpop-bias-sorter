@@ -231,7 +231,6 @@
 
     .vs-text { text-align: center; color: #ec4899; font-weight: 800; font-size: 1.3rem; margin: 3px 0; }
 
-    /* Estilos para el botón de retroceso */
     .btn-undo {
       background: rgba(236, 72, 153, 0.15);
       border: 1px solid #ec4899;
@@ -364,11 +363,35 @@
 
   <script>
     /* ==============================================================================
-       MIS GRUPOS GUARDADOS (Bloque 1 de 5 - Del 1 al 10 - Ordenados alfabéticamente)
+       MIS GRUPOS GUARDADOS (Ordenados alfabéticamente)
        ============================================================================== */
     const misGruposGuardados = {
+      "aespa": [
+        "Karina - aespa", "Giselle - aespa", "Winter - aespa", "NingNing - aespa"
+      ],
       "ARTMS": [
         "HeeJin - ARTMS", "Kim Lip - ARTMS", "JinSoul - ARTMS", "Choerry - ARTMS", "HaSeul - ARTMS"
+      ],
+      "BABY DONT CRY": [
+        "Yihyun - BABY DONT CRY", "Kumi - BABY DONT CRY", "Mia - BABY DONT CRY", "Beni - BABY DONT CRY"
+      ],
+      "BABYMONSTER": [
+        "Ruka - BABYMONSTER", "Pharita - BABYMONSTER", "Asa - BABYMONSTER", "Ahyeon - BABYMONSTER", "Rami - BABYMONSTER", "Rora - BABYMONSTER", "Chiquita - BABYMONSTER"
+      ],
+      "Billlie": [
+        "Moon Sua - Billlie", "Suhyeon - Billlie", "Haram - Billlie", "Tsuki - Billlie", "Sheon - Billlie", "Siyoon - Billlie", "Haruna - Billlie"
+      ],
+      "BLACKPINK": [
+        "Jisoo - BLACKPINK", "Jennie - BLACKPINK", "Rosé - BLACKPINK", "Lisa - BLACKPINK"
+      ],
+      "Dreamcatcher": [
+        "JiU - Dreamcatcher", "SuA - Dreamcatcher", "Siyeon - Dreamcatcher", "Handong - Dreamcatcher", "Yoohyeon - Dreamcatcher", "Dami - Dreamcatcher", "Gahyun - Dreamcatcher"
+      ],
+      "EVERGLOW": [
+        "E:U - EVERGLOW", "Sihyeon - EVERGLOW", "Mia - EVERGLOW", "Onda - EVERGLOW", "Aisha - EVERGLOW", "Yiren - EVERGLOW"
+      ],
+      "FIFTY FIFTY": [
+        "Keena - FIFTY FIFTY", "Chanelle - FIFTY FIFTY", "Yewon - FIFTY FIFTY", "Hana - FIFTY FIFTY", "Athena - FIFTY FIFTY"
       ],
       "GFRIEND": [
         "Sowon - GFRIEND", "Yerin - GFRIEND", "Eunha - GFRIEND", "Yuju - GFRIEND", "SinB - GFRIEND", "Umji - GFRIEND"
@@ -376,14 +399,32 @@
       "H1-KEY": [
         "Seoi - H1-KEY", "Riina - H1-KEY", "Hwiseo - H1-KEY", "Yel - H1-KEY"
       ],
+      "ifeye": [
+        "Kasia - ifeye", "Won Hwayeon - ifeye", "Taerin - ifeye", "Rahee - ifeye", "Meu - ifeye", "Sasha - ifeye"
+      ],
       "ILLIT": [
         "Yunah - ILLIT", "Minju - ILLIT", "Moka - ILLIT", "Wonhee - ILLIT", "Iroha - ILLIT"
       ],
       "ITZY": [
         "Yeji - ITZY", "Lia - ITZY", "Ryujin - ITZY", "Chaeryeong - ITZY", "Yuna - ITZY"
       ],
+      "IVE": [
+        "Gaeul - IVE", "Yujin - IVE", "Rei - IVE", "Wonyoung - IVE", "Liz - IVE", "Leeseo - IVE"
+      ],
+      "izna": [
+        "Mai - izna", "Bang Jeemin - izna", "Yoon Jiyoon - izna", "Koko - izna", "Ryu Sarang - izna", "Choi Jungeun - izna", "Jeong Saebi - izna"
+      ],
+      "Kep1er": [
+        "Yujin - Kep1er", "Xiaoting - Kep1er", "Chaehyun - Kep1er", "Dayeon - Kep1er", "Hikaru - Kep1er", "Huening Bahiyyih - Kep1er"
+      ],
+      "KiiiKiii": [
+        "Jiyu - KiiiKiii", "Leesol - KiiiKiii", "Sui - KiiiKiii", "Haum - KiiiKiii", "Kya - KiiiKiii"
+      ],
       "KISS OF LIFE": [
         "Julie - KISS OF LIFE", "Natty - KISS OF LIFE", "Belle - KISS OF LIFE", "Haneul - KISS OF LIFE"
+      ],
+      "LE SSERAFIM": [
+        "Sakura - LE SSERAFIM", "Chaewon - LE SSERAFIM", "Yunjin - LE SSERAFIM", "Kazuha - LE SSERAFIM", "Eunchae - LE SSERAFIM"
       ],
       "LOONA": [
         "HeeJin - LOONA", "HyunJin - LOONA", "HaSeul - LOONA", "YeoJin - LOONA", "ViVi - LOONA", 
@@ -396,93 +437,51 @@
       "MEOVV": [
         "Sooin - MEOVV", "Gawon - MEOVV", "Anna - MEOVV", "Narin - MEOVV", "Ella - MEOVV"
       ],
-      "Red Velvet": [
-        "Irene - Red Velvet", "Seulgi - Red Velvet", "Wendy - Red Velvet", "Joy - Red Velvet", "Yeri - Red Velvet"
-      ],
-      "STAYC": [
-        "Sumin - STAYC", "Sieun - STAYC", "ISA - STAYC", "Seeun - STAYC", "Yoon - STAYC", "J - STAYC"
-      ],
-      "VIVIZ": [
-        "Eunha - VIVIZ", "SinB - VIVIZ", "Umji - VIVIZ"
-      ],
-      "Purple Kiss": [
-        "Na Go-eun - Purple Kiss", "Dosie - Purple Kiss", "Ireh - Purple Kiss", "Yuki - Purple Kiss", "Chaein - Purple Kiss", "Swan - Purple Kiss"
-      ],
-      "TWICE": [
-        "Nayeon - TWICE", "Jeongyeon - TWICE", "Momo - TWICE", "Sana - TWICE", "Jihyo - TWICE", "Mina - TWICE", "Dahyun - TWICE", "Chaeyoung - TWICE", "Tzuyu - TWICE"
+      "NewJeans": [
+        "Minji - NewJeans", "Hanni - NewJeans", "Danielle - NewJeans", "Haerin - NewJeans", "Hyein - NewJeans"
       ],
       "NMIXX": [
         "Lily - NMIXX", "Haewon - NMIXX", "Sullyoon - NMIXX", "Bae - NMIXX", "Jiwoo - NMIXX", "Kyujin - NMIXX"
       ],
-      "ifeye": [
-        "Kasia - ifeye", "Won Hwayeon - ifeye", "Taerin - ifeye", "Rahee - ifeye", "Meu - ifeye", "Sasha - ifeye"
-      ],
-      "aespa": [
-        "Karina - aespa", "Giselle - aespa", "Winter - aespa", "NingNing - aespa"
-      ],
-      "BABYMONSTER": [
-        "Ruka - BABYMONSTER", "Pharita - BABYMONSTER", "Asa - BABYMONSTER", "Ahyeon - BABYMONSTER", "Rami - BABYMONSTER", "Rora - BABYMONSTER", "Chiquita - BABYMONSTER"
-      ],
-      "BLACKPINK": [
-        "Jisoo - BLACKPINK", "Jennie - BLACKPINK", "Rosé - BLACKPINK", "Lisa - BLACKPINK"
-      ],
-      "IVE": [
-        "Gaeul - IVE", "Yujin - IVE", "Rei - IVE", "Wonyoung - IVE", "Liz - IVE", "Leeseo - IVE"
-      ],
-      "LE SSERAFIM": [
-        "Sakura - LE SSERAFIM", "Chaewon - LE SSERAFIM", "Yunjin - LE SSERAFIM", "Kazuha - LE SSERAFIM", "Eunchae - LE SSERAFIM"
-      ],
-      "NewJeans": [
-        "Minji - NewJeans", "Hanni - NewJeans", "Danielle - NewJeans", "Haerin - NewJeans", "Hyein - NewJeans"
-      ],
-      "UNIS": [
-        "Hyeonju - UNIS", "Nana - UNIS", "Gehlee - UNIS", "Kotoko - UNIS", "Yunha - UNIS", "Elisia - UNIS", "Yoona - UNIS", "Seowon - UNIS"
-      ],
-      "YOUNG POSSE": [
-        "Sunhye - YOUNG POSSE", "We Yeonjung - YOUNG POSSE", "Jiana - YOUNG POSSE", "Doeun - YOUNG POSSE", "Jieun - YOUNG POSSE"
-      ],
-      "Billlie": [
-        "Moon Sua - Billlie", "Suhyeon - Billlie", "Haram - Billlie", "Tsuki - Billlie", "Sheon - Billlie", "Siyoon - Billlie", "Haruna - Billlie"
-      ],
-      "Dreamcatcher": [
-        "JiU - Dreamcatcher", "SuA - Dreamcatcher", "Siyeon - Dreamcatcher", "Handong - Dreamcatcher", "Yoohyeon - Dreamcatcher", "Dami - Dreamcatcher", "Gahyun - Dreamcatcher"
-      ],
-      "EVERGLOW": [
-        "E:U - EVERGLOW", "Sihyeon - EVERGLOW", "Mia - EVERGLOW", "Onda - EVERGLOW", "Aisha - EVERGLOW", "Yiren - EVERGLOW"
-      ],
-      "FIFTY FIFTY": [
-        "Keena - FIFTY FIFTY", "Chanelle - FIFTY FIFTY", "Yewon - FIFTY FIFTY", "Hana - FIFTY FIFTY", "Athena - FIFTY FIFTY"
-      ],
-      "izna": [
-        "Mai - izna", "Bang Jeemin - izna", "Yoon Jiyoon - izna", "Koko - izna", "Ryu Sarang - izna", "Choi Jungeun - izna", "Jeong Saebi - izna"
-      ],
-      "Kep1er": [
-        "Yujin - Kep1er", "Xiaoting - Kep1er", "Chaehyun - Kep1er", "Dayeon - Kep1er", "Hikaru - Kep1er", "Huening Bahiyyih - Kep1er"
-      ],
-      "SAY MY NAME": [
-        "Hitomi - SAY MY NAME", "Shuie - SAY MY NAME", "Mei - SAY MY NAME", "Kanny - SAY MY NAME", "Soha - SAY MY NAME", "Dohee - SAY MY NAME", "Junhwi - SAY MY NAME", "Seungjoo - SAY MY NAME"
-      ],
-      "WJSN": [
-        "Seola - WJSN", "Bona - WJSN", "Exy - WJSN", "Soobin - WJSN", "Luda - WJSN", "Dawon - WJSN", "Eunseo - WJSN", "Yeoreum - WJSN", "Dayoung - WJSN", "Yeonjung - WJSN"
-      ],
-      "BABY DONT CRY": [
-        "Yihyun - BABYMONSTER", "Kumi - BABY DONT CRY", "Mia - BABY DONT CRY", "Beni - BABY DONT CRY"
-      ],
-      "KiiiKiii": [
-        "Jiyu - KiiiKiii", "Leesol - KiiiKiii", "Sui - KiiiKiii", "Haum - KiiiKiii", "Kya - KiiiKiii"
+      "Purple Kiss": [
+        "Na Go-eun - Purple Kiss", "Dosie - Purple Kiss", "Ireh - Purple Kiss", "Yuki - Purple Kiss", "Chaein - Purple Kiss", "Swan - Purple Kiss"
       ],
       "QWER": [
         "Chodan - QWER", "Magenta - QWER", "Hina - QWER", "Siyeon - QWER"
       ],
+      "Red Velvet": [
+        "Irene - Red Velvet", "Seulgi - Red Velvet", "Wendy - Red Velvet", "Joy - Red Velvet", "Yeri - Red Velvet"
+      ],
       "RESCENE": [
         "Woni - RESCENE", "Minami - RESCENE", "Liv - RESCENE", "May - RESCENE", "Zena - RESCENE"
+      ],
+      "SAY MY NAME": [
+        "Hitomi - SAY MY NAME", "Shuie - SAY MY NAME", "Mei - SAY MY NAME", "Kanny - SAY MY NAME", "Soha - SAY MY NAME", "Dohee - SAY MY NAME", "Junhwi - SAY MY NAME", "Seungjoo - SAY MY NAME"
+      ],
+      "STAYC": [
+        "Sumin - STAYC", "Sieun - STAYC", "ISA - STAYC", "Seeun - STAYC", "Yoon - STAYC", "J - STAYC"
+      ],
+      "tripleS": [
+        "Seoyeon - tripleS", "Hyerin - tripleS", "Jiwoo - tripleS", "Chaeyeon - tripleS", "Yooyeon - tripleS", "Soomin - tripleS", "Nakyoung - tripleS", "Yubin - tripleS", "Kaede - tripleS", "Dahyun - tripleS", "Kotone - tripleS", "Yeonji - tripleS", "Nien - tripleS", "Sohyun - tripleS", "Xinyu - tripleS", "Mayu - tripleS", "Lynn - tripleS", "Joobin - tripleS", "Hayeon - tripleS", "Shion - tripleS", "Chaewon - tripleS", "Sullin - tripleS", "SeoAh - tripleS", "JiYeon - tripleS"
+      ],
+      "TWICE": [
+        "Nayeon - TWICE", "Jeongyeon - TWICE", "Momo - TWICE", "Sana - TWICE", "Jihyo - TWICE", "Mina - TWICE", "Dahyun - TWICE", "Chaeyoung - TWICE", "Tzuyu - TWICE"
+      ],
+      "UNIS": [
+        "Hyeonju - UNIS", "Nana - UNIS", "Gehlee - UNIS", "Kotoko - UNIS", "Yunha - UNIS", "Elisia - UNIS", "Yoona - UNIS", "Seowon - UNIS"
+      ],
+      "VIVIZ": [
+        "Eunha - VIVIZ", "SinB - VIVIZ", "Umji - VIVIZ"
+      ],
+      "WJSN": [
+        "Seola - WJSN", "Bona - WJSN", "Exy - WJSN", "Soobin - WJSN", "Luda - WJSN", "Dawon - WJSN", "Eunseo - WJSN", "Yeoreum - WJSN", "Dayoung - WJSN", "Yeonjung - WJSN"
       ],
       "WOOAH": [
         "Nana - WOOAH", "Wooyeon - WOOAH", "Sora - WOOAH", "Lucy - WOOAH", "Minseo - WOOAH"
       ],
-      "tripleS": [
-        "Seoyeon - TripleS", "Hyerin - TripleS", "Jiwoo - TripleS", "Chaeyeon - TripleS", "Yooyeon - TripleS", "Soomin - TripleS", "Nakyoung - TripleS", "Yubin - TripleS", "Kaede - TripleS", "Dahyun - TripleS", "Kotone - TripleS", "Yeonji - TripleS", "Nien - TripleS", "Sohyun - TripleS" "Xinyu - TripleS", "Mayu - TripleS", "Lynn - TripleS", "Joobin - TripleS", "Hayeon - TripleS", "Shion - TripleS", "Chaewon - TripleS", "Sullin - TripleS", "SeoAh - TripleS", "JiYeon - TripleS"
-      ].
+      "YOUNG POSSE": [
+        "Sunhye - YOUNG POSSE", "We Yeonjung - YOUNG POSSE", "Jiana - YOUNG POSSE", "Doeun - YOUNG POSSE", "Jieun - YOUNG POSSE"
+      ]
     };
 
     // Poblar el menú desplegable ordenado alfabéticamente
@@ -567,128 +566,176 @@
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .map(line => {
-          const parts = line.split('-').map(p => p.trim());
-          return { name: parts[0], group: parts[1] || '' };
+          let parts = line.split('-');
+          if (parts.length >= 2) {
+            let name = parts[0].trim();
+            let group = parts.slice(1).join('-').trim();
+            return { name, group };
+          } else {
+            return { name: line, group: 'Solo' };
+          }
         });
     }
 
-    function startSorter() {
-      const input = document.getElementById('bias-input').value;
-      unSortedList = parseInput(input);
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
 
-      if (unSortedList.length < 2) {
-        alert('Por favor, selecciona o ingresa al menos 2 integrantes.');
+    function startSorter() {
+      const text = document.getElementById('bias-input').value;
+      const parsed = parseInput(text);
+
+      if (parsed.length < 2) {
+        alert('Por favor agrega al menos 2 integrantes para comparar.');
         return;
       }
 
-      unSortedList.sort(() => Math.random() - 0.5);
-
-      sortedList = [unSortedList.shift()];
+      unSortedList = shuffleArray([...parsed]);
+      sortedList = [unSortedList.pop()];
+      
       historyStack = [];
       remainingUndos = maxUndos;
       updateUndoButton();
-      
+
       document.getElementById('setup-screen').style.display = 'none';
-      document.getElementById('results-screen').style.display = 'none';
       document.getElementById('battle-screen').style.display = 'flex';
 
-      startInsertionOfNextIdol();
+      nextInsertion();
     }
 
-    function startInsertionOfNextIdol() {
-      if (unSortedList.length === 0) {
-        showResults();
-        return;
+    function updateUndoButton() {
+      const btn = document.getElementById('btn-undo');
+      if (historyStack.length === 0 || remainingUndos <= 0) {
+        btn.disabled = true;
+        btn.innerText = `↩️ Volver atrás (${remainingUndos} disponibles)`;
+      } else {
+        btn.disabled = false;
+        btn.innerText = `↩️ Volver atrás (${remainingUndos} disponibles)`;
       }
-
-      currentIdolToInsert = unSortedList.shift();
-      currentLow = 0;
-      currentHigh = sortedList.length - 1;
-
-      updateProgress();
-      showNextComparison();
     }
 
-    function showNextComparison() {
-      currentMid = Math.floor((currentLow + currentHigh) / 2);
-      const idolSortedMid = sortedList[currentMid];
-
-      document.getElementById('idol-name-0').innerText = currentIdolToInsert.name;
-      document.getElementById('idol-group-0').innerText = currentIdolToInsert.group;
-
-      document.getElementById('idol-name-1').innerText = idolSortedMid.name;
-      document.getElementById('idol-group-1').innerText = idolSortedMid.group;
-    }
-
-    function handleChoice(choice) {
-      // Guardar estado actual en el historial antes de avanzar
+    function saveState() {
       historyStack.push({
         unSortedList: JSON.parse(JSON.stringify(unSortedList)),
         sortedList: JSON.parse(JSON.stringify(sortedList)),
-        currentIdolToInsert: JSON.parse(JSON.stringify(currentIdolToInsert)),
-        currentLow: currentLow,
-        currentHigh: currentHigh,
-        currentMid: currentMid
+        currentIdolToInsert: currentIdolToInsert ? { ...currentIdolToInsert } : null,
+        currentLow,
+        currentHigh,
+        currentMid
       });
-
-      // Si el historial supera un tamaño razonable, limpiamos los más viejos, pero controlamos el límite de 3 permitidos del usuario con `remainingUndos`
-      if (historyStack.length > 20) historyStack.shift();
-
-      if (choice === 0) {
-        currentHigh = currentMid - 1;
-      } else {
-        currentLow = currentMid + 1;
-      }
-
-      if (currentLow > currentHigh) {
-        sortedList.splice(currentLow, 0, currentIdolToInsert);
-        startInsertionOfNextIdol();
-      } else {
-        showNextComparison();
-      }
-
       updateUndoButton();
     }
 
     function undoLastChoice() {
       if (historyStack.length === 0 || remainingUndos <= 0) return;
 
-      const prevState = historyStack.pop();
-      unSortedList = prevState.unSortedList;
-      sortedList = prevState.sortedList;
-      currentIdolToInsert = prevState.currentIdolToInsert;
-      currentLow = prevState.currentLow;
-      currentHigh = prevState.currentHigh;
-      currentMid = prevState.currentMid;
-
+      const previousState = historyStack.pop();
       remainingUndos--;
-      updateProgress();
-      showNextComparison();
+
+      unSortedList = previousState.unSortedList;
+      sortedList = previousState.sortedList;
+      currentIdolToInsert = previousState.currentIdolToInsert;
+      currentLow = previousState.currentLow;
+      currentHigh = previousState.currentHigh;
+      currentMid = previousState.currentMid;
+
       updateUndoButton();
+      showBattle();
     }
 
-    function updateUndoButton() {
-      const btn = document.getElementById('btn-undo');
-      if (historyStack.length > 0 && remainingUndos > 0) {
-        btn.disabled = false;
-        btn.innerText = `↩️ Volver atrás (${remainingUndos} ${remainingUndos === 1 ? 'restante' : 'restantes'})`;
-      } else {
-        btn.disabled = true;
-        btn.innerText = remainingUndos === 0 ? '↩️ Sin retrocesos disponibles' : '↩️ Volver atrás';
+    function nextInsertion() {
+      if (unSortedList.length === 0) {
+        showResults();
+        return;
       }
+
+      currentIdolToInsert = unSortedList.pop();
+      currentLow = 0;
+      currentHigh = sortedList.length - 1;
+
+      stepBinarySearch();
     }
 
-    function updateProgress() {
-      const totalIdols = sortedList.length + unSortedList.length + (currentIdolToInsert ? 1 : 0);
-      const currentOrderedCount = sortedList.length;
-      const pct = Math.min(100, Math.round((currentOrderedCount / totalIdols) * 100));
+    function stepBinarySearch() {
+      if (currentLow > currentHigh) {
+        sortedList.splice(currentLow, 0, currentIdolToInsert);
+        nextInsertion();
+        return;
+      }
 
-      document.getElementById('progress-bar').style.width = `${pct}%`;
-      document.getElementById('progress-text').innerText = `Posicionando idol ${currentOrderedCount + 1} de ${totalIdols}`;
-      document.getElementById('progress-pct').innerText = `${pct}%`;
+      currentMid = Math.floor((currentLow + currentHigh) / 2);
+      showBattle();
+    }
+
+    function showBattle() {
+      const totalToInsert = unSortedList.length + sortedList.length;
+      const currentDone = sortedList.length;
+      const pct = Math.round((currentDone / totalToInsert) * 100);
+
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-pct').innerText = pct + '%';
+      document.getElementById('progress-text').innerText = `Procesando: ${currentDone} de ${totalToInsert}`;
+
+      // Opción 0: Ídol actual que estamos intentando insertar
+      document.getElementById('idol-name-0').innerText = currentIdolToInsert.name;
+      document.getElementById('idol-group-0').innerText = currentIdolToInsert.group;
+
+      // Opción 1: Ídol del grupo ordenado con el que comparamos
+      const opponent = sortedList[currentMid];
+      document.getElementById('idol-name-1').innerText = opponent.name;
+      document.getElementById('idol-group-1').innerText = opponent.group;
+    }
+
+    function handleChoice(choice) {
+      saveState();
+
+      if (choice === 0) {
+        // La elegida es preferida sobre el oponente actual -> va más arriba en el ranking (índices menores)
+        currentHigh = currentMid - 1;
+      } else {
+        // El oponente es preferido -> la elegida va más abajo
+        currentLow = currentMid + 1;
+      }
+
+      stepBinarySearch();
     }
 
     function showResults() {
-      document.getElementById('progress-bar').style.width = '100%';
       document.getElementById('battle-screen').style.display = 'none';
-      document.getElementById('results-screen').s
+      document.getElementById('results-screen').style.display = 'flex';
+
+      const tbody = document.getElementById('results-body');
+      tbody.innerHTML = '';
+
+      sortedList.forEach((idol, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="rank">${index + 1}</td>
+          <td class="name-col">${idol.name}</td>
+          <td class="group-col">${idol.group}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Efecto de Confeti al terminar
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    function resetSorter() {
+      document.getElementById('results-screen').style.display = 'none';
+      document.getElementById('setup-screen').style.display = 'block';
+      document.getElementById('bias-input').value = '';
+    }
+  </script>
+</body>
+</html>
