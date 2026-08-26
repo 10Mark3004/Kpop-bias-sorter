@@ -63,6 +63,7 @@
       cursor: pointer;
       font-weight: 600;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 10;
     }
 
     h1 {
@@ -303,7 +304,7 @@
     td.name-col { font-weight: 700; font-size: 1.1rem; color: var(--text-color); }
     td.group-col { color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Área de la Copa del Campeón (Oculta para exportar individual) */
+    /* Tarjeta de la Copa */
     #trophy-card-area {
       display: none;
       width: 100%;
@@ -313,17 +314,12 @@
       border: 2px solid #fbbf24;
       text-align: center;
       box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+      margin-top: 15px;
     }
 
     .trophy-icon {
       font-size: 3.5rem;
       margin-bottom: 10px;
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
     }
 
     .trophy-subtitle {
@@ -474,7 +470,10 @@
 
     function renderGroupsList() {
       const container = document.getElementById('groups-container');
-      const query = document.getElementById('group-search').value.toLowerCase();
+      const searchInput = document.getElementById('group-search');
+      if (!container || !searchInput) return;
+
+      const query = searchInput.value.toLowerCase();
       container.innerHTML = '';
 
       const filtered = popularGroups.filter(g => g.name.toLowerCase().includes(query));
@@ -547,8 +546,9 @@
     function toggleAllGroup(groupName) {
       const textarea = document.getElementById('bias-input');
       const groupData = popularGroups.find(g => g.name === groupName);
-      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      if (!groupData) return;
 
+      let lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       const allEntries = groupData.members.map(m => `${m} - ${groupName}`);
       const allPresent = allEntries.every(entry => lines.includes(entry));
 
@@ -563,7 +563,10 @@
       renderGroupsList();
     }
 
-    renderGroupsList();
+    // Inicializar lista al cargar
+    window.onload = function() {
+      renderGroupsList();
+    };
 
     let unSortedList = [];
     let sortedList = [];
@@ -587,12 +590,11 @@
       unSortedList = parseInput(input);
 
       if (unSortedList.length < 2) {
-        alert('Por favor, ingresa al menos 2 integrantes para comparar.');
+        alert('Por favor, ingresa o selecciona al menos 2 integrantes para comparar.');
         return;
       }
 
       unSortedList.sort(() => Math.random() - 0.5);
       sortedList = [unSortedList.shift()];
       
-      document.getElementById('setup-screen').style.display = 'none';
-      document.getEleme
+      document.getElementById('setup-screen
