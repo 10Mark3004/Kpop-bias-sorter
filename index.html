@@ -788,13 +788,35 @@
           origin: { y: 0.6 }
         });
       }
-    }
+          document.getElementById('card-list-content').innerHTML = document.getElementById('results-body').innerHTML;
+document.getElementById('btn-download-card').style.display = 'block';
+      }
     
 
     function resetSorter() {
       document.getElementById('results-screen').style.display = 'none';
       document.getElementById('setup-screen').style.display = 'block';
       document.getElementById('bias-input').value = '';
+    }
+    function descargarTarjeta() {
+  const card = document.getElementById('card-to-download');
+  
+  // Hacemos visible temporalmente la tarjeta para capturarla
+  card.style.display = 'block';
+
+  html2canvas(card, {
+    backgroundColor: null,
+    scale: 2 // Alta calidad
+  }).then(canvas => {
+    // Volvemos a ocultarla en la web
+    card.style.display = 'none';
+
+    // Creamos la descarga de la imagen
+    const link = document.createElement('a');
+    link.download = 'mi-top-kpop.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
     }
   </script>
 </body>
