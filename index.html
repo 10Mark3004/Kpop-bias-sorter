@@ -359,6 +359,23 @@
         </thead>
         <tbody id="results-body"></tbody>
       </table>
+      <!-- Contenedor oculto que se transforma en foto -->
+<div id="card-to-download" style="display: none; width: 350px; padding: 30px; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #4c1d95 100%); border-radius: 20px; text-align: center; color: white; font-family: sans-serif; border: 2px solid #ec4899; box-shadow: 0 10px 30px rgba(236,72,153,0.3);">
+  <h2 style="color: #f472b6; margin: 0 0 5px 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">My Bias Ranking</h2>
+  <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 20px;">K-POP BIAS SORTER</p>
+  
+  <div id="card-list-content" style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(244, 114, 182, 0.2);">
+    <!-- Acá se inserta la lista automáticamente -->
+  </div>
+  
+  <p style="color: #cbd5e1; font-size: 0.75rem; margin-top: 20px; font-weight: bold;">✨ Creado con K-pop Bias Sorter</p>
+</div>
+
+<!-- Botón para descargar -->
+<button id="btn-download-card" onclick="descargarTarjeta()" style="display: none; margin: 20px auto; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);">
+  📸 Descargar Tarjeta (PNG)
+</button>
+      
       <button class="btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
     </div>
   </div>
