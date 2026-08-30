@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio de Pruebas</title>
+  <title>Kpop Bias Sorter - Lab</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,83 +12,104 @@
     }
 
     body {
-      background-color: #0f172a;
+      background-color: #0d0d11;
       color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* CONTENEDOR DE LOGOS DE FONDO */
-    #background-logos-container {
-      position: fixed;
+    /* Contenedor de logos animados en el fondo */
+    #background-container {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none; /* Permite tocar a través de los logos */
-      z-index: 0;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
 
     .bg-logo {
       position: absolute;
-      max-width: 85px;
-      max-height: 85px;
+      max-width: 180px;
+      max-height: 90px;
+      object-fit: contain;
       opacity: 0;
-      filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(244, 114, 182, 0.4));
-      transition: opacity 1.5s ease-in-out;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+      transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+      transform: scale(0.9);
     }
 
     .bg-logo.visible {
-      opacity: 0.18; /* Opacidad para efecto marca de agua */
+      opacity: 0.35;
+      transform: scale(1);
     }
 
-    /* TARJETA DE SIMULACIÓN DEL SORTER */
-    .demo-card {
+    /* Contenido principal sobrepuesto */
+    .content-box {
       position: relative;
-      z-index: 1;
-      background: rgba(30, 27, 75, 0.75);
-      border: 1px solid rgba(244, 114, 182, 0.3);
-      border-radius: 20px;
-      padding: 24px;
-      width: 100%;
-      max-width: 350px;
+      z-index: 2;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(8px);
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 90%;
+      width: 400px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
-    .demo-card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-      color: #f472b6;
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
     }
 
-    .demo-card p {
+    p {
+      color: #a0a0b0;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-back {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-weight: 600;
       font-size: 0.9rem;
-      color: #cbd5e1;
-      line-height: 1.4;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(167, 119, 227, 0.4);
     }
   </style>
 </head>
 <body>
 
-  <!-- Contenedor para los logos de fondo -->
-  <div id="background-logos-container"></div>
+  <!-- Fondo animado -->
+  <div id="background-container"></div>
 
-  <!-- Vista previa de la tarjeta -->
-  <div class="demo-card">
-    <h2>Vista Previa - Laboratorio</h2>
-    <p>Los logos deben aparecer y desaparecer de fondo de forma suave sin tapar el contenido de la pantalla.</p>
+  <!-- Tarjeta central del Laboratorio -->
+  <div class="content-box">
+    <h1>Laboratorio de Pruebas</h1>
+    <p>Probando animaciones dinámicas de fondo con logos en rotación continua.</p>
+    <a href="index.html" class="btn-back">Volver al Inicio</a>
   </div>
 
   <script>
-    // Configurá las tandas con la ruta de tus PNGs y sus posiciones en %
+    // Tandas de logos con nombres exactos de tu carpeta /logos
     const logoBatches = [
       // Tanda 1
       [
@@ -148,7 +169,7 @@
       const currentLogos = container.querySelectorAll('.bg-logo');
       currentLogos.forEach(img => img.classList.remove('visible'));
 
-      // 2. Cargar la siguiente tanda
+      // 2. Esperar al desvanecimiento para cambiar las imágenes
       setTimeout(() => {
         container.innerHTML = '';
         const currentBatch = logoBatches[currentBatchIndex];
@@ -165,17 +186,17 @@
 
           container.appendChild(img);
 
+          // Forzar refinamiento visual antes de activar transición
           setTimeout(() => img.classList.add('visible'), 50);
         });
 
         currentBatchIndex = (currentBatchIndex + 1) % logoBatches.length;
-      }, 1500);
+      }, 1000);
     }
 
-    // Iniciar rotación (Cada 3 segundos / 3000 ms)
+    // Iniciar rotación cada 3 segundos
     showNextLogoBatch();
     setInterval(showNextLogoBatch, 3000);
-    
   </script>
 </body>
 </html>
