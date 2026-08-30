@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Pruebas</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* CONTENEDOR DE LOGOS DE FONDO */
+    #background-logos-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none; /* Permite tocar a través de los logos */
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-logo {
+      position: absolute;
+      max-width: 85px;
+      max-height: 85px;
+      opacity: 0;
+      filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(244, 114, 182, 0.4));
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .bg-logo.visible {
+      opacity: 0.18; /* Opacidad para efecto marca de agua */
+    }
+
+    /* TARJETA DE SIMULACIÓN DEL SORTER */
+    .demo-card {
+      position: relative;
+      z-index: 1;
+      background: rgba(30, 27, 75, 0.75);
+      border: 1px solid rgba(244, 114, 182, 0.3);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+    }
+
+    .demo-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: #f472b6;
+    }
+
+    .demo-card p {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor para los logos de fondo -->
+  <div id="background-logos-container"></div>
+
+  <!-- Vista previa de la tarjeta -->
+  <div class="demo-card">
+    <h2>Vista Previa - Laboratorio</h2>
+    <p>Los logos deben aparecer y desaparecer de fondo de forma suave sin tapar el contenido de la pantalla.</p>
+  </div>
+
+  <script>
+    // Configurá las tandas con la ruta de tus PNGs y sus posiciones en %
+    const logoBatches = [
+      // Tanda 1
+      [
+        { src: 'logos/purplekiss.png', top: '10%', left: '8%' },
+        { src: 'logos/badvillain.png', top: '15%', right: '10%' },
+        { src: 'logos/mamamoo.png', bottom: '20%', left: '10%' },
+        { src: 'logos/clc.png', bottom: '12%', right: '8%' }
+      ],
+      // Tanda 2
+      [
+        { src: 'logos/izone.png', top: '22%', left: '70%' },
+        { src: 'logos/exid.png', top: '45%', left: '8%' },
+        { src: 'logos/snsd.png', bottom: '28%', right: '12%' },
+        { src: 'logos/fromis9.png', bottom: '8%', left: '35%' }
+      ],
+      // Tanda 3
+      [
+        { src: 'logos/weeekly.png', top: '8%', left: '40%' },
+        { src: 'logos/pixy.png', top: '58%', right: '8%' },
+        { src: 'logos/afterschool.png', bottom: '22%', left: '12%' },
+        { src: 'logos/craxy.png', top: '32%', left: '10%' }
+      ]
+    ];
+
+    let currentBatchIndex = 0;
+    const container = document.getElementById('background-logos-container');
+
+    function showNextLogoBatch() {
+      // 1. Desvanecer los logos actuales
+      const currentLogos = container.querySelectorAll('.bg-logo');
+      currentLogos.forEach(img => img.classList.remove('visible'));
+
+      // 2. Cargar la siguiente tanda
+      setTimeout(() => {
+        container.innerHTML = '';
+        const currentBatch = logoBatches[currentBatchIndex];
+
+        currentBatch.forEach(data => {
+          const img = document.createElement('img');
+          img.src = data.src;
+          img.className = 'bg-logo';
+          
+          if (data.top) img.style.top = data.top;
+          if (data.bottom) img.style.bottom = data.bottom;
+          if (data.left) img.style.left = data.left;
+          if (data.right) img.style.right = data.right;
+
+          container.appendChild(img);
+
+          setTimeout(() => img.classList.add('visible'), 50);
+        });
+
+        currentBatchIndex = (currentBatchIndex + 1) % logoBatches.length;
+      }, 1500);
+    }
+
+    // Iniciar rotación
+    showNextLogoBatch();
+    setInterval(showNextLogoBatch, 6000);
+  </script>
+</body>
+</html>
