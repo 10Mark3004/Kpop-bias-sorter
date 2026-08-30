@@ -90,17 +90,58 @@
   <script>
     // Configurá las tandas con la ruta de tus PNGs y sus posiciones en %
     const logoBatches = [
-      // Tanda 1 (Tus logos subidos)
+      // Tanda 1
       [
-        { src: 'PurpleKiss.png', top: '10%', left: '8%' },
-        { src: 'Twice.png', top: '15%', right: '10%' },
-        { src: 'Nmixx.png', bottom: '20%', left: '10%' },
-        { src: 'Blackpink.png', bottom: '12%', right: '8%' }
+        { src: 'logos/PurpleKiss.png', top: '10%', left: '8%' },
+        { src: 'logos/Aespa.png', top: '15%', right: '10%' },
+        { src: 'logos/Itzy.png', bottom: '20%', left: '10%' },
+        { src: 'logos/Fiftyfifty.png', bottom: '12%', right: '8%' },
+        { src: 'logos/Kiiikiii.png', top: '45%', left: '42%' }
+      ],
+      // Tanda 2
+      [
+        { src: 'logos/Gfriend.png', top: '12%', left: '12%' },
+        { src: 'logos/2NE1.png', top: '18%', right: '8%' },
+        { src: 'logos/Nmixx.png', bottom: '22%', left: '8%' },
+        { src: 'logos/Lesserafim.png', bottom: '10%', right: '12%' },
+        { src: 'logos/Youngposse.png', top: '48%', left: '40%' }
+      ],
+      // Tanda 3
+      [
+        { src: 'logos/StayC.png', top: '8%', left: '10%' },
+        { src: 'logos/Newjeans.png', top: '20%', right: '12%' },
+        { src: 'logos/ARTMS.png', bottom: '25%', left: '12%' },
+        { src: 'logos/Twice.png', bottom: '10%', right: '10%' },
+        { src: 'logos/Oddyouth.png', top: '42%', left: '45%' }
+      ],
+      // Tanda 4
+      [
+        { src: 'logos/Mamamoo.png', top: '15%', left: '8%' },
+        { src: 'logos/Illit.png', top: '12%', right: '12%' },
+        { src: 'logos/Chuu.png', bottom: '18%', left: '10%' },
+        { src: 'logos/Blackpink.png', bottom: '12%', right: '8%' },
+        { src: 'logos/Atheart.png', top: '50%', left: '38%' }
+      ],
+      // Tanda 5
+      [
+        { src: 'logos/Viviz.png', top: '10%', left: '10%' },
+        { src: 'logos/Rescene.png', top: '15%', right: '8%' },
+        { src: 'logos/TripleS.png', bottom: '20%', left: '8%' },
+        { src: 'logos/Bibi.png', bottom: '10%', right: '12%' },
+        { src: 'logos/Izna.png', top: '45%', left: '40%' }
+      ],
+      // Tanda 6
+      [
+        { src: 'logos/Loossemble.png', top: '12%', left: '8%' },
+        { src: 'logos/Ive.png', top: '18%', right: '10%' },
+        { src: 'logos/Billie.png', bottom: '22%', left: '12%' },
+        { src: 'logos/Everglow.png', bottom: '12%', right: '8%' },
+        { src: 'logos/Ifeye.png', top: '48%', left: '42%' }
       ]
     ];
-    
+
     let currentBatchIndex = 0;
-    const container = document.getElementById('background-logos-container');
+    const container = document.getElementById('background-container');
 
     function showNextLogoBatch() {
       // 1. Desvanecer los logos actuales
@@ -116,7 +157,7 @@
           const img = document.createElement('img');
           img.src = data.src;
           img.className = 'bg-logo';
-          
+
           if (data.top) img.style.top = data.top;
           if (data.bottom) img.style.bottom = data.bottom;
           if (data.left) img.style.left = data.left;
@@ -131,9 +172,9 @@
       }, 1500);
     }
 
-    // Iniciar rotación
+    // Iniciar rotación (Cada 3 segundos / 3000 ms)
     showNextLogoBatch();
-    setInterval(showNextLogoBatch, 6000);
+    setInterval(showNextLogoBatch, 3000);
   </script>
 </body>
 </html>
