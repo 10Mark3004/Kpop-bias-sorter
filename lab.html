@@ -59,12 +59,19 @@
       transform: translateX(-50%) scale(1);
     }
 
-    /* Pantallas */
+        /* Pantallas centradas de forma absoluta */
     .screen {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 2;
       text-align: center;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease;
     }
 
     .hidden {
@@ -81,7 +88,9 @@
       max-width: 90%;
       width: 350px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      margin: 0 auto; /* Asegura el centrado en el eje X */
     }
+  
 
     h1 {
       font-size: 2rem;
