@@ -176,101 +176,120 @@
   </div>
 
   <script>
-    // 1. BIENVENIDA: Posiciones visibles alrededor del marco sin taparse
+    // ==========================================
+    // ⚙️ PANEL DE CONTROL DE POSICIONES
+    // Si querés subir o bajar zonas, ¡cambiá SOLO los % acá!
+    // ==========================================
+    const POSICIONES = {
+      // Para la pantalla de bienvenida
+      arribaIzquierda: { top: '7%', left: '6%' },
+      arribaDerecha:   { top: '7%', right: '6%' },
+      arribaCentro:    { top: '22%', left: '50%', isCenter: true },
+      abajoCentro:     { bottom: '26%', left: '50%', isCenter: true }, // <-- SUBÍ ESTE
+      abajoIzquierda:  { bottom: '14%', left: '8%' },                   // <-- SUBÍ ESTE
+      abajoDerecha:    { bottom: '14%', right: '8%' },                  // <-- SUBÍ ESTE
+
+      // Para el juego
+      juegoIzquierda:  { bottom: '14%', left: '8%' },                   // <-- SUBÍ ESTE
+      juegoCentro:     { bottom: '24%', left: '50%', isCenter: true }, // <-- SUBÍ ESTE
+      juegoDerecha:    { bottom: '14%', right: '8%' }                   // <-- SUBÍ ESTE
+    };
+
+    // 1. BIENVENIDA (Usa las posiciones definidas arriba)
     const welcomeBatches = [
       [
-        { src: 'logos/PurpleKiss.png', top: '7%', left: '6%' },
-        { src: 'logos/Aespa.png', top: '7%', right: '6%' },
-        { src: 'logos/Kiiikiii.png', top: '27%', left: '50%', isCenter: true },
-        { src: 'logos/Gfriend.png', bottom: '22%', left: '50%', isCenter: true },
-        { src: 'logos/Itzy.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Fiftyfifty.png', bottom: '8%', right: '8%' }
+        { src: 'logos/PurpleKiss.png', pos: POSICIONES.arribaIzquierda },
+        { src: 'logos/Aespa.png',      pos: POSICIONES.arribaDerecha },
+        { src: 'logos/Kiiikiii.png',   pos: POSICIONES.arribaCentro },
+        { src: 'logos/Gfriend.png',    pos: POSICIONES.abajoCentro },
+        { src: 'logos/Itzy.png',       pos: POSICIONES.abajoIzquierda },
+        { src: 'logos/Fiftyfifty.png', pos: POSICIONES.abajoDerecha }
       ],
       [
-        { src: 'logos/2NE1.png', top: '7%', left: '6%' },
-        { src: 'logos/Nmixx.png', top: '7%', right: '6%' },
-        { src: 'logos/Lesserafim.png', top: '27%', left: '50%', isCenter: true },
-        { src: 'logos/Youngposse.png', bottom: '22%', left: '50%', isCenter: true },
-        { src: 'logos/StayC.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Newjeans.png', bottom: '8%', right: '8%' }
+        { src: 'logos/2NE1.png',       pos: POSICIONES.arribaIzquierda },
+        { src: 'logos/Nmixx.png',      pos: POSICIONES.arribaDerecha },
+        { src: 'logos/Lesserafim.png', pos: POSICIONES.arribaCentro },
+        { src: 'logos/Youngposse.png', pos: POSICIONES.abajoCentro },
+        { src: 'logos/StayC.png',      pos: POSICIONES.abajoIzquierda },
+        { src: 'logos/Newjeans.png',   pos: POSICIONES.abajoDerecha }
       ],
       [
-        { src: 'logos/ARTMS.png', top: '7%', left: '6%' },
-        { src: 'logos/Twice.png', top: '7%', right: '6%' },
-        { src: 'logos/Oddyouth.png', top: '27%', left: '50%', isCenter: true },
-        { src: 'logos/Mamamoo.png', bottom: '22%', left: '50%', isCenter: true },
-        { src: 'logos/Illit.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Chuu.png', bottom: '8%', right: '8%' }
+        { src: 'logos/ARTMS.png',      pos: POSICIONES.arribaIzquierda },
+        { src: 'logos/Twice.png',      pos: POSICIONES.arribaDerecha },
+        { src: 'logos/Oddyouth.png',   pos: POSICIONES.arribaCentro },
+        { src: 'logos/Mamamoo.png',    pos: POSICIONES.abajoCentro },
+        { src: 'logos/Illit.png',      pos: POSICIONES.abajoIzquierda },
+        { src: 'logos/Chuu.png',       pos: POSICIONES.abajoDerecha }
       ],
       [
-        { src: 'logos/Blackpink.png', top: '7%', left: '6%' },
-        { src: 'logos/Atheart.png', top: '7%', right: '6%' },
-        { src: 'logos/Viviz.png', top: '27%', left: '50%', isCenter: true },
-        { src: 'logos/Rescene.png', bottom: '22%', left: '50%', isCenter: true },
-        { src: 'logos/TripleS.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Bibi.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Blackpink.png',  pos: POSICIONES.arribaIzquierda },
+        { src: 'logos/Atheart.png',    pos: POSICIONES.arribaDerecha },
+        { src: 'logos/Viviz.png',      pos: POSICIONES.arribaCentro },
+        { src: 'logos/Rescene.png',    pos: POSICIONES.abajoCentro },
+        { src: 'logos/TripleS.png',    pos: POSICIONES.abajoIzquierda },
+        { src: 'logos/Bibi.png',       pos: POSICIONES.abajoDerecha }
       ],
       [
-        { src: 'logos/Izna.png', top: '7%', left: '6%' },
-        { src: 'logos/Loossemble.png', top: '7%', right: '6%' },
-        { src: 'logos/Ive.png', top: '27%', left: '50%', isCenter: true },
-        { src: 'logos/Billie.png', bottom: '22%', left: '50%', isCenter: true },
-        { src: 'logos/Everglow.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Ifeye.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Izna.png',       pos: POSICIONES.arribaIzquierda },
+        { src: 'logos/Loossemble.png', pos: POSICIONES.arribaDerecha },
+        { src: 'logos/Ive.png',        pos: POSICIONES.arribaCentro },
+        { src: 'logos/Billie.png',     pos: POSICIONES.abajoCentro },
+        { src: 'logos/Everglow.png',   pos: POSICIONES.abajoIzquierda },
+        { src: 'logos/Ifeye.png',      pos: POSICIONES.abajoDerecha }
       ]
     ];
 
-    // 2. JUEGO: 10 tandas de 3 logos situados únicamente en la zona inferior
+    // 2. JUEGO (Usa las posiciones de abajo definidas arriba)
     const gameBatches = [
       [
-        { src: 'logos/PurpleKiss.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Aespa.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Fiftyfifty.png', bottom: '8%', right: '8%' }
+        { src: 'logos/PurpleKiss.png', pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Aespa.png',      pos: POSICIONES.juegoCentro },
+        { src: 'logos/Fiftyfifty.png', pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Twice.png', bottom: '8%', left: '8%' },
-        { src: 'logos/StayC.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Itzy.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Twice.png',      pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/StayC.png',      pos: POSICIONES.juegoCentro },
+        { src: 'logos/Itzy.png',       pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Blackpink.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Newjeans.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Kiiikiii.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Blackpink.png',  pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Newjeans.png',   pos: POSICIONES.juegoCentro },
+        { src: 'logos/Kiiikiii.png',   pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Lesserafim.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Nmixx.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Gfriend.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Lesserafim.png', pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Nmixx.png',      pos: POSICIONES.juegoCentro },
+        { src: 'logos/Gfriend.png',    pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Ive.png', bottom: '8%', left: '8%' },
-        { src: 'logos/2NE1.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Youngposse.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Ive.png',        pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/2NE1.png',       pos: POSICIONES.juegoCentro },
+        { src: 'logos/Youngposse.png', pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/ARTMS.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Oddyouth.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Mamamoo.png', bottom: '8%', right: '8%' }
+        { src: 'logos/ARTMS.png',      pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Oddyouth.png',   pos: POSICIONES.juegoCentro },
+        { src: 'logos/Mamamoo.png',    pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Illit.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Chuu.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Atheart.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Illit.png',      pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Chuu.png',       pos: POSICIONES.juegoCentro },
+        { src: 'logos/Atheart.png',    pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Viviz.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Rescene.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/TripleS.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Viviz.png',      pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Rescene.png',    pos: POSICIONES.juegoCentro },
+        { src: 'logos/TripleS.png',    pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Bibi.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Izna.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Loossemble.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Bibi.png',       pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Izna.png',       pos: POSICIONES.juegoCentro },
+        { src: 'logos/Loossemble.png', pos: POSICIONES.juegoDerecha }
       ],
       [
-        { src: 'logos/Billie.png', bottom: '8%', left: '8%' },
-        { src: 'logos/Everglow.png', bottom: '18%', left: '50%', isCenter: true },
-        { src: 'logos/Ifeye.png', bottom: '8%', right: '8%' }
+        { src: 'logos/Billie.png',     pos: POSICIONES.juegoIzquierda },
+        { src: 'logos/Everglow.png',   pos: POSICIONES.juegoCentro },
+        { src: 'logos/Ifeye.png',      pos: POSICIONES.juegoDerecha }
       ]
     ];
 
@@ -292,12 +311,14 @@
         currentBatch.forEach(data => {
           const img = document.createElement('img');
           img.src = data.src;
-          img.className = 'bg-logo' + (data.isCenter ? ' centered-logo' : '');
+          
+          const p = data.pos;
+          img.className = 'bg-logo' + (p.isCenter ? ' centered-logo' : '');
 
-          if (data.top) img.style.top = data.top;
-          if (data.bottom) img.style.bottom = data.bottom;
-          if (data.left) img.style.left = data.left;
-          if (data.right) img.style.right = data.right;
+          if (p.top) img.style.top = p.top;
+          if (p.bottom) img.style.bottom = p.bottom;
+          if (p.left) img.style.left = p.left;
+          if (p.right) img.style.right = p.right;
 
           container.appendChild(img);
           setTimeout(() => img.classList.add('visible'), 50);
