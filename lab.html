@@ -37,8 +37,8 @@
 
     .bg-logo {
       position: absolute;
-      max-width: 150px;
-      max-height: 75px;
+      max-width: 130px;
+      max-height: 65px;
       object-fit: contain;
       opacity: 0;
       filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
@@ -46,9 +46,17 @@
       transform: scale(0.85);
     }
 
+    .bg-logo.centered-logo {
+      transform: translateX(-50%) scale(0.85);
+    }
+
     .bg-logo.visible {
-      opacity: 0.35;
+      opacity: 0.4;
       transform: scale(1);
+    }
+
+    .bg-logo.centered-logo.visible {
+      transform: translateX(-50%) scale(1);
     }
 
     /* Pantallas */
@@ -111,7 +119,7 @@
       box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
     }
 
-    /* Pantalla 2: Simulación del Juego */
+    /* Pantalla 2: Simulación Juego */
     .sorter-card {
       background: rgba(23, 22, 38, 0.85);
       backdrop-filter: blur(10px);
@@ -147,7 +155,7 @@
   <!-- Fondo animado -->
   <div id="background-container"></div>
 
-  <!-- PANTALLA 1: BIENVENIDA (5 tandas de 6 logos) -->
+  <!-- PANTALLA 1: BIENVENIDA -->
   <div id="screen-welcome" class="screen">
     <div class="welcome-card">
       <h1>¡Bienvenido!</h1>
@@ -156,7 +164,7 @@
     </div>
   </div>
 
-  <!-- PANTALLA 2: SIMULACIÓN JUEGO (10 tandas de 3 logos minimalistas) -->
+  <!-- PANTALLA 2: SIMULACIÓN JUEGO -->
   <div id="screen-game" class="screen hidden">
     <div class="sorter-card">
       <h2 style="font-size: 1.2rem; margin-bottom: 10px;">Enfrentamiento VS</h2>
@@ -168,101 +176,101 @@
   </div>
 
   <script>
-    // 1. BIENVENIDA: 5 tandas de 6 logos
+    // 1. BIENVENIDA: Posiciones visibles alrededor del marco sin taparse
     const welcomeBatches = [
       [
-        { src: 'logos/PurpleKiss.png', top: '5%', left: '5%' },
-        { src: 'logos/Aespa.png', top: '5%', right: '5%' },
-        { src: 'logos/Itzy.png', bottom: '5%', left: '5%' },
-        { src: 'logos/Fiftyfifty.png', bottom: '5%', right: '5%' },
-        { src: 'logos/Kiiikiii.png', top: '48%', left: '4%' },
-        { src: 'logos/Gfriend.png', top: '48%', right: '4%' }
+        { src: 'logos/PurpleKiss.png', top: '7%', left: '6%' },
+        { src: 'logos/Aespa.png', top: '7%', right: '6%' },
+        { src: 'logos/Kiiikiii.png', top: '27%', left: '50%', isCenter: true },
+        { src: 'logos/Gfriend.png', bottom: '22%', left: '50%', isCenter: true },
+        { src: 'logos/Itzy.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Fiftyfifty.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/2NE1.png', top: '6%', left: '6%' },
-        { src: 'logos/Nmixx.png', top: '6%', right: '6%' },
-        { src: 'logos/Lesserafim.png', bottom: '6%', left: '6%' },
-        { src: 'logos/Youngposse.png', bottom: '6%', right: '6%' },
-        { src: 'logos/StayC.png', top: '45%', left: '5%' },
-        { src: 'logos/Newjeans.png', top: '45%', right: '5%' }
+        { src: 'logos/2NE1.png', top: '7%', left: '6%' },
+        { src: 'logos/Nmixx.png', top: '7%', right: '6%' },
+        { src: 'logos/Lesserafim.png', top: '27%', left: '50%', isCenter: true },
+        { src: 'logos/Youngposse.png', bottom: '22%', left: '50%', isCenter: true },
+        { src: 'logos/StayC.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Newjeans.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/ARTMS.png', top: '5%', left: '5%' },
-        { src: 'logos/Twice.png', top: '5%', right: '5%' },
-        { src: 'logos/Oddyouth.png', bottom: '5%', left: '5%' },
-        { src: 'logos/Mamamoo.png', bottom: '5%', right: '5%' },
-        { src: 'logos/Illit.png', top: '50%', left: '4%' },
-        { src: 'logos/Chuu.png', top: '50%', right: '4%' }
+        { src: 'logos/ARTMS.png', top: '7%', left: '6%' },
+        { src: 'logos/Twice.png', top: '7%', right: '6%' },
+        { src: 'logos/Oddyouth.png', top: '27%', left: '50%', isCenter: true },
+        { src: 'logos/Mamamoo.png', bottom: '22%', left: '50%', isCenter: true },
+        { src: 'logos/Illit.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Chuu.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Blackpink.png', top: '6%', left: '6%' },
-        { src: 'logos/Atheart.png', top: '6%', right: '6%' },
-        { src: 'logos/Viviz.png', bottom: '6%', left: '6%' },
-        { src: 'logos/Rescene.png', bottom: '6%', right: '6%' },
-        { src: 'logos/TripleS.png', top: '46%', left: '5%' },
-        { src: 'logos/Bibi.png', top: '46%', right: '5%' }
+        { src: 'logos/Blackpink.png', top: '7%', left: '6%' },
+        { src: 'logos/Atheart.png', top: '7%', right: '6%' },
+        { src: 'logos/Viviz.png', top: '27%', left: '50%', isCenter: true },
+        { src: 'logos/Rescene.png', bottom: '22%', left: '50%', isCenter: true },
+        { src: 'logos/TripleS.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Bibi.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Izna.png', top: '5%', left: '5%' },
-        { src: 'logos/Loossemble.png', top: '5%', right: '5%' },
-        { src: 'logos/Ive.png', bottom: '5%', left: '5%' },
-        { src: 'logos/Billie.png', bottom: '5%', right: '5%' },
-        { src: 'logos/Everglow.png', top: '48%', left: '4%' },
-        { src: 'logos/Ifeye.png', top: '48%', right: '4%' }
+        { src: 'logos/Izna.png', top: '7%', left: '6%' },
+        { src: 'logos/Loossemble.png', top: '7%', right: '6%' },
+        { src: 'logos/Ive.png', top: '27%', left: '50%', isCenter: true },
+        { src: 'logos/Billie.png', bottom: '22%', left: '50%', isCenter: true },
+        { src: 'logos/Everglow.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Ifeye.png', bottom: '8%', right: '8%' }
       ]
     ];
 
-    // 2. JUEGO: 10 tandas de 3 logos (repartidos por las esquinas y laterales sin estorbar)
+    // 2. JUEGO: 10 tandas de 3 logos situados únicamente en la zona inferior
     const gameBatches = [
       [
-        { src: 'logos/PurpleKiss.png', top: '4%', left: '4%' },
-        { src: 'logos/Aespa.png', bottom: '5%', right: '4%' },
-        { src: 'logos/Fiftyfifty.png', top: '45%', left: '3%' }
+        { src: 'logos/PurpleKiss.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Aespa.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Fiftyfifty.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Twice.png', top: '4%', right: '4%' },
-        { src: 'logos/StayC.png', bottom: '5%', left: '4%' },
-        { src: 'logos/Itzy.png', top: '45%', right: '3%' }
+        { src: 'logos/Twice.png', bottom: '8%', left: '8%' },
+        { src: 'logos/StayC.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Itzy.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Blackpink.png', top: '4%', left: '4%' },
-        { src: 'logos/Newjeans.png', bottom: '5%', right: '4%' },
-        { src: 'logos/Kiiikiii.png', top: '45%', left: '3%' }
+        { src: 'logos/Blackpink.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Newjeans.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Kiiikiii.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Lesserafim.png', top: '4%', right: '4%' },
-        { src: 'logos/Nmixx.png', bottom: '5%', left: '4%' },
-        { src: 'logos/Gfriend.png', top: '45%', right: '3%' }
+        { src: 'logos/Lesserafim.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Nmixx.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Gfriend.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Ive.png', top: '4%', left: '4%' },
-        { src: 'logos/2NE1.png', bottom: '5%', right: '4%' },
-        { src: 'logos/Youngposse.png', top: '45%', left: '3%' }
+        { src: 'logos/Ive.png', bottom: '8%', left: '8%' },
+        { src: 'logos/2NE1.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Youngposse.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/ARTMS.png', top: '4%', right: '4%' },
-        { src: 'logos/Oddyouth.png', bottom: '5%', left: '4%' },
-        { src: 'logos/Mamamoo.png', top: '45%', right: '3%' }
+        { src: 'logos/ARTMS.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Oddyouth.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Mamamoo.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Illit.png', top: '4%', left: '4%' },
-        { src: 'logos/Chuu.png', bottom: '5%', right: '4%' },
-        { src: 'logos/Atheart.png', top: '45%', left: '3%' }
+        { src: 'logos/Illit.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Chuu.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Atheart.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Viviz.png', top: '4%', right: '4%' },
-        { src: 'logos/Rescene.png', bottom: '5%', left: '4%' },
-        { src: 'logos/TripleS.png', top: '45%', right: '3%' }
+        { src: 'logos/Viviz.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Rescene.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/TripleS.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Bibi.png', top: '4%', left: '4%' },
-        { src: 'logos/Izna.png', bottom: '5%', right: '4%' },
-        { src: 'logos/Loossemble.png', top: '45%', left: '3%' }
+        { src: 'logos/Bibi.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Izna.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Loossemble.png', bottom: '8%', right: '8%' }
       ],
       [
-        { src: 'logos/Billie.png', top: '4%', right: '4%' },
-        { src: 'logos/Everglow.png', bottom: '5%', left: '4%' },
-        { src: 'logos/Ifeye.png', top: '45%', right: '3%' }
+        { src: 'logos/Billie.png', bottom: '8%', left: '8%' },
+        { src: 'logos/Everglow.png', bottom: '18%', left: '50%', isCenter: true },
+        { src: 'logos/Ifeye.png', bottom: '8%', right: '8%' }
       ]
     ];
 
@@ -284,7 +292,7 @@
         currentBatch.forEach(data => {
           const img = document.createElement('img');
           img.src = data.src;
-          img.className = 'bg-logo';
+          img.className = 'bg-logo' + (data.isCenter ? ' centered-logo' : '');
 
           if (data.top) img.style.top = data.top;
           if (data.bottom) img.style.bottom = data.bottom;
