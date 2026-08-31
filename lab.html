@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kpop Bias Sorter - Lab</title>
+  <title>K-pop Bias Sorter - Lab</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,7 +12,7 @@
     }
 
     body {
-      background-color: #0d0d11;
+      background: linear-gradient(135deg, #0d0d16 0%, #15102a 100%);
       color: #ffffff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Contenedor de logos animados en el fondo */
+    /* Contenedor de logos de fondo */
     #background-container {
       position: absolute;
       top: 0;
@@ -37,13 +37,13 @@
 
     .bg-logo {
       position: absolute;
-      max-width: 180px;
-      max-height: 90px;
+      max-width: 150px;
+      max-height: 75px;
       object-fit: contain;
       opacity: 0;
-      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
       transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
-      transform: scale(0.9);
+      transform: scale(0.85);
     }
 
     .bg-logo.visible {
@@ -51,48 +51,94 @@
       transform: scale(1);
     }
 
-    /* Contenido principal sobrepuesto */
-    .content-box {
+    /* Pantallas */
+    .screen {
       position: relative;
       z-index: 2;
       text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Pantalla 1: Bienvenida */
+    .welcome-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
       padding: 2.5rem 2rem;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       max-width: 90%;
-      width: 400px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      width: 350px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
 
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
+      font-size: 2rem;
+      background: linear-gradient(135deg, #ff7eb3, #7afcff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.8rem;
     }
 
     p {
-      color: #a0a0b0;
+      color: #b3b3cb;
       font-size: 0.95rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .btn-main {
+      display: inline-block;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #e91e63, #9c27b0);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+    }
+
+    /* Pantalla 2: Simulación del Juego */
+    .sorter-card {
+      background: rgba(23, 22, 38, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 320px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .vs-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-weight: bold;
     }
 
     .btn-back {
-      display: inline-block;
-      text-decoration: none;
-      color: #fff;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
-      padding: 10px 24px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-back:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(167, 119, 227, 0.4);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #aaa;
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -101,78 +147,139 @@
   <!-- Fondo animado -->
   <div id="background-container"></div>
 
-  <!-- Tarjeta central del Laboratorio -->
-  <div class="content-box">
-    <h1>Laboratorio de Pruebas</h1>
-    <p>Probando animaciones dinámicas de fondo con logos en rotación continua.</p>
-    <a href="index.html" class="btn-back">Volver al Inicio</a>
+  <!-- PANTALLA 1: BIENVENIDA (5 tandas de 6 logos) -->
+  <div id="screen-welcome" class="screen">
+    <div class="welcome-card">
+      <h1>¡Bienvenido!</h1>
+      <p>Selecciona tus grupos e integrantes favoritos para armar tu ranking definitivo.</p>
+      <button class="btn-main" onclick="goToGame()">¡Probar Sorter!</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 2: SIMULACIÓN JUEGO (10 tandas de 3 logos minimalistas) -->
+  <div id="screen-game" class="screen hidden">
+    <div class="sorter-card">
+      <h2 style="font-size: 1.2rem; margin-bottom: 10px;">Enfrentamiento VS</h2>
+      <div class="vs-box">Integrante A</div>
+      <span style="color: #ff7eb3; font-weight: bold;">VS</span>
+      <div class="vs-box">Integrante B</div>
+      <button class="btn-back" onclick="goToWelcome()">← Volver a Bienvenida</button>
+    </div>
   </div>
 
   <script>
-    // Tandas de logos con nombres exactos de tu carpeta /logos
-    const logoBatches = [
-      // Tanda 1
+    // 1. BIENVENIDA: 5 tandas de 6 logos
+    const welcomeBatches = [
       [
-        { src: 'logos/PurpleKiss.png', top: '10%', left: '8%' },
-        { src: 'logos/Aespa.png', top: '15%', right: '10%' },
-        { src: 'logos/Itzy.png', bottom: '20%', left: '10%' },
-        { src: 'logos/Fiftyfifty.png', bottom: '12%', right: '8%' },
-        { src: 'logos/Kiiikiii.png', top: '45%', left: '42%' }
+        { src: 'logos/PurpleKiss.png', top: '5%', left: '5%' },
+        { src: 'logos/Aespa.png', top: '5%', right: '5%' },
+        { src: 'logos/Itzy.png', bottom: '5%', left: '5%' },
+        { src: 'logos/Fiftyfifty.png', bottom: '5%', right: '5%' },
+        { src: 'logos/Kiiikiii.png', top: '48%', left: '4%' },
+        { src: 'logos/Gfriend.png', top: '48%', right: '4%' }
       ],
-      // Tanda 2
       [
-        { src: 'logos/Gfriend.png', top: '12%', left: '12%' },
-        { src: 'logos/2NE1.png', top: '18%', right: '8%' },
-        { src: 'logos/Nmixx.png', bottom: '22%', left: '8%' },
-        { src: 'logos/Lesserafim.png', bottom: '10%', right: '12%' },
-        { src: 'logos/Youngposse.png', top: '48%', left: '40%' }
+        { src: 'logos/2NE1.png', top: '6%', left: '6%' },
+        { src: 'logos/Nmixx.png', top: '6%', right: '6%' },
+        { src: 'logos/Lesserafim.png', bottom: '6%', left: '6%' },
+        { src: 'logos/Youngposse.png', bottom: '6%', right: '6%' },
+        { src: 'logos/StayC.png', top: '45%', left: '5%' },
+        { src: 'logos/Newjeans.png', top: '45%', right: '5%' }
       ],
-      // Tanda 3
       [
-        { src: 'logos/StayC.png', top: '8%', left: '10%' },
-        { src: 'logos/Newjeans.png', top: '20%', right: '12%' },
-        { src: 'logos/ARTMS.png', bottom: '25%', left: '12%' },
-        { src: 'logos/Twice.png', bottom: '10%', right: '10%' },
-        { src: 'logos/Oddyouth.png', top: '42%', left: '45%' }
+        { src: 'logos/ARTMS.png', top: '5%', left: '5%' },
+        { src: 'logos/Twice.png', top: '5%', right: '5%' },
+        { src: 'logos/Oddyouth.png', bottom: '5%', left: '5%' },
+        { src: 'logos/Mamamoo.png', bottom: '5%', right: '5%' },
+        { src: 'logos/Illit.png', top: '50%', left: '4%' },
+        { src: 'logos/Chuu.png', top: '50%', right: '4%' }
       ],
-      // Tanda 4
       [
-        { src: 'logos/Mamamoo.png', top: '15%', left: '8%' },
-        { src: 'logos/Illit.png', top: '12%', right: '12%' },
-        { src: 'logos/Chuu.png', bottom: '18%', left: '10%' },
-        { src: 'logos/Blackpink.png', bottom: '12%', right: '8%' },
-        { src: 'logos/Atheart.png', top: '50%', left: '38%' }
+        { src: 'logos/Blackpink.png', top: '6%', left: '6%' },
+        { src: 'logos/Atheart.png', top: '6%', right: '6%' },
+        { src: 'logos/Viviz.png', bottom: '6%', left: '6%' },
+        { src: 'logos/Rescene.png', bottom: '6%', right: '6%' },
+        { src: 'logos/TripleS.png', top: '46%', left: '5%' },
+        { src: 'logos/Bibi.png', top: '46%', right: '5%' }
       ],
-      // Tanda 5
       [
-        { src: 'logos/Viviz.png', top: '10%', left: '10%' },
-        { src: 'logos/Rescene.png', top: '15%', right: '8%' },
-        { src: 'logos/TripleS.png', bottom: '20%', left: '8%' },
-        { src: 'logos/Bibi.png', bottom: '10%', right: '12%' },
-        { src: 'logos/Izna.png', top: '45%', left: '40%' }
+        { src: 'logos/Izna.png', top: '5%', left: '5%' },
+        { src: 'logos/Loossemble.png', top: '5%', right: '5%' },
+        { src: 'logos/Ive.png', bottom: '5%', left: '5%' },
+        { src: 'logos/Billie.png', bottom: '5%', right: '5%' },
+        { src: 'logos/Everglow.png', top: '48%', left: '4%' },
+        { src: 'logos/Ifeye.png', top: '48%', right: '4%' }
+      ]
+    ];
+
+    // 2. JUEGO: 10 tandas de 3 logos (repartidos por las esquinas y laterales sin estorbar)
+    const gameBatches = [
+      [
+        { src: 'logos/PurpleKiss.png', top: '4%', left: '4%' },
+        { src: 'logos/Aespa.png', bottom: '5%', right: '4%' },
+        { src: 'logos/Fiftyfifty.png', top: '45%', left: '3%' }
       ],
-      // Tanda 6
       [
-        { src: 'logos/Loossemble.png', top: '12%', left: '8%' },
-        { src: 'logos/Ive.png', top: '18%', right: '10%' },
-        { src: 'logos/Billie.png', bottom: '22%', left: '12%' },
-        { src: 'logos/Everglow.png', bottom: '12%', right: '8%' },
-        { src: 'logos/Ifeye.png', top: '48%', left: '42%' }
+        { src: 'logos/Twice.png', top: '4%', right: '4%' },
+        { src: 'logos/StayC.png', bottom: '5%', left: '4%' },
+        { src: 'logos/Itzy.png', top: '45%', right: '3%' }
+      ],
+      [
+        { src: 'logos/Blackpink.png', top: '4%', left: '4%' },
+        { src: 'logos/Newjeans.png', bottom: '5%', right: '4%' },
+        { src: 'logos/Kiiikiii.png', top: '45%', left: '3%' }
+      ],
+      [
+        { src: 'logos/Lesserafim.png', top: '4%', right: '4%' },
+        { src: 'logos/Nmixx.png', bottom: '5%', left: '4%' },
+        { src: 'logos/Gfriend.png', top: '45%', right: '3%' }
+      ],
+      [
+        { src: 'logos/Ive.png', top: '4%', left: '4%' },
+        { src: 'logos/2NE1.png', bottom: '5%', right: '4%' },
+        { src: 'logos/Youngposse.png', top: '45%', left: '3%' }
+      ],
+      [
+        { src: 'logos/ARTMS.png', top: '4%', right: '4%' },
+        { src: 'logos/Oddyouth.png', bottom: '5%', left: '4%' },
+        { src: 'logos/Mamamoo.png', top: '45%', right: '3%' }
+      ],
+      [
+        { src: 'logos/Illit.png', top: '4%', left: '4%' },
+        { src: 'logos/Chuu.png', bottom: '5%', right: '4%' },
+        { src: 'logos/Atheart.png', top: '45%', left: '3%' }
+      ],
+      [
+        { src: 'logos/Viviz.png', top: '4%', right: '4%' },
+        { src: 'logos/Rescene.png', bottom: '5%', left: '4%' },
+        { src: 'logos/TripleS.png', top: '45%', right: '3%' }
+      ],
+      [
+        { src: 'logos/Bibi.png', top: '4%', left: '4%' },
+        { src: 'logos/Izna.png', bottom: '5%', right: '4%' },
+        { src: 'logos/Loossemble.png', top: '45%', left: '3%' }
+      ],
+      [
+        { src: 'logos/Billie.png', top: '4%', right: '4%' },
+        { src: 'logos/Everglow.png', bottom: '5%', left: '4%' },
+        { src: 'logos/Ifeye.png', top: '45%', right: '3%' }
       ]
     ];
 
     let currentBatchIndex = 0;
+    let currentMode = 'welcome';
+    let intervalId = null;
     const container = document.getElementById('background-container');
 
     function showNextLogoBatch() {
-      // 1. Desvanecer los logos actuales
+      const activeBatches = currentMode === 'welcome' ? welcomeBatches : gameBatches;
+
       const currentLogos = container.querySelectorAll('.bg-logo');
       currentLogos.forEach(img => img.classList.remove('visible'));
 
-      // 2. Esperar al desvanecimiento para cambiar las imágenes
       setTimeout(() => {
         container.innerHTML = '';
-        const currentBatch = logoBatches[currentBatchIndex];
+        const currentBatch = activeBatches[currentBatchIndex];
 
         currentBatch.forEach(data => {
           const img = document.createElement('img');
@@ -185,18 +292,35 @@
           if (data.right) img.style.right = data.right;
 
           container.appendChild(img);
-
-          // Forzar refinamiento visual antes de activar transición
           setTimeout(() => img.classList.add('visible'), 50);
         });
 
-        currentBatchIndex = (currentBatchIndex + 1) % logoBatches.length;
+        currentBatchIndex = (currentBatchIndex + 1) % activeBatches.length;
       }, 1000);
     }
 
-    // Iniciar rotación cada 3 segundos
-    showNextLogoBatch();
-    setInterval(showNextLogoBatch, 3000);
+    function startRotation() {
+      if (intervalId) clearInterval(intervalId);
+      currentBatchIndex = 0;
+      showNextLogoBatch();
+      intervalId = setInterval(showNextLogoBatch, 3000);
+    }
+
+    function goToGame() {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-game').classList.remove('hidden');
+      currentMode = 'game';
+      startRotation();
+    }
+
+    function goToWelcome() {
+      document.getElementById('screen-game').classList.add('hidden');
+      document.getElementById('screen-welcome').classList.remove('hidden');
+      currentMode = 'welcome';
+      startRotation();
+    }
+
+    startRotation();
   </script>
 </body>
 </html>
