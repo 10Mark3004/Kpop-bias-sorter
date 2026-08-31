@@ -284,7 +284,12 @@
 
     .btn-restart { margin-top: 30px; background: transparent; border: 2px solid #8b5cf6; color: #a78bfa; width: 100%; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 17px; cursor: pointer; }
     .btn-restart:hover { background: var(--accent-gradient); color: white; border-color: transparent; }
-
+    html, body {
+  min-height: 100vh;
+  background-color: #0d0d16;
+  background-attachment: fixed;
+    }
+    
     /* --- ANIMACIÓN Y POSICIONES DE LOGOS DE FONDO --- */
 #background-container {
   position: fixed;
@@ -1126,21 +1131,27 @@ function startRotation() {
 
 // Función que se ejecuta al tocar el botón "¡Comenzar!"
 function startSorterGame() {
-  // 1. Oculta el cartel de bienvenida
+  // 1. Frena la animación de logos
+  if (intervalId) clearInterval(intervalId);
+
+  // 2. Borra y oculta el contenedor de logos flotantes
+  const container = document.getElementById('background-container');
+  if (container) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+  }
+
+  // 3. Oculta la pantalla de bienvenida
   const welcomeScreen = document.getElementById('screen-welcome');
   if (welcomeScreen) {
     welcomeScreen.style.display = 'none';
   }
-  
-  // 2. Muestra TODO el juego
+
+  // 4. Muestra la pantalla del juego completa
   const appContainer = document.getElementById('main-app-container');
   if (appContainer) {
     appContainer.style.display = 'block';
   }
-  
-  // 3. Cambia la rotación de logos a modo juego
-  currentMode = 'game';
-  startRotation();
 }
 
 startRotation();
