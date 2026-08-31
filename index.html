@@ -365,12 +365,13 @@
   </div>
 </div>
 
+  <div id="main-app-container" style="display: none; width: 100%;">
   <h1>K-pop Bias Sorter</h1>
   <p class="description">Selecciona tus grupos, elige qué integrantes participan y arma tu ranking definitivo.</p>
 
   <div class="container">
     <!-- Pantalla 1 -->
-    <div id="setup-screen" style="width: 100%; display: none;">
+    <div id="setup-screen" style="width: 100%;">
        
       <!-- Menú desplegable -->
       <div class="preset-section">
@@ -1125,18 +1126,26 @@ function startRotation() {
 
 // Función que se ejecuta al tocar el botón "¡Comenzar!"
 function startSorterGame() {
-  document.getElementById('screen-welcome').classList.add('hidden-welcome');
+  // 1. Oculta el cartel de bienvenida
+  const welcomeScreen = document.getElementById('screen-welcome');
+  if (welcomeScreen) {
+    welcomeScreen.style.display = 'none';
+  }
   
-  // Si el contenedor de tu juego tiene otro ID (ej: 'main-container'), cambialo acá:
-  const gameDiv = document.getElementById('main-game-container');
-  if (gameDiv) gameDiv.classList.remove('hidden-welcome');
+  // 2. Muestra TODO el juego
+  const appContainer = document.getElementById('main-app-container');
+  if (appContainer) {
+    appContainer.style.display = 'block';
+  }
   
+  // 3. Cambia la rotación de logos a modo juego
   currentMode = 'game';
   startRotation();
 }
 
 startRotation();
     
-  </script>
+    </script>
+</div>
 </body>
 </html>
