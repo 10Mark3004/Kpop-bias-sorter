@@ -354,6 +354,247 @@
 .hidden-welcome {
   display: none !important;
 }
+
+    /* ==========================================
+   ESTILOS Y PALETAS DE COLORES PARA LA TARJETA
+   ========================================== */
+
+/* Pure Dark (Por defecto) */
+#modal-cloned-card,
+#ranking-card {
+  --bg-card: #18181b;
+  --card-border: #27272a;
+  --text-main: #ffffff;
+  --text-title: #f4f4f5;
+  --text-sub: #a1a1aa;
+  --item-bg: #27272a;
+  --badge-bg: #3f3f46;
+  --badge-text: #f4f4f5;
+}
+
+/* Minimal Light */
+[data-theme="light"] {
+  --bg-card: #ffffff !important;
+  --card-border: #d4d4d8 !important;
+  --text-main: #18181b !important;
+  --text-title: #09090b !important;
+  --text-sub: #71717a !important;
+  --item-bg: #f4f4f5 !important;
+  --badge-bg: #e4e4e7 !important;
+  --badge-text: #18181b !important;
+}
+
+/* Soft Pink */
+[data-theme="pink"] {
+  --bg-card: #fbcfe8 !important;
+  --card-border: #f472b6 !important;
+  --text-main: #831843 !important;
+  --text-title: #831843 !important;
+  --text-sub: #db2777 !important;
+  --item-bg: #ffffff !important;
+  --badge-bg: #f472b6 !important;
+  --badge-text: #ffffff !important;
+}
+
+/* Ocean Blue */
+[data-theme="blue"] {
+  --bg-card: #0f172a !important;
+  --card-border: #1e293b !important;
+  --text-main: #f0f9ff !important;
+  --text-title: #38bdf8 !important;
+  --text-sub: #7dd3fc !important;
+  --item-bg: #1e293b !important;
+  --badge-bg: #0284c7 !important;
+  --badge-text: #ffffff !important;
+}
+
+/* Forest Green */
+[data-theme="green"] {
+  --bg-card: #064e3b !important;
+  --card-border: #047857 !important;
+  --text-main: #ecfdf5 !important;
+  --text-title: #6ee7b7 !important;
+  --text-sub: #a7f3d0 !important;
+  --item-bg: #065f46 !important;
+  --badge-bg: #10b981 !important;
+  --badge-text: #064e3b !important;
+}
+
+/* Argentina */
+[data-theme="argentina"] {
+  --bg-card: #ffffff !important;
+  --card-border: #38bdf8 !important;
+  --text-main: #0c4a6e !important;
+  --text-title: #0284c7 !important;
+  --text-sub: #38bdf8 !important;
+  --item-bg: #bae6fd !important;
+  --badge-bg: #0284c7 !important;
+  --badge-text: #ffffff !important;
+}
+
+/* Boca Juniors */
+[data-theme="boca"] {
+  --bg-card: #002244 !important;
+  --card-border: #ffcc00 !important;
+  --text-main: #ffffff !important;
+  --text-title: #ffcc00 !important;
+  --text-sub: #ffcc00 !important;
+  --item-bg: #003366 !important;
+  --badge-bg: #ffcc00 !important;
+  --badge-text: #002244 !important;
+}
+
+/* River Plate */
+[data-theme="river"] {
+  --bg-card: #ffffff !important;
+  --card-border: #e50027 !important;
+  --text-main: #ffffff !important;
+  --text-title: #e50027 !important;
+  --text-sub: #99001a !important;
+  --item-bg: #e50027 !important;
+  --badge-bg: #700012 !important;
+  --badge-text: #ffffff !important;
+}
+
+#modal-cloned-card {
+  background: var(--bg-card) !important;
+  border-color: var(--card-border) !important;
+}
+
+#modal-cloned-card * {
+  color: var(--text-main);
+}
+
+/* ==========================================
+   ESTILOS DE LA VENTANA MODAL
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.modal-card-container {
+  background: #12131c;
+  border: 1px solid #2d2f45;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px; right: 15px;
+  background: none; border: none;
+  color: #a3a3a3; font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin: 0; color: #fff;
+  font-size: 1.1rem; text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 0.75rem; color: #a3a3a3; font-weight: 600;
+}
+
+.input-group input {
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px solid #333; background: #1a1b26;
+  color: #fff; font-size: 0.9rem; outline: none;
+}
+
+.theme-selector-box {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+}
+
+.theme-label-text {
+  font-size: 0.7rem; color: #a3a3a3;
+  font-weight: 700; letter-spacing: 1px;
+}
+
+.theme-buttons-row {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 6px;
+}
+
+.btn-theme {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.btn-theme:hover { transform: scale(1.15); }
+.btn-theme.active { border-color: #ffffff; transform: scale(1.15); box-shadow: 0 0 6px rgba(255,255,255,0.8); }
+
+.t-dark { background: #0a0a0a; }
+.t-light { background: #ffffff; }
+.t-pink { background: #f472b6; }
+.t-blue { background: #0284c7; }
+.t-green { background: #10b981; }
+.t-arg { background: linear-gradient(135deg, #7dd3fc 50%, #ffffff 50%); }
+.t-boca { background: linear-gradient(135deg, #002244 50%, #ffcc00 50%); }
+.t-river { background: linear-gradient(135deg, #ffffff 50%, #e50027 50%); }
+
+.preview-card-holder {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.btn-download-final {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #e052a0, #f15c80);
+  color: white;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-download-final:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
     
   </style>
 </head>
@@ -460,8 +701,8 @@
 </div>
       
 <!-- Botón para descargar -->
-<button id="btn-download-card" onclick="descargarTarjeta()" style="display: none; margin: 20px auto; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);">
-  📸 Descargar Tarjeta (PNG)
+<button id="btn-download-card" onclick="openCardModal()" style="display: none; margin: 20px auto; background: linear-gradient(135deg, #e052a0, #f15c80);">
+  🎨 Personalizar y Ver Imagen
 </button>
       
       <button class="btn-restart" onclick="resetSorter()">Hacer otro Sorter</button>
