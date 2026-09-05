@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio - Temas Limpios & Podio</title>
+  <title>Laboratorio - Temas Ajustados & Pasión</title>
   <style>
     /* ==========================================
        1. DEFINICIÓN DE PALETAS Y TEMAS
        ========================================== */
 
-    /* TEMA POR DEFECTO: Pure Dark (Base Negra / Letras Blancas) */
+    /* TEMA POR DEFECTO: Pure Dark (Ajustado) */
     :root {
       --bg-card: #0a0a0a;
-      --card-border: #262626;
+      --card-border: #333333;
       --text-main: #ffffff;
       --text-title: #f5f5f5;
       --text-sub: #a3a3a3;
-      --item-bg: #171717;
-      --badge-bg: #262626;
+      --item-bg: #222222; /* Cuadros más claros */
+      --badge-bg: #333333;
       --badge-text: #e5e5e5;
     }
 
-    /* TEMA 2: Minimal Light (Base Blanca / Letras Negras) */
+    /* Minimal Light (Ajustado) */
     [data-theme="light"] {
       --bg-card: #ffffff;
-      --card-border: #e5e5e5;
+      --card-border: #d4d4d4;
       --text-main: #171717;
       --text-title: #0a0a0a;
-      --text-sub: #737373;
-      --item-bg: #f5f5f5;
-      --badge-bg: #e5e5e5;
-      --badge-text: #262626;
+      --text-sub: #525252;
+      --item-bg: #e5e5e5; /* Cuadros más oscuros */
+      --badge-bg: #d4d4d4;
+      --badge-text: #171717;
     }
 
-    /* TEMA 3: Soft Pink (Tonos Rosas) */
+    /* Soft Pink (Fondo más oscuro/saturado) */
     [data-theme="pink"] {
-      --bg-card: #fdf2f8;
-      --card-border: #fbcfe8;
+      --bg-card: #f472b6; /* Fondo rosa bien definido */
+      --card-border: #db2777;
       --text-main: #831843;
-      --text-title: #9d174d;
-      --text-sub: #db2777;
-      --item-bg: #fce7f3;
-      --badge-bg: #fbcfe8;
-      --badge-text: #9d174d;
+      --text-title: #500724;
+      --text-sub: #831843;
+      --item-bg: #fbcfe8;
+      --badge-bg: #f472b6;
+      --badge-text: #500724;
     }
 
-    /* TEMA 4: Ocean Blue (Celeste y Azul) */
+    /* Ocean Blue (Perfecto) */
     [data-theme="blue"] {
       --bg-card: #0f172a;
       --card-border: #1e293b;
@@ -57,7 +57,7 @@
       --badge-text: #ffffff;
     }
 
-    /* TEMA 5: Forest Green (Tonos Verdes) */
+    /* Forest Green (Perfecto) */
     [data-theme="green"] {
       --bg-card: #064e3b;
       --card-border: #047857;
@@ -69,9 +69,45 @@
       --badge-text: #064e3b;
     }
 
+    /* --- SPECIAL: ARGENTINA --- */
+    [data-theme="argentina"] {
+      --bg-card: #7dd3fc;
+      --card-border: #38bdf8;
+      --text-main: #0c4a6e;
+      --text-title: #0369a1;
+      --text-sub: #0284c7;
+      --item-bg: #ffffff;
+      --badge-bg: #bae6fd;
+      --badge-text: #0369a1;
+    }
+
+    /* --- SPECIAL: BOCA JUNIORS --- */
+    [data-theme="boca"] {
+      --bg-card: #002244;
+      --card-border: #ffcc00;
+      --text-main: #ffffff;
+      --text-title: #ffcc00;
+      --text-sub: #ffcc00;
+      --item-bg: #003366;
+      --badge-bg: #ffcc00;
+      --badge-text: #002244;
+    }
+
+    /* --- SPECIAL: RIVER PLATE --- */
+    [data-theme="river"] {
+      --bg-card: #ffffff;
+      --card-border: #e50027;
+      --text-main: #111111;
+      --text-title: #e50027;
+      --text-sub: #e50027;
+      --item-bg: #f5f5f5;
+      --badge-bg: #e50027;
+      --badge-text: #ffffff;
+    }
+
 
     /* ==========================================
-       2. ESTILOS GENERALES Y ESTRUCTURA
+       2. ESTRUCTURA Y ESTILOS
        ========================================== */
     body {
       background-color: #121212;
@@ -86,7 +122,7 @@
     .test-card {
       width: 340px;
       background: var(--bg-card);
-      border: 2px solid var(--card-border);
+      border: 3px solid var(--card-border);
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -109,10 +145,9 @@
       margin: 4px 0 20px 0;
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* LISTA DEL RANKING */
     .rank-list {
       display: flex;
       flex-direction: column;
@@ -156,30 +191,26 @@
       background: var(--badge-bg);
       padding: 4px 10px;
       border-radius: 20px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* ==========================================
-       3. PODIO (BORDES Y ILUMINACIÓN TOP 1, 2, 3)
-       ========================================== */
+    /* PODIO (TOP 1, 2, 3) */
     .rank-item.top-1 {
       border: 2px solid #ffd700;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
 
     .rank-item.top-2 {
       border: 2px solid #c0c0c0;
-      box-shadow: 0 0 8px rgba(192, 192, 192, 0.2);
+      box-shadow: 0 0 8px rgba(192, 192, 192, 0.25);
     }
 
     .rank-item.top-3 {
       border: 2px solid #cd7f32;
-      box-shadow: 0 0 8px rgba(205, 127, 50, 0.2);
+      box-shadow: 0 0 8px rgba(205, 127, 50, 0.25);
     }
 
-    /* ==========================================
-       4. BOTONES DEL SELECTOR DE TEMAS
-       ========================================== */
+    /* SELECTOR DE TEMAS */
     .theme-selector {
       margin-top: 25px;
       display: flex;
@@ -193,43 +224,48 @@
       color: var(--text-sub);
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .theme-buttons {
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 280px;
     }
 
     .btn-theme {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      border: 2px solid #ffffff44;
+      border: 2px solid #ffffff66;
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
     }
 
-    .btn-theme:hover { transform: scale(1.15); }
-    .btn-theme.active { border-color: #ffffff; transform: scale(1.15); }
+    .btn-theme:hover { transform: scale(1.2); }
+    .btn-theme.active { border-color: #ffffff; transform: scale(1.15); box-shadow: 0 0 6px rgba(255,255,255,0.8); }
 
     .t-dark { background: #0a0a0a; }
     .t-light { background: #ffffff; }
-    .t-pink { background: #fbcfe8; }
+    .t-pink { background: #f472b6; }
     .t-blue { background: #0284c7; }
     .t-green { background: #10b981; }
+    .t-arg { background: linear-gradient(135deg, #7dd3fc 50%, #ffffff 50%); }
+    .t-boca { background: linear-gradient(135deg, #002244 50%, #ffcc00 50%); }
+    .t-river { background: linear-gradient(135deg, #ffffff 50%, #e50027 50%); }
   </style>
 </head>
 <body>
 
-  <h2>🔬 Laboratorio: Paletas de Color</h2>
+  <h2>🔬 Laboratorio: Edición Pasión</h2>
 
   <div id="test-card" class="test-card">
     <h2 class="test-title">MY BIAS RANKING</h2>
     <p class="test-subtitle">K-Pop Bias Sorter</p>
 
     <div class="rank-list">
-      <!-- TOP 1 -->
       <div class="rank-item top-1">
         <div class="rank-left">
           <span class="rank-num">🥇 1</span>
@@ -238,7 +274,6 @@
         <span class="group-badge">Purple Kiss</span>
       </div>
 
-      <!-- TOP 2 -->
       <div class="rank-item top-2">
         <div class="rank-left">
           <span class="rank-num">🥈 2</span>
@@ -247,7 +282,6 @@
         <span class="group-badge">GFRIEND</span>
       </div>
 
-      <!-- TOP 3 -->
       <div class="rank-item top-3">
         <div class="rank-left">
           <span class="rank-num">🥉 3</span>
@@ -256,7 +290,6 @@
         <span class="group-badge">Purple Kiss</span>
       </div>
 
-      <!-- RESTO -->
       <div class="rank-item">
         <div class="rank-left">
           <span class="rank-num">4.</span>
@@ -283,6 +316,9 @@
         <button class="btn-theme t-pink" onclick="setTheme('pink', event)" title="Soft Pink"></button>
         <button class="btn-theme t-blue" onclick="setTheme('blue', event)" title="Ocean Blue"></button>
         <button class="btn-theme t-green" onclick="setTheme('green', event)" title="Forest Green"></button>
+        <button class="btn-theme t-arg" onclick="setTheme('argentina', event)" title="Argentina"></button>
+        <button class="btn-theme t-boca" onclick="setTheme('boca', event)" title="Boca Juniors"></button>
+        <button class="btn-theme t-river" onclick="setTheme('river', event)" title="River Plate"></button>
       </div>
     </div>
   </div>
