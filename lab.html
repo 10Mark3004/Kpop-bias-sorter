@@ -69,18 +69,6 @@
       --badge-text: #064e3b;
     }
 
-    /* --- SPECIAL: ARGENTINA --- */
-    [data-theme="argentina"] {
-      --bg-card: #7dd3fc;
-      --card-border: #38bdf8;
-      --text-main: #0c4a6e;
-      --text-title: #0369a1;
-      --text-sub: #0284c7;
-      --item-bg: #ffffff;
-      --badge-bg: #bae6fd;
-      --badge-text: #0369a1;
-    }
-
     /* --- SPECIAL: BOCA JUNIORS --- */
     [data-theme="boca"] {
       --bg-card: #002244;
@@ -92,18 +80,30 @@
       --badge-bg: #ffcc00;
       --badge-text: #002244;
     }
+    /* --- SPECIAL: ARGENTINA (Fondo Blanco / Cuadros Celestes) --- */
+[data-theme="argentina"] {
+  --bg-card: #ffffff;
+  --card-border: #38bdf8;
+  --text-main: #0c4a6e;
+  --text-title: #0284c7;
+  --text-sub: #38bdf8;
+  --item-bg: #bae6fd; /* Cuadros celestes */
+  --badge-bg: #0284c7;
+  --badge-text: #ffffff;
+}
 
-    /* --- SPECIAL: RIVER PLATE --- */
-    [data-theme="river"] {
-      --bg-card: #ffffff;
-      --card-border: #e50027;
-      --text-main: #111111;
-      --text-title: #e50027;
-      --text-sub: #e50027;
-      --item-bg: #f5f5f5;
-      --badge-bg: #e50027;
-      --badge-text: #ffffff;
-    }
+/* --- SPECIAL: RIVER PLATE (Cuadros Rojos / Etiqueta Bordó) --- */
+[data-theme="river"] {
+  --bg-card: #ffffff;
+  --card-border: #e50027;
+  --text-main: #ffffff;
+  --text-title: #e50027;
+  --text-sub: #99001a;
+  --item-bg: #e50027; /* Cuadros rojos */
+  --badge-bg: #700012; /* Etiqueta del grupo en bordó */
+  --badge-text: #ffffff;
+}
+    
 
 
     /* ==========================================
