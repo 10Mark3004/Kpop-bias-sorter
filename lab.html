@@ -3,362 +3,270 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-pop Bias Sorter - Lab</title>
+  <title>Laboratorio - Podio con Medallas & Temas</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* VARIABLES DE TEMAS */
+    :root {
+      --bg-card: #0d0a1a;
+      --card-border: #2a2040;
+      --text-main: #ffffff;
+      --text-title: #f472b6;
+      --text-sub: #a7f3d0;
+      --item-bg: rgba(255, 255, 255, 0.05);
+      --badge-bg: rgba(244, 114, 182, 0.15);
+    }
+
+    /* TEMA 2: PASTEL PINK */
+    [data-theme="pink"] {
+      --bg-card: #1f121b;
+      --card-border: #f472b6;
+      --text-title: #fbcfe8;
+      --text-sub: #f472b6;
+      --item-bg: rgba(244, 114, 182, 0.1);
+      --badge-bg: rgba(244, 114, 182, 0.25);
+    }
+
+    /* TEMA 3: CYBERPUNK NEON */
+    [data-theme="cyberpunk"] {
+      --bg-card: #050b14;
+      --card-border: #00f0ff;
+      --text-title: #00f0ff;
+      --text-sub: #ff007f;
+      --item-bg: rgba(0, 240, 255, 0.07);
+      --badge-bg: rgba(255, 0, 127, 0.2);
+    }
+
+    /* TEMA 4: DARK GOLD */
+    [data-theme="gold"] {
+      --bg-card: #120e06;
+      --card-border: #eab308;
+      --text-title: #fde047;
+      --text-sub: #eab308;
+      --item-bg: rgba(234, 179, 8, 0.08);
+      --badge-bg: rgba(234, 179, 8, 0.2);
     }
 
     body {
-      background: linear-gradient(135deg, #0d0d16 0%, #15102a 100%);
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
+      background-color: #07050d;
+      color: white;
+      font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
+      padding: 20px;
     }
 
-    /* Contenedor de logos de fondo */
-    #background-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
+    /* CONTENEDOR PRINCIPAL */
+    .test-card {
+      width: 340px;
+      background: var(--bg-card);
+      border: 2px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
     }
 
-    .bg-logo {
-      position: absolute;
-      max-width: 130px;
-      max-height: 65px;
-      object-fit: contain;
-      opacity: 0;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-      transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
-      transform: scale(0.85);
-    }
-
-    .bg-logo.centered-logo {
-      transform: translateX(-50%) scale(0.85);
-    }
-
-    .bg-logo.visible {
-      opacity: 0.4;
-      transform: scale(1);
-    }
-
-    .bg-logo.centered-logo.visible {
-      transform: translateX(-50%) scale(1);
-    }
-
-        /* Pantallas centradas de forma absoluta */
-    .screen {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
+    .test-title {
+      color: var(--text-title);
       text-align: center;
-      width: 100%;
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .test-subtitle {
+      color: var(--text-sub);
+      text-align: center;
+      font-size: 0.75rem;
+      margin: 4px 0 20px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* LISTA DEL RANKING */
+    .rank-list {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rank-item {
+      display: flex;
       align-items: center;
-      transition: opacity 0.4s ease;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* Pantalla 1: Bienvenida */
-    .welcome-card {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      padding: 2.5rem 2rem;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      max-width: 90%;
-      width: 350px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      margin: 0 auto; /* Asegura el centrado en el eje X */
-    }
-  
-
-    h1 {
-      font-size: 2rem;
-      background: linear-gradient(135deg, #ff7eb3, #7afcff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.8rem;
-    }
-
-    p {
-      color: #b3b3cb;
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      line-height: 1.4;
-    }
-
-    .btn-main {
-      display: inline-block;
-      width: 100%;
-      padding: 14px 0;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, #e91e63, #9c27b0);
-      border: none;
+      justify-content: space-between;
+      background: var(--item-bg);
       border-radius: 12px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .rank-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rank-num {
+      font-weight: 700;
+      font-size: 0.95rem;
+      min-width: 35px;
+      text-align: left;
+      color: var(--text-main);
+    }
+
+    .rank-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .group-badge {
+      font-size: 0.75rem;
+      color: var(--text-title);
+      background: var(--badge-bg);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* BORDES Y DESTELLOS DEL PODIO */
+    .rank-item.top-1 {
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
+      background: rgba(255, 215, 0, 0.08);
+    }
+
+    .rank-item.top-2 {
+      border: 2px solid #e0e0e0;
+      box-shadow: 0 0 10px rgba(224, 224, 224, 0.25);
+      background: rgba(224, 224, 224, 0.06);
+    }
+
+    .rank-item.top-3 {
+      border: 2px solid #cd7f32;
+      box-shadow: 0 0 10px rgba(205, 127, 50, 0.25);
+      background: rgba(205, 127, 50, 0.06);
+    }
+
+    /* SELECTOR DE TEMAS */
+    .theme-selector {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-title {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .theme-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-theme {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #ffffff33;
       cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
-    .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
-    }
+    .btn-theme:hover { transform: scale(1.15); }
+    .btn-theme.active { border-color: #ffffff; transform: scale(1.1); }
 
-    /* Pantalla 2: Simulación Juego */
-    .sorter-card {
-      background: rgba(23, 22, 38, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      width: 320px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    }
-
-    .vs-box {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem;
-      border-radius: 10px;
-      margin: 10px 0;
-      font-weight: bold;
-    }
-
-    .btn-back {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #aaa;
-      padding: 8px 16px;
-      border-radius: 8px;
-      margin-top: 15px;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
+    .t-default { background: linear-gradient(135deg, #0d0a1a, #f472b6); }
+    .t-pink { background: linear-gradient(135deg, #1f121b, #fbcfe8); }
+    .t-cyber { background: linear-gradient(135deg, #050b14, #00f0ff); }
+    .t-gold { background: linear-gradient(135deg, #120e06, #fde047); }
   </style>
 </head>
 <body>
 
-  <!-- Fondo animado -->
-  <div id="background-container"></div>
+  <h2>🔬 Laboratorio de Prueba</h2>
 
-  <!-- PANTALLA 1: BIENVENIDA -->
-  <div id="screen-welcome" class="screen">
-    <div class="welcome-card">
-      <h1>¡Bienvenido!</h1>
-      <p>Selecciona tus grupos e integrantes favoritos para armar tu ranking definitivo.</p>
-      <button class="btn-main" onclick="goToGame()">¡Probar Sorter!</button>
+  <div id="test-card" class="test-card">
+    <h2 class="test-title">MY BIAS RANKING</h2>
+    <p class="test-subtitle">K-Pop Bias Sorter</p>
+
+    <div class="rank-list">
+      <!-- TOP 1 -->
+      <div class="rank-item top-1">
+        <div class="rank-left">
+          <span class="rank-num">🥇 1</span>
+          <span class="rank-name">Ireh</span>
+        </div>
+        <span class="group-badge">Purple Kiss</span>
+      </div>
+
+      <!-- TOP 2 -->
+      <div class="rank-item top-2">
+        <div class="rank-left">
+          <span class="rank-num">🥈 2</span>
+          <span class="rank-name">SinB</span>
+        </div>
+        <span class="group-badge">GFRIEND</span>
+      </div>
+
+      <!-- TOP 3 -->
+      <div class="rank-item top-3">
+        <div class="rank-left">
+          <span class="rank-num">🥉 3</span>
+          <span class="rank-name">Yuki</span>
+        </div>
+        <span class="group-badge">Purple Kiss</span>
+      </div>
+
+      <!-- RESTO -->
+      <div class="rank-item">
+        <div class="rank-left">
+          <span class="rank-num">4.</span>
+          <span class="rank-name">Yerin</span>
+        </div>
+        <span class="group-badge">GFRIEND</span>
+      </div>
+
+      <div class="rank-item">
+        <div class="rank-left">
+          <span class="rank-num">5.</span>
+          <span class="rank-name">Chaein</span>
+        </div>
+        <span class="group-badge">Purple Kiss</span>
+      </div>
     </div>
-  </div>
 
-  <!-- PANTALLA 2: SIMULACIÓN JUEGO -->
-  <div id="screen-game" class="screen hidden">
-    <div class="sorter-card">
-      <h2 style="font-size: 1.2rem; margin-bottom: 10px;">Enfrentamiento VS</h2>
-      <div class="vs-box">Integrante A</div>
-      <span style="color: #ff7eb3; font-weight: bold;">VS</span>
-      <div class="vs-box">Integrante B</div>
-      <button class="btn-back" onclick="goToWelcome()">← Volver a Bienvenida</button>
+    <!-- SELECTOR DE TEMAS -->
+    <div class="theme-selector">
+      <span class="theme-title">Elegir Tema</span>
+      <div class="theme-buttons">
+        <button class="btn-theme t-default active" onclick="setTheme('', event)" title="Original"></button>
+        <button class="btn-theme t-pink" onclick="setTheme('pink', event)" title="Pastel Pink"></button>
+        <button class="btn-theme t-cyber" onclick="setTheme('cyberpunk', event)" title="Cyberpunk"></button>
+        <button class="btn-theme t-gold" onclick="setTheme('gold', event)" title="Dark Gold"></button>
+      </div>
     </div>
   </div>
 
   <script>
-    // ==========================================
-    // ⚙️ PANEL DE CONTROL DE POSICIONES
-    // Si querés subir o bajar zonas, ¡cambiá SOLO los % acá!
-    // ==========================================
-    const POSICIONES = {
-      // Para la pantalla de bienvenida
-      arribaIzquierda: { top: '7%', left: '6%' },
-      arribaDerecha:   { top: '7%', right: '6%' },
-      arribaCentro:    { top: '22%', left: '50%', isCenter: true },
-      abajoCentro:     { bottom: '26%', left: '50%', isCenter: true }, // <-- SUBÍ ESTE
-      abajoIzquierda:  { bottom: '14%', left: '8%' },                   // <-- SUBÍ ESTE
-      abajoDerecha:    { bottom: '14%', right: '8%' },                  // <-- SUBÍ ESTE
+    function setTheme(themeName, evt) {
+      const card = document.getElementById('test-card');
+      if (themeName) {
+        card.setAttribute('data-theme', themeName);
+      } else {
+        card.removeAttribute('data-theme');
+      }
 
-      // Para el juego
-      juegoIzquierda:  { bottom: '14%', left: '8%' },                   // <-- SUBÍ ESTE
-      juegoCentro:     { bottom: '24%', left: '50%', isCenter: true }, // <-- SUBÍ ESTE
-      juegoDerecha:    { bottom: '14%', right: '8%' }                   // <-- SUBÍ ESTE
-    };
-
-    // 1. BIENVENIDA (Usa las posiciones definidas arriba)
-    const welcomeBatches = [
-      [
-        { src: 'logos/PurpleKiss.png', pos: POSICIONES.arribaIzquierda },
-        { src: 'logos/Aespa.png',      pos: POSICIONES.arribaDerecha },
-        { src: 'logos/Kiiikiii.png',   pos: POSICIONES.arribaCentro },
-        { src: 'logos/Gfriend.png',    pos: POSICIONES.abajoCentro },
-        { src: 'logos/Itzy.png',       pos: POSICIONES.abajoIzquierda },
-        { src: 'logos/Fiftyfifty.png', pos: POSICIONES.abajoDerecha }
-      ],
-      [
-        { src: 'logos/2NE1.png',       pos: POSICIONES.arribaIzquierda },
-        { src: 'logos/Nmixx.png',      pos: POSICIONES.arribaDerecha },
-        { src: 'logos/Lesserafim.png', pos: POSICIONES.arribaCentro },
-        { src: 'logos/Youngposse.png', pos: POSICIONES.abajoCentro },
-        { src: 'logos/StayC.png',      pos: POSICIONES.abajoIzquierda },
-        { src: 'logos/Newjeans.png',   pos: POSICIONES.abajoDerecha }
-      ],
-      [
-        { src: 'logos/ARTMS.png',      pos: POSICIONES.arribaIzquierda },
-        { src: 'logos/Twice.png',      pos: POSICIONES.arribaDerecha },
-        { src: 'logos/Oddyouth.png',   pos: POSICIONES.arribaCentro },
-        { src: 'logos/Mamamoo.png',    pos: POSICIONES.abajoCentro },
-        { src: 'logos/Illit.png',      pos: POSICIONES.abajoIzquierda },
-        { src: 'logos/Chuu.png',       pos: POSICIONES.abajoDerecha }
-      ],
-      [
-        { src: 'logos/Blackpink.png',  pos: POSICIONES.arribaIzquierda },
-        { src: 'logos/Atheart.png',    pos: POSICIONES.arribaDerecha },
-        { src: 'logos/Viviz.png',      pos: POSICIONES.arribaCentro },
-        { src: 'logos/Rescene.png',    pos: POSICIONES.abajoCentro },
-        { src: 'logos/TripleS.png',    pos: POSICIONES.abajoIzquierda },
-        { src: 'logos/Bibi.png',       pos: POSICIONES.abajoDerecha }
-      ],
-      [
-        { src: 'logos/Izna.png',       pos: POSICIONES.arribaIzquierda },
-        { src: 'logos/Loossemble.png', pos: POSICIONES.arribaDerecha },
-        { src: 'logos/Ive.png',        pos: POSICIONES.arribaCentro },
-        { src: 'logos/Billie.png',     pos: POSICIONES.abajoCentro },
-        { src: 'logos/Everglow.png',   pos: POSICIONES.abajoIzquierda },
-        { src: 'logos/Ifeye.png',      pos: POSICIONES.abajoDerecha }
-      ]
-    ];
-
-    // 2. JUEGO (Usa las posiciones de abajo definidas arriba)
-    const gameBatches = [
-      [
-        { src: 'logos/PurpleKiss.png', pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Aespa.png',      pos: POSICIONES.juegoCentro },
-        { src: 'logos/Fiftyfifty.png', pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Twice.png',      pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/StayC.png',      pos: POSICIONES.juegoCentro },
-        { src: 'logos/Itzy.png',       pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Blackpink.png',  pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Newjeans.png',   pos: POSICIONES.juegoCentro },
-        { src: 'logos/Kiiikiii.png',   pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Lesserafim.png', pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Nmixx.png',      pos: POSICIONES.juegoCentro },
-        { src: 'logos/Gfriend.png',    pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Ive.png',        pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/2NE1.png',       pos: POSICIONES.juegoCentro },
-        { src: 'logos/Youngposse.png', pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/ARTMS.png',      pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Oddyouth.png',   pos: POSICIONES.juegoCentro },
-        { src: 'logos/Mamamoo.png',    pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Illit.png',      pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Chuu.png',       pos: POSICIONES.juegoCentro },
-        { src: 'logos/Atheart.png',    pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Viviz.png',      pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Rescene.png',    pos: POSICIONES.juegoCentro },
-        { src: 'logos/TripleS.png',    pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Bibi.png',       pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Izna.png',       pos: POSICIONES.juegoCentro },
-        { src: 'logos/Loossemble.png', pos: POSICIONES.juegoDerecha }
-      ],
-      [
-        { src: 'logos/Billie.png',     pos: POSICIONES.juegoIzquierda },
-        { src: 'logos/Everglow.png',   pos: POSICIONES.juegoCentro },
-        { src: 'logos/Ifeye.png',      pos: POSICIONES.juegoDerecha }
-      ]
-    ];
-
-    let currentBatchIndex = 0;
-    let currentMode = 'welcome';
-    let intervalId = null;
-    const container = document.getElementById('background-container');
-
-    function showNextLogoBatch() {
-      const activeBatches = currentMode === 'welcome' ? welcomeBatches : gameBatches;
-
-      const currentLogos = container.querySelectorAll('.bg-logo');
-      currentLogos.forEach(img => img.classList.remove('visible'));
-
-      setTimeout(() => {
-        container.innerHTML = '';
-        const currentBatch = activeBatches[currentBatchIndex];
-
-        currentBatch.forEach(data => {
-          const img = document.createElement('img');
-          img.src = data.src;
-          
-          const p = data.pos;
-          img.className = 'bg-logo' + (p.isCenter ? ' centered-logo' : '');
-
-          if (p.top) img.style.top = p.top;
-          if (p.bottom) img.style.bottom = p.bottom;
-          if (p.left) img.style.left = p.left;
-          if (p.right) img.style.right = p.right;
-
-          container.appendChild(img);
-          setTimeout(() => img.classList.add('visible'), 50);
-        });
-
-        currentBatchIndex = (currentBatchIndex + 1) % activeBatches.length;
-      }, 1000);
+      document.querySelectorAll('.btn-theme').forEach(btn => btn.classList.remove('active'));
+      evt.target.classList.add('active');
     }
-
-    function startRotation() {
-      if (intervalId) clearInterval(intervalId);
-      currentBatchIndex = 0;
-      showNextLogoBatch();
-      intervalId = setInterval(showNextLogoBatch, 3000);
-    }
-
-    function goToGame() {
-      document.getElementById('screen-welcome').classList.add('hidden');
-      document.getElementById('screen-game').classList.remove('hidden');
-      currentMode = 'game';
-      startRotation();
-    }
-
-    function goToWelcome() {
-      document.getElementById('screen-game').classList.add('hidden');
-      document.getElementById('screen-welcome').classList.remove('hidden');
-      currentMode = 'welcome';
-      startRotation();
-    }
-
-    startRotation();
   </script>
 </body>
 </html>
