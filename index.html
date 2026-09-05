@@ -595,6 +595,28 @@
   opacity: 0.95;
   transform: translateY(-1px);
 }
+
+    .btn-personalizar {
+  background: linear-gradient(135deg, #e052a0, #f15c80);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(224, 82, 160, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-personalizar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(224, 82, 160, 0.6);
+}
     
   </style>
 </head>
@@ -701,7 +723,12 @@
 </div>
       
 <!-- Botón para descargar -->
-<button id="btn-download-card" onclick="openCardModal()" style="display: none; margin: 20px auto; background: linear-gradient(135deg, #e052a0, #f15c80);">
+<button 
+  id="btn-download-card" 
+  class="btn-personalizar" 
+  onclick="openCardModal()" 
+  style="display: block; margin: 20px auto;"
+>
   🎨 Personalizar y Ver Imagen
 </button>
       
@@ -1415,19 +1442,29 @@ startRotation();
 
     // Funciones para el Modal de la Tarjeta
 function openCardModal() {
-  const rankingCard = document.getElementById('ranking-card'); 
+  // Busca la tarjeta del ranking usando clase o id
+  const rankingCard = document.querySelector('.container') || document.getElementById('ranking-card');
   const holder = document.getElementById('preview-card-holder');
   
-  if (!rankingCard) return;
+  if (!rankingCard || !holder) return;
   
   holder.innerHTML = '';
+  
+  // Clona la tarjeta para la vista previa
   const clonedCard = rankingCard.cloneNode(true);
   clonedCard.id = 'modal-cloned-card';
   
-  holder.appendChild(clonedCard);
-  document.getElementById('card-modal').style.display = 'flex';
-}
+  // Quita los botones dentro del clon para que la tarjeta salga limpia
+  const oldButtons = clonedCard.querySelectorAll('button');
+  oldButtons.forEach(btn => btn.remove());
 
+  holder.appendChild(clonedCard);
+  
+  // Abre el modal
+  const modal = document.getElementById('card-modal');
+  if (modal) modal.style.display = 'flex';
+}
+    
 function closeCardModal() {
   document.getElementById('card-modal').style.display = 'none';
 }
