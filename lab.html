@@ -3,51 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio - Podio con Medallas & Temas</title>
+  <title>Laboratorio - Temas Limpios & Podio</title>
   <style>
-    /* VARIABLES DE TEMAS */
+    /* ==========================================
+       1. DEFINICIÓN DE PALETAS Y TEMAS
+       ========================================== */
+
+    /* TEMA POR DEFECTO: Pure Dark (Base Negra / Letras Blancas) */
     :root {
-      --bg-card: #0d0a1a;
-      --card-border: #2a2040;
+      --bg-card: #0a0a0a;
+      --card-border: #262626;
       --text-main: #ffffff;
-      --text-title: #f472b6;
-      --text-sub: #a7f3d0;
-      --item-bg: rgba(255, 255, 255, 0.05);
-      --badge-bg: rgba(244, 114, 182, 0.15);
+      --text-title: #f5f5f5;
+      --text-sub: #a3a3a3;
+      --item-bg: #171717;
+      --badge-bg: #262626;
+      --badge-text: #e5e5e5;
     }
 
-    /* TEMA 2: PASTEL PINK */
+    /* TEMA 2: Minimal Light (Base Blanca / Letras Negras) */
+    [data-theme="light"] {
+      --bg-card: #ffffff;
+      --card-border: #e5e5e5;
+      --text-main: #171717;
+      --text-title: #0a0a0a;
+      --text-sub: #737373;
+      --item-bg: #f5f5f5;
+      --badge-bg: #e5e5e5;
+      --badge-text: #262626;
+    }
+
+    /* TEMA 3: Soft Pink (Tonos Rosas) */
     [data-theme="pink"] {
-      --bg-card: #1f121b;
-      --card-border: #f472b6;
-      --text-title: #fbcfe8;
-      --text-sub: #f472b6;
-      --item-bg: rgba(244, 114, 182, 0.1);
-      --badge-bg: rgba(244, 114, 182, 0.25);
+      --bg-card: #fdf2f8;
+      --card-border: #fbcfe8;
+      --text-main: #831843;
+      --text-title: #9d174d;
+      --text-sub: #db2777;
+      --item-bg: #fce7f3;
+      --badge-bg: #fbcfe8;
+      --badge-text: #9d174d;
     }
 
-    /* TEMA 3: CYBERPUNK NEON */
-    [data-theme="cyberpunk"] {
-      --bg-card: #050b14;
-      --card-border: #00f0ff;
-      --text-title: #00f0ff;
-      --text-sub: #ff007f;
-      --item-bg: rgba(0, 240, 255, 0.07);
-      --badge-bg: rgba(255, 0, 127, 0.2);
+    /* TEMA 4: Ocean Blue (Celeste y Azul) */
+    [data-theme="blue"] {
+      --bg-card: #0f172a;
+      --card-border: #1e293b;
+      --text-main: #f0f9ff;
+      --text-title: #38bdf8;
+      --text-sub: #7dd3fc;
+      --item-bg: #1e293b;
+      --badge-bg: #0284c7;
+      --badge-text: #ffffff;
     }
 
-    /* TEMA 4: DARK GOLD */
-    [data-theme="gold"] {
-      --bg-card: #120e06;
-      --card-border: #eab308;
-      --text-title: #fde047;
-      --text-sub: #eab308;
-      --item-bg: rgba(234, 179, 8, 0.08);
-      --badge-bg: rgba(234, 179, 8, 0.2);
+    /* TEMA 5: Forest Green (Tonos Verdes) */
+    [data-theme="green"] {
+      --bg-card: #064e3b;
+      --card-border: #047857;
+      --text-main: #ecfdf5;
+      --text-title: #6ee7b7;
+      --text-sub: #a7f3d0;
+      --item-bg: #065f46;
+      --badge-bg: #10b981;
+      --badge-text: #064e3b;
     }
 
+
+    /* ==========================================
+       2. ESTILOS GENERALES Y ESTRUCTURA
+       ========================================== */
     body {
-      background-color: #07050d;
+      background-color: #121212;
       color: white;
       font-family: system-ui, -apple-system, sans-serif;
       display: flex;
@@ -56,22 +83,22 @@
       padding: 20px;
     }
 
-    /* CONTENEDOR PRINCIPAL */
     .test-card {
       width: 340px;
       background: var(--bg-card);
       border: 2px solid var(--card-border);
       border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
     }
 
     .test-title {
       color: var(--text-title);
       text-align: center;
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 800;
       letter-spacing: 1px;
     }
 
@@ -82,6 +109,7 @@
       margin: 4px 0 20px 0;
       text-transform: uppercase;
       letter-spacing: 2px;
+      font-weight: 600;
     }
 
     /* LISTA DEL RANKING */
@@ -98,8 +126,8 @@
       background: var(--item-bg);
       border-radius: 12px;
       padding: 10px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
     }
 
     .rank-left {
@@ -124,33 +152,34 @@
 
     .group-badge {
       font-size: 0.75rem;
-      color: var(--text-title);
+      color: var(--badge-text);
       background: var(--badge-bg);
       padding: 4px 10px;
       border-radius: 20px;
       font-weight: 600;
     }
 
-    /* BORDES Y DESTELLOS DEL PODIO */
+    /* ==========================================
+       3. PODIO (BORDES Y ILUMINACIÓN TOP 1, 2, 3)
+       ========================================== */
     .rank-item.top-1 {
       border: 2px solid #ffd700;
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
-      background: rgba(255, 215, 0, 0.08);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
     }
 
     .rank-item.top-2 {
-      border: 2px solid #e0e0e0;
-      box-shadow: 0 0 10px rgba(224, 224, 224, 0.25);
-      background: rgba(224, 224, 224, 0.06);
+      border: 2px solid #c0c0c0;
+      box-shadow: 0 0 8px rgba(192, 192, 192, 0.2);
     }
 
     .rank-item.top-3 {
       border: 2px solid #cd7f32;
-      box-shadow: 0 0 10px rgba(205, 127, 50, 0.25);
-      background: rgba(205, 127, 50, 0.06);
+      box-shadow: 0 0 8px rgba(205, 127, 50, 0.2);
     }
 
-    /* SELECTOR DE TEMAS */
+    /* ==========================================
+       4. BOTONES DEL SELECTOR DE TEMAS
+       ========================================== */
     .theme-selector {
       margin-top: 25px;
       display: flex;
@@ -160,10 +189,11 @@
     }
 
     .theme-title {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-sub);
       text-transform: uppercase;
       letter-spacing: 1px;
+      font-weight: 600;
     }
 
     .theme-buttons {
@@ -172,26 +202,27 @@
     }
 
     .btn-theme {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 2px solid #ffffff33;
+      border: 2px solid #ffffff44;
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
     }
 
     .btn-theme:hover { transform: scale(1.15); }
-    .btn-theme.active { border-color: #ffffff; transform: scale(1.1); }
+    .btn-theme.active { border-color: #ffffff; transform: scale(1.15); }
 
-    .t-default { background: linear-gradient(135deg, #0d0a1a, #f472b6); }
-    .t-pink { background: linear-gradient(135deg, #1f121b, #fbcfe8); }
-    .t-cyber { background: linear-gradient(135deg, #050b14, #00f0ff); }
-    .t-gold { background: linear-gradient(135deg, #120e06, #fde047); }
+    .t-dark { background: #0a0a0a; }
+    .t-light { background: #ffffff; }
+    .t-pink { background: #fbcfe8; }
+    .t-blue { background: #0284c7; }
+    .t-green { background: #10b981; }
   </style>
 </head>
 <body>
 
-  <h2>🔬 Laboratorio de Prueba</h2>
+  <h2>🔬 Laboratorio: Paletas de Color</h2>
 
   <div id="test-card" class="test-card">
     <h2 class="test-title">MY BIAS RANKING</h2>
@@ -247,10 +278,11 @@
     <div class="theme-selector">
       <span class="theme-title">Elegir Tema</span>
       <div class="theme-buttons">
-        <button class="btn-theme t-default active" onclick="setTheme('', event)" title="Original"></button>
-        <button class="btn-theme t-pink" onclick="setTheme('pink', event)" title="Pastel Pink"></button>
-        <button class="btn-theme t-cyber" onclick="setTheme('cyberpunk', event)" title="Cyberpunk"></button>
-        <button class="btn-theme t-gold" onclick="setTheme('gold', event)" title="Dark Gold"></button>
+        <button class="btn-theme t-dark active" onclick="setTheme('', event)" title="Pure Dark"></button>
+        <button class="btn-theme t-light" onclick="setTheme('light', event)" title="Minimal Light"></button>
+        <button class="btn-theme t-pink" onclick="setTheme('pink', event)" title="Soft Pink"></button>
+        <button class="btn-theme t-blue" onclick="setTheme('blue', event)" title="Ocean Blue"></button>
+        <button class="btn-theme t-green" onclick="setTheme('green', event)" title="Forest Green"></button>
       </div>
     </div>
   </div>
