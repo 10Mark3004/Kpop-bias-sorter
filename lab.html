@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio - Temas & Nombres Dinámicos</title>
+  <title>Laboratorio - Sorter Features</title>
+  
+  <!-- Librería para generar la foto/PNG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     /* ==========================================
-       1. DEFINICIÓN DE PALETAS Y TEMAS
+       1. PALETAS DE COLORES Y TEMAS
        ========================================== */
 
     /* Pure Dark (Default) */
@@ -33,7 +37,7 @@
       --badge-text: #171717;
     }
 
-    /* Soft Pink (Rosa Pastel Suave) */
+    /* Soft Pink */
     [data-theme="pink"] {
       --bg-card: #fbcfe8;
       --card-border: #f472b6;
@@ -118,6 +122,38 @@
       padding: 20px;
     }
 
+    /* CAMPO DE NOMBRE DE USUARIO */
+    .user-input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .user-input-container label {
+      font-size: 0.85rem;
+      color: #a3a3a3;
+      font-weight: 600;
+    }
+
+    .user-input-container input {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .user-input-container input:focus {
+      border-color: #0284c7;
+    }
+
+    /* TARJETA DE RESULTADOS */
     .test-card {
       width: 340px;
       background: var(--bg-card);
@@ -126,15 +162,18 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       transition: all 0.25s ease;
+      box-sizing: border-box;
     }
 
     .test-title {
       color: var(--text-title);
       text-align: center;
       margin: 0;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 800;
       letter-spacing: 1px;
+      text-transform: uppercase;
+      word-wrap: break-word;
     }
 
     .test-subtitle {
@@ -219,13 +258,13 @@
     }
 
     .theme-info {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-title);
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-weight: 800;
       text-align: center;
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(0, 0, 0, 0.12);
       padding: 4px 12px;
       border-radius: 12px;
     }
@@ -258,14 +297,89 @@
     .t-arg { background: linear-gradient(135deg, #7dd3fc 50%, #ffffff 50%); }
     .t-boca { background: linear-gradient(135deg, #002244 50%, #ffcc00 50%); }
     .t-river { background: linear-gradient(135deg, #ffffff 50%, #e50027 50%); }
+
+    /* BOTONES DE ACCIÓN (VER / DESCARGAR) */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-action {
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: none;
+      background: #262626;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover { background: #333333; transform: translateY(-2px); }
+    .btn-download { background: #0284c7; }
+    .btn-download:hover { background: #0369a1; }
+
+    /* MODAL DE VISTA PREVIA */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #18181b;
+      padding: 24px;
+      border-radius: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 18px;
+      font-size: 1.6rem;
+      color: #a3a3a3;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .modal-close:hover { color: #ffffff; }
   </style>
 </head>
 <body>
 
-  <h2>🔬 Laboratorio: Nombres de Temas</h2>
+  <h2>🔬 Laboratorio de Pruebas</h2>
 
+  <!-- CAMPO PARA NOMBRE -->
+  <div class="user-input-container">
+    <label for="username-input">Personalizá tu tarjeta:</label>
+    <input 
+      type="text" 
+      id="username-input" 
+      placeholder="Escribí tu nombre..." 
+      oninput="updateCardTitle()"
+    />
+  </div>
+
+  <!-- TARJETA PRINCIPAL -->
   <div id="test-card" class="test-card">
-    <h2 class="test-title">MY BIAS RANKING</h2>
+    <h2 id="card-title" class="test-title">MY BIAS RANKING</h2>
     <p class="test-subtitle">K-Pop Bias Sorter</p>
 
     <div class="rank-list">
@@ -312,7 +426,6 @@
 
     <!-- SELECTOR DE TEMAS -->
     <div class="theme-selector">
-      <!-- Muestra el nombre del tema activo -->
       <div id="theme-name" class="theme-info">FONDO: PURE DARK</div>
 
       <div class="theme-buttons">
@@ -328,24 +441,94 @@
     </div>
   </div>
 
+  <!-- BOTONES VER IMAGEN Y DESCARGAR -->
+  <div class="action-buttons">
+    <button class="btn-action" onclick="showPreview()">👁️ Ver Imagen</button>
+    <button class="btn-action btn-download" onclick="downloadCard()">📥 Descargar</button>
+  </div>
+
+  <!-- MODAL DE VISTA PREVIA -->
+  <div id="preview-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closePreview()">&times;</button>
+      <h3 style="margin: 0; font-size: 1rem; color: #a3a3a3;">Vista Previa</h3>
+      <div id="preview-area"></div>
+    </div>
+  </div>
+
   <script>
+    // 1. Cambiar tema y etiqueta
     function setTheme(themeKey, themeLabel, evt) {
       const card = document.getElementById('test-card');
       const label = document.getElementById('theme-name');
 
-      // Aplica el tema
       if (themeKey) {
         card.setAttribute('data-theme', themeKey);
       } else {
         card.removeAttribute('data-theme');
       }
 
-      // Actualiza el texto con el nombre del fondo
       label.textContent = `FONDO: ${themeLabel}`;
 
-      // Marca el botón activo
       document.querySelectorAll('.btn-theme').forEach(btn => btn.classList.remove('active'));
       evt.target.classList.add('active');
+    }
+
+    // 2. Personalizar título con el nombre de usuario
+    function updateCardTitle() {
+      const nameInput = document.getElementById('username-input').value.trim();
+      const cardTitle = document.getElementById('card-title');
+
+      if (nameInput) {
+        cardTitle.textContent = `TOP BIAS DE ${nameInput}`;
+      } else {
+        cardTitle.textContent = 'MY BIAS RANKING';
+      }
+    }
+
+    // 3. Mostrar Vista Previa (Ver Imagen)
+    function showPreview() {
+      const card = document.getElementById('test-card');
+      
+      // Oculta temporalmente el selector de temas para capturar solo la tarjeta limpia
+      const themeSelector = card.querySelector('.theme-selector');
+      themeSelector.style.display = 'none';
+
+      html2canvas(card, { backgroundColor: null, scale: 2 }).then(canvas => {
+        const previewArea = document.getElementById('preview-area');
+        previewArea.innerHTML = '';
+        
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL('image/png');
+        img.style.maxWidth = '100%';
+        img.style.borderRadius = '16px';
+        
+        previewArea.appendChild(img);
+        document.getElementById('preview-modal').style.display = 'flex';
+
+        // Restaura el selector de temas
+        themeSelector.style.display = 'flex';
+      });
+    }
+
+    function closePreview() {
+      document.getElementById('preview-modal').style.display = 'none';
+    }
+
+    // 4. Descargar Tarjeta PNG
+    function downloadCard() {
+      const card = document.getElementById('test-card');
+      const themeSelector = card.querySelector('.theme-selector');
+      themeSelector.style.display = 'none';
+
+      html2canvas(card, { backgroundColor: null, scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'my-bias-ranking.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        themeSelector.style.display = 'flex';
+      });
     }
   </script>
 </body>
