@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio - Temas Ajustados & Pasión</title>
+  <title>Laboratorio - Temas & Nombres Dinámicos</title>
   <style>
     /* ==========================================
        1. DEFINICIÓN DE PALETAS Y TEMAS
        ========================================== */
 
-    /* TEMA POR DEFECTO: Pure Dark (Ajustado) */
+    /* Pure Dark (Default) */
     :root {
       --bg-card: #0a0a0a;
       --card-border: #333333;
       --text-main: #ffffff;
       --text-title: #f5f5f5;
       --text-sub: #a3a3a3;
-      --item-bg: #222222; /* Cuadros más claros */
+      --item-bg: #222222;
       --badge-bg: #333333;
       --badge-text: #e5e5e5;
     }
 
-    /* Minimal Light (Ajustado) */
+    /* Minimal Light */
     [data-theme="light"] {
       --bg-card: #ffffff;
       --card-border: #d4d4d4;
       --text-main: #171717;
       --text-title: #0a0a0a;
       --text-sub: #525252;
-      --item-bg: #e5e5e5; /* Cuadros más oscuros */
+      --item-bg: #e5e5e5;
       --badge-bg: #d4d4d4;
       --badge-text: #171717;
     }
 
-    /* Opción B: Rosa Pastel Suave */
-[data-theme="pink"] {
-  --bg-card: #fbcfe8;       /* Rosa claro bien definido */
-  --card-border: #f472b6;
-  --text-main: #831843;
-  --text-title: #831843;
-  --text-sub: #db2777;
-  --item-bg: #ffffff;        /* Tarjetas en blanco para máximo contraste */
-  --badge-bg: #f472b6;
-  --badge-text: #ffffff;
-}
+    /* Soft Pink (Rosa Pastel Suave) */
+    [data-theme="pink"] {
+      --bg-card: #fbcfe8;
+      --card-border: #f472b6;
+      --text-main: #831843;
+      --text-title: #831843;
+      --text-sub: #db2777;
+      --item-bg: #ffffff;
+      --badge-bg: #f472b6;
+      --badge-text: #ffffff;
+    }
 
-    /* Ocean Blue (Perfecto) */
+    /* Ocean Blue */
     [data-theme="blue"] {
       --bg-card: #0f172a;
       --card-border: #1e293b;
@@ -57,7 +57,7 @@
       --badge-text: #ffffff;
     }
 
-    /* Forest Green (Perfecto) */
+    /* Forest Green */
     [data-theme="green"] {
       --bg-card: #064e3b;
       --card-border: #047857;
@@ -69,7 +69,19 @@
       --badge-text: #064e3b;
     }
 
-    /* --- SPECIAL: BOCA JUNIORS --- */
+    /* SPECIAL: ARGENTINA */
+    [data-theme="argentina"] {
+      --bg-card: #ffffff;
+      --card-border: #38bdf8;
+      --text-main: #0c4a6e;
+      --text-title: #0284c7;
+      --text-sub: #38bdf8;
+      --item-bg: #bae6fd;
+      --badge-bg: #0284c7;
+      --badge-text: #ffffff;
+    }
+
+    /* SPECIAL: BOCA JUNIORS */
     [data-theme="boca"] {
       --bg-card: #002244;
       --card-border: #ffcc00;
@@ -80,31 +92,18 @@
       --badge-bg: #ffcc00;
       --badge-text: #002244;
     }
-    /* --- SPECIAL: ARGENTINA (Fondo Blanco / Cuadros Celestes) --- */
-[data-theme="argentina"] {
-  --bg-card: #ffffff;
-  --card-border: #38bdf8;
-  --text-main: #0c4a6e;
-  --text-title: #0284c7;
-  --text-sub: #38bdf8;
-  --item-bg: #bae6fd; /* Cuadros celestes */
-  --badge-bg: #0284c7;
-  --badge-text: #ffffff;
-}
 
-/* --- SPECIAL: RIVER PLATE (Cuadros Rojos / Etiqueta Bordó) --- */
-[data-theme="river"] {
-  --bg-card: #ffffff;
-  --card-border: #e50027;
-  --text-main: #ffffff;
-  --text-title: #e50027;
-  --text-sub: #99001a;
-  --item-bg: #e50027; /* Cuadros rojos */
-  --badge-bg: #700012; /* Etiqueta del grupo en bordó */
-  --badge-text: #ffffff;
-}
-    
-
+    /* SPECIAL: RIVER PLATE */
+    [data-theme="river"] {
+      --bg-card: #ffffff;
+      --card-border: #e50027;
+      --text-main: #ffffff;
+      --text-title: #e50027;
+      --text-sub: #99001a;
+      --item-bg: #e50027;
+      --badge-bg: #700012;
+      --badge-text: #ffffff;
+    }
 
     /* ==========================================
        2. ESTRUCTURA Y ESTILOS
@@ -219,12 +218,16 @@
       gap: 10px;
     }
 
-    .theme-title {
-      font-size: 0.75rem;
-      color: var(--text-sub);
+    .theme-info {
+      font-size: 0.8rem;
+      color: var(--text-title);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.08);
+      padding: 4px 12px;
+      border-radius: 12px;
     }
 
     .theme-buttons {
@@ -259,7 +262,7 @@
 </head>
 <body>
 
-  <h2>🔬 Laboratorio: Edición Pasión</h2>
+  <h2>🔬 Laboratorio: Nombres de Temas</h2>
 
   <div id="test-card" class="test-card">
     <h2 class="test-title">MY BIAS RANKING</h2>
@@ -309,29 +312,38 @@
 
     <!-- SELECTOR DE TEMAS -->
     <div class="theme-selector">
-      <span class="theme-title">Elegir Tema</span>
+      <!-- Muestra el nombre del tema activo -->
+      <div id="theme-name" class="theme-info">FONDO: PURE DARK</div>
+
       <div class="theme-buttons">
-        <button class="btn-theme t-dark active" onclick="setTheme('', event)" title="Pure Dark"></button>
-        <button class="btn-theme t-light" onclick="setTheme('light', event)" title="Minimal Light"></button>
-        <button class="btn-theme t-pink" onclick="setTheme('pink', event)" title="Soft Pink"></button>
-        <button class="btn-theme t-blue" onclick="setTheme('blue', event)" title="Ocean Blue"></button>
-        <button class="btn-theme t-green" onclick="setTheme('green', event)" title="Forest Green"></button>
-        <button class="btn-theme t-arg" onclick="setTheme('argentina', event)" title="Argentina"></button>
-        <button class="btn-theme t-boca" onclick="setTheme('boca', event)" title="Boca Juniors"></button>
-        <button class="btn-theme t-river" onclick="setTheme('river', event)" title="River Plate"></button>
+        <button class="btn-theme t-dark active" onclick="setTheme('', 'Pure Dark', event)" title="Pure Dark"></button>
+        <button class="btn-theme t-light" onclick="setTheme('light', 'Minimal Light', event)" title="Minimal Light"></button>
+        <button class="btn-theme t-pink" onclick="setTheme('pink', 'Soft Pink', event)" title="Soft Pink"></button>
+        <button class="btn-theme t-blue" onclick="setTheme('blue', 'Ocean Blue', event)" title="Ocean Blue"></button>
+        <button class="btn-theme t-green" onclick="setTheme('green', 'Forest Green', event)" title="Forest Green"></button>
+        <button class="btn-theme t-arg" onclick="setTheme('argentina', 'Special Argentina', event)" title="Special Argentina"></button>
+        <button class="btn-theme t-boca" onclick="setTheme('boca', 'Special Boca', event)" title="Special Boca"></button>
+        <button class="btn-theme t-river" onclick="setTheme('river', 'Special River', event)" title="Special River"></button>
       </div>
     </div>
   </div>
 
   <script>
-    function setTheme(themeName, evt) {
+    function setTheme(themeKey, themeLabel, evt) {
       const card = document.getElementById('test-card');
-      if (themeName) {
-        card.setAttribute('data-theme', themeName);
+      const label = document.getElementById('theme-name');
+
+      // Aplica el tema
+      if (themeKey) {
+        card.setAttribute('data-theme', themeKey);
       } else {
         card.removeAttribute('data-theme');
       }
 
+      // Actualiza el texto con el nombre del fondo
+      label.textContent = `FONDO: ${themeLabel}`;
+
+      // Marca el botón activo
       document.querySelectorAll('.btn-theme').forEach(btn => btn.classList.remove('active'));
       evt.target.classList.add('active');
     }
