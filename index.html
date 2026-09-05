@@ -1171,8 +1171,116 @@ function startSorterGame() {
 }
 
 startRotation();
+
+    // Funciones para el Modal de la Tarjeta
+function openCardModal() {
+  const rankingCard = document.getElementById('ranking-card'); 
+  const holder = document.getElementById('preview-card-holder');
+  
+  if (!rankingCard) return;
+  
+  holder.innerHTML = '';
+  const clonedCard = rankingCard.cloneNode(true);
+  clonedCard.id = 'modal-cloned-card';
+  
+  holder.appendChild(clonedCard);
+  document.getElementById('card-modal').style.display = 'flex';
+}
+
+function closeCardModal() {
+  document.getElementById('card-modal').style.display = 'none';
+}
+
+function setModalTheme(themeKey, themeLabel, evt) {
+  const card = document.getElementById('modal-cloned-card');
+  const label = document.getElementById('modal-theme-label');
+
+  if (themeKey) {
+    card.setAttribute('data-theme', themeKey);
+  } else {
+    card.removeAttribute('data-theme');
+  }
+
+  if (label) label.textContent = `FONDO: ${themeLabel}`;
+
+  const buttons = evt.target.parentElement.querySelectorAll('.btn-theme');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  evt.target.classList.add('active');
+}
+
+function updateModalCardTitle() {
+  const nameInput = document.getElementById('modal-username').value.trim();
+  const card = document.getElementById('modal-cloned-card');
+  if (!card) return;
+  
+  const cardTitle = card.querySelector('.title-text') || card.querySelector('h2');
+
+  if (cardTitle) {
+    if (nameInput) {
+      cardTitle.textContent = `👑 Ranking de ${nameInput} 👑`;
+    } else {
+      cardTitle.textContent = '👑 Tu Ranking Definitivo 👑';
+    }
+  }
+}
+
+function downloadModalCard() {
+  const card = document.getElementById('modal-cloned-card');
+  if (!card) return;
+
+  html2canvas(card, { 
+    backgroundColor: null, 
+    scale: 2 
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'kpop-bias-ranking.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
     
     </script>
+    <!-- MODAL DE PERSONALIZACIÓN Y DESCARGA -->
+<div id="card-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-card-container">
+    <button class="close-modal-btn" onclick="closeCardModal()">&times;</button>
+    
+    <h3 class="modal-title">Personalizá tu Tarjeta</h3>
+
+    <div class="modal-controls">
+      <div class="input-group">
+        <label for="modal-username">Tu nombre / usuario:</label>
+        <input 
+          type="text" 
+          id="modal-username" 
+          placeholder="Ej: Sofia" 
+          oninput="updateModalCardTitle()"
+        />
+      </div>
+
+      <div class="theme-selector-box">
+        <span id="modal-theme-label" class="theme-label-text">FONDO: PURE DARK</span>
+        <div class="theme-buttons-row">
+          <button class="btn-theme t-dark active" onclick="setModalTheme('', 'Pure Dark', event)" title="Pure Dark"></button>
+          <button class="btn-theme t-light" onclick="setModalTheme('light', 'Minimal Light', event)" title="Minimal Light"></button>
+          <button class="btn-theme t-pink" onclick="setModalTheme('pink', 'Soft Pink', event)" title="Soft Pink"></button>
+          <button class="btn-theme t-blue" onclick="setModalTheme('blue', 'Ocean Blue', event)" title="Ocean Blue"></button>
+          <button class="btn-theme t-green" onclick="setModalTheme('green', 'Forest Green', event)" title="Forest Green"></button>
+          <button class="btn-theme t-arg" onclick="setModalTheme('argentina', 'Special Argentina', event)" title="Special Argentina"></button>
+          <button class="btn-theme t-boca" onclick="setModalTheme('boca', 'Special Boca', event)" title="Special Boca"></button>
+          <button class="btn-theme t-river" onclick="setModalTheme('river', 'Special River', event)" title="Special River"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="preview-card-holder" class="preview-card-holder"></div>
+
+    <button class="btn-download-final" onclick="downloadModalCard()">
+      📸 Descargar Tarjeta (PNG)
+    </button>
+  </div>
+</div>
+    
 </div>
 </body>
 </html>
