@@ -472,6 +472,7 @@ important;
    ESTILOS DE LA VENTANA MODAL
    ========================================== */
 .modal-overlay {
+  display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
@@ -1523,7 +1524,8 @@ function openCardModal() {
 } 
     
 function closeCardModal() {
-  document.getElementById('card-modal').style.display = 'none';
+  const modal = document.getElementById('card-modal');
+  if (modal) modal.style.display = 'none';
 }
 
 function setModalTheme(themeKey, themeLabel, evt) {
