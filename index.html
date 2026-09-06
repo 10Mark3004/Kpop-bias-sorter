@@ -653,14 +653,111 @@ important;
   padding: 0 10px !important;
 }
 
-#modal-cloned-card td:first-child,
-#modal-cloned-card .rank-col {
+/* =======================================================
+   ESTILOS DE TARJETAS TIPO LABORATORIO (TODOS LOS TEMAS)
+   ======================================================= */
+
+/* Contenedor general del modal */
+#modal-cloned-card {
+  padding: 16px !important;
+  border-radius: 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Ocultar encabezados antiguos de tabla (# NOMBRE GRUPO) */
+#modal-cloned-card table thead,
+#modal-cloned-card th {
+  display: none !important;
+}
+
+#modal-cloned-card table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 10px !important;
+}
+
+/* Base de cada fila / tarjeta */
+#modal-cloned-card tr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  border-radius: 16px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Celdas internas */
+#modal-cloned-card td {
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Posición / Medalla */
+#modal-cloned-card td:first-child {
+  font-weight: bold !important;
+  font-size: 1.1rem !important;
+  margin-right: 10px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
-  min-width: 40px !important;
+  min-width: 30px !important;
 }
+
+/* Nombre del integrante */
+#modal-cloned-card td:nth-child(2) {
+  flex-grow: 1 !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  text-align: left !important;
+}
+
+/* Pastilla para el Grupo */
+#modal-cloned-card td:nth-child(3) {
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+}
+
+/* -------------------------------------------------------
+   PALETAS AUTOMÁTICAS SEGÚN EL BOTÓN SELECCIONADO
+   ------------------------------------------------------- */
+
+/* 1. Pure Dark (Negro) */
+#modal-cloned-card,
+#modal-cloned-card[data-theme="dark"] { background-color: #09090b !important; }
+#modal-cloned-card[data-theme="dark"] tr { background: #18181b !important; border: 1px solid #27272a !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="dark"] td:nth-child(3) { background: rgba(255, 255, 255, 0.1) !important; color: #f4f4f5 !important; }
+
+/* 2. Minimal Light (Blanco) */
+#modal-cloned-card[data-theme="light"] { background-color: #ffffff !important; }
+#modal-cloned-card[data-theme="light"] tr { background: #f4f4f5 !important; border: 1px solid #e4e4e7 !important; color: #09090b !important; }
+#modal-cloned-card[data-theme="light"] td:nth-child(3) { background: #e4e4e7 !important; color: #18181b !important; }
+
+/* 3. Soft Pink (Rosa) */
+#modal-cloned-card[data-theme="pink"] { background-color: #fce7f3 !important; }
+#modal-cloned-card[data-theme="pink"] tr { background: #f472b6 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="pink"] td:nth-child(3) { background: #831843 !important; color: #ffffff !important; }
+
+/* 4. River Plate (Rojo) */
+#modal-cloned-card[data-theme="river"] { background-color: #ffffff !important; border: 2px solid #e11d48 !important; }
+#modal-cloned-card[data-theme="river"] tr { background: #e11d48 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="river"] tr:nth-child(1) { border: 2px solid #eab308 !important; }
+#modal-cloned-card[data-theme="river"] tr:nth-child(2) { border: 2px solid #9ca3af !important; }
+#modal-cloned-card[data-theme="river"] tr:nth-child(3) { border: 2px solid #d97706 !important; }
+#modal-cloned-card[data-theme="river"] td:nth-child(3) { background: rgba(0, 0, 0, 0.35) !important; color: #ffffff !important; }
+
+/* 5. Boca Juniors (Azul y Oro) */
+#modal-cloned-card[data-theme="boca"] { background-color: #0284c7 !important; }
+#modal-cloned-card[data-theme="boca"] tr { background: #0369a1 !important; border: 1px solid #38bdf8 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="boca"] td:nth-child(3) { background: #eab308 !important; color: #0f172a !important; }
+
+/* 6. Argentina (Celeste y Blanco) */
+#modal-cloned-card[data-theme="arg"] { background-color: #f0f9ff !important; }
+#modal-cloned-card[data-theme="arg"] tr { background: #38bdf8 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="arg"] td:nth-child(3) { background: #ffffff !important; color: #0284c7 !important; }
     
   </style>
 </head>
