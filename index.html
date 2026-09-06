@@ -361,204 +361,112 @@ important;
   --item-bg: #065f46 !important;
 }
 
-/* ==========================================
-   ESTILOS Y PALETAS DE COLORES CORREGIDOS
+   /* ==========================================
+   ESTILOS Y PALETAS DE COLORES (CORREGIDO PARA TABLA)
    ========================================== */
 
-/* 1. Título alineado en un solo renglón */
-#modal-cloned-card h2,
-#modal-cloned-card .title-text,
-#ranking-card h2 {
-  font-size: 1.1rem !important;
-  white-space: nowrap !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
+/* Ajuste general del clon dentro del modal */
+#modal-cloned-card {
+  width: 100% !important;
+  max-width: 360px !important;
+  border-radius: 16px !important;
+  padding: 15px !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* 2. Medallas alineadas horizontalmente con los números */
-#modal-cloned-card .rank-number,
-#ranking-card .rank-number {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 4px !important;
+#modal-cloned-card .results-title,
+#modal-cloned-card h2 {
+  font-size: 1.1rem !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  margin-bottom: 15px !important;
+}
+
+#modal-cloned-card table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
 }
 
 /* ------------------------------------------
-   TEMAS DIRECTOS SOBRE EL MODAL
+   TEMAS DE COLORES PARA LA TABLA
    ------------------------------------------ */
 
-/* Pure Dark (Por defecto - Negro profundo) */
+/* 1. Pure Dark (Negro profundo) */
 #modal-cloned-card,
 #modal-cloned-card[data-theme=""] {
   background-color: #050505 !important;
-  border-color: #27272a !important;
+  border: 1px solid #27272a !important;
 }
-#modal-cloned-card .ranking-header {
-  background-color: #18181b !important;
-}
-#modal-cloned-card .ranking-header span {
-  color: #f4f4f5 !important;
-}
-#modal-cloned-card li, #modal-cloned-card .ranking-item {
-  background-color: #121214 !important;
-}
-#modal-cloned-card .name-text, #modal-cloned-card .rank-number {
-  color: #ffffff !important;
-}
-#modal-cloned-card .group-text, #modal-cloned-card .sub-text {
-  color: #a1a1aa !important;
-}
+#modal-cloned-card[data-theme=""] th { background: #18181b !important; color: #f472b6 !important; }
+#modal-cloned-card[data-theme=""] tr { background: #121214 !important; border-bottom: 1px solid #27272a !important; }
+#modal-cloned-card[data-theme=""] td.rank { color: #f472b6 !important; }
+#modal-cloned-card[data-theme=""] td.name-col { color: #ffffff !important; }
+#modal-cloned-card[data-theme=""] td.group-col { color: #a1a1aa !important; }
 
-/* Minimal Light (Blanco puro) */
-#modal-cloned-card[data-theme="light"] {
-  background-color: #ffffff !important;
-  border-color: #e4e4e7 !important;
-}
-#modal-cloned-card[data-theme="light"] .ranking-header {
-  background-color: #f4f4f5 !important;
-}
-#modal-cloned-card[data-theme="light"] .ranking-header span {
-  color: #09090b !important;
-}
-#modal-cloned-card[data-theme="light"] li, #modal-cloned-card[data-theme="light"] .ranking-item {
-  background-color: #f8f8f8 !important;
-}
-#modal-cloned-card[data-theme="light"] .name-text, #modal-cloned-card[data-theme="light"] .rank-number {
-  color: #09090b !important;
-}
-#modal-cloned-card[data-theme="light"] .group-text, #modal-cloned-card[data-theme="light"] .sub-text {
-  color: #52525b !important;
-}
+/* 2. Minimal Light (Blanco puro) */
+#modal-cloned-card[data-theme="light"] { background-color: #ffffff !important; border: 1px solid #e4e4e7 !important; }
+#modal-cloned-card[data-theme="light"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #09090b !important; }
+#modal-cloned-card[data-theme="light"] th { background: #f4f4f5 !important; color: #09090b !important; }
+#modal-cloned-card[data-theme="light"] tr { background: #f8f8f8 !important; border-bottom: 1px solid #e4e4e7 !important; }
+#modal-cloned-card[data-theme="light"] td.rank { color: #db2777 !important; }
+#modal-cloned-card[data-theme="light"] td.name-col { color: #09090b !important; }
+#modal-cloned-card[data-theme="light"] td.group-col { color: #52525b !important; }
 
-/* Soft Pink */
-#modal-cloned-card[data-theme="pink"] {
-  background-color: #fbcfe8 !important;
-  border-color: #f472b6 !important;
-}
-#modal-cloned-card[data-theme="pink"] .ranking-header {
-  background-color: #f472b6 !important;
-}
-#modal-cloned-card[data-theme="pink"] .ranking-header span {
-  color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="pink"] li, #modal-cloned-card[data-theme="pink"] .ranking-item {
-  background-color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="pink"] .name-text, #modal-cloned-card[data-theme="pink"] .rank-number {
-  color: #831843 !important;
-}
-#modal-cloned-card[data-theme="pink"] .group-text, #modal-cloned-card[data-theme="pink"] .sub-text {
-  color: #9d174d !important;
-}
+/* 3. Soft Pink */
+#modal-cloned-card[data-theme="pink"] { background-color: #fbcfe8 !important; border: 1px solid #f472b6 !important; }
+#modal-cloned-card[data-theme="pink"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #831843 !important; }
+#modal-cloned-card[data-theme="pink"] th { background: #f472b6 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="pink"] tr { background: #ffffff !important; border-bottom: 1px solid #fbcfe8 !important; }
+#modal-cloned-card[data-theme="pink"] td.rank { color: #db2777 !important; }
+#modal-cloned-card[data-theme="pink"] td.name-col { color: #831843 !important; }
+#modal-cloned-card[data-theme="pink"] td.group-col { color: #9d174d !important; }
 
-/* Ocean Blue */
-#modal-cloned-card[data-theme="blue"] {
-  background-color: #0c4a6e !important;
-  border-color: #0284c7 !important;
-}
-#modal-cloned-card[data-theme="blue"] .ranking-header {
-  background-color: #0369a1 !important;
-}
-#modal-cloned-card[data-theme="blue"] .ranking-header span {
-  color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="blue"] li, #modal-cloned-card[data-theme="blue"] .ranking-item {
-  background-color: #075985 !important;
-}
-#modal-cloned-card[data-theme="blue"] .name-text, #modal-cloned-card[data-theme="blue"] .rank-number {
-  color: #f0f9ff !important;
-}
-#modal-cloned-card[data-theme="blue"] .group-text, #modal-cloned-card[data-theme="blue"] .sub-text {
-  color: #bae6fd !important;
-}
+/* 4. Ocean Blue */
+#modal-cloned-card[data-theme="blue"] { background-color: #0c4a6e !important; border: 1px solid #0284c7 !important; }
+#modal-cloned-card[data-theme="blue"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #38bdf8 !important; }
+#modal-cloned-card[data-theme="blue"] th { background: #0369a1 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="blue"] tr { background: #075985 !important; border-bottom: 1px solid #0c4a6e !important; }
+#modal-cloned-card[data-theme="blue"] td.rank { color: #38bdf8 !important; }
+#modal-cloned-card[data-theme="blue"] td.name-col { color: #f0f9ff !important; }
+#modal-cloned-card[data-theme="blue"] td.group-col { color: #bae6fd !important; }
 
-/* Forest Green */
-#modal-cloned-card[data-theme="green"] {
-  background-color: #064e3b !important;
-  border-color: #059669 !important;
-}
-#modal-cloned-card[data-theme="green"] .ranking-header {
-  background-color: #047857 !important;
-}
-#modal-cloned-card[data-theme="green"] .ranking-header span {
-  color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="green"] li, #modal-cloned-card[data-theme="green"] .ranking-item {
-  background-color: #065f46 !important;
-}
-#modal-cloned-card[data-theme="green"] .name-text, #modal-cloned-card[data-theme="green"] .rank-number {
-  color: #ecfdf5 !important;
-}
-#modal-cloned-card[data-theme="green"] .group-text, #modal-cloned-card[data-theme="green"] .sub-text {
-  color: #a7f3d0 !important;
-}
+/* 5. Forest Green */
+#modal-cloned-card[data-theme="green"] { background-color: #064e3b !important; border: 1px solid #059669 !important; }
+#modal-cloned-card[data-theme="green"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #34d399 !important; }
+#modal-cloned-card[data-theme="green"] th { background: #047857 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="green"] tr { background: #065f46 !important; border-bottom: 1px solid #064e3b !important; }
+#modal-cloned-card[data-theme="green"] td.rank { color: #34d399 !important; }
+#modal-cloned-card[data-theme="green"] td.name-col { color: #ecfdf5 !important; }
+#modal-cloned-card[data-theme="green"] td.group-col { color: #a7f3d0 !important; }
 
-/* Argentina */
-#modal-cloned-card[data-theme="argentina"] {
-  background-color: #e0f2fe !important;
-  border-color: #38bdf8 !important;
-}
-#modal-cloned-card[data-theme="argentina"] .ranking-header {
-  background-color: #7dd3fc !important;
-}
-#modal-cloned-card[data-theme="argentina"] .ranking-header span {
-  color: #0c4a6e !important;
-}
-#modal-cloned-card[data-theme="argentina"] li, #modal-cloned-card[data-theme="argentina"] .ranking-item {
-  background-color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="argentina"] .name-text, #modal-cloned-card[data-theme="argentina"] .rank-number {
-  color: #0369a1 !important;
-}
-#modal-cloned-card[data-theme="argentina"] .group-text, #modal-cloned-card[data-theme="argentina"] .sub-text {
-  color: #0284c7 !important;
-}
+/* 6. Special Argentina */
+#modal-cloned-card[data-theme="argentina"] { background-color: #e0f2fe !important; border: 1px solid #38bdf8 !important; }
+#modal-cloned-card[data-theme="argentina"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #0369a1 !important; }
+#modal-cloned-card[data-theme="argentina"] th { background: #7dd3fc !important; color: #0c4a6e !important; }
+#modal-cloned-card[data-theme="argentina"] tr { background: #ffffff !important; border-bottom: 1px solid #bae6fd !important; }
+#modal-cloned-card[data-theme="argentina"] td.rank { color: #0284c7 !important; }
+#modal-cloned-card[data-theme="argentina"] td.name-col { color: #0c4a6e !important; }
+#modal-cloned-card[data-theme="argentina"] td.group-col { color: #0284c7 !important; }
 
-/* Boca Juniors */
-#modal-cloned-card[data-theme="boca"] {
-  background-color: #03254c !important;
-  border-color: #facc15 !important;
-}
-#modal-cloned-card[data-theme="boca"] .ranking-header {
-  background-color: #114084 !important;
-}
-#modal-cloned-card[data-theme="boca"] .ranking-header span {
-  color: #facc15 !important;
-}
-#modal-cloned-card[data-theme="boca"] li, #modal-cloned-card[data-theme="boca"] .ranking-item {
-  background-color: #114084 !important;
-}
-#modal-cloned-card[data-theme="boca"] .name-text, #modal-cloned-card[data-theme="boca"] .rank-number {
-  color: #ffffff !important;
-}
-#modal-cloned-card[data-theme="boca"] .group-text, #modal-cloned-card[data-theme="boca"] .sub-text {
-  color: #fde047 !important;
-}
+/* 7. Special Boca */
+#modal-cloned-card[data-theme="boca"] { background-color: #03254c !important; border: 1px solid #facc15 !important; }
+#modal-cloned-card[data-theme="boca"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #facc15 !important; }
+#modal-cloned-card[data-theme="boca"] th { background: #114084 !important; color: #facc15 !important; }
+#modal-cloned-card[data-theme="boca"] tr { background: #0a3161 !important; border-bottom: 1px solid #03254c !important; }
+#modal-cloned-card[data-theme="boca"] td.rank { color: #facc15 !important; }
+#modal-cloned-card[data-theme="boca"] td.name-col { color: #ffffff !important; }
+#modal-cloned-card[data-theme="boca"] td.group-col { color: #fde047 !important; }
 
-/* River Plate */
-#modal-cloned-card[data-theme="river"] {
-  background-color: #ffffff !important;
-  border-color: #dc2626 !important;
-}
-#modal-cloned-card[data-theme="river"] .ranking-header {
-  background-color: #fee2e2 !important;
-}
-#modal-cloned-card[data-theme="river"] .ranking-header span {
-  color: #991b1b !important;
-}
-#modal-cloned-card[data-theme="river"] li, #modal-cloned-card[data-theme="river"] .ranking-item {
-  background-color: #fef2f2 !important;
-}
-#modal-cloned-card[data-theme="river"] .name-text, #modal-cloned-card[data-theme="river"] .rank-number {
-  color: #18181b !important;
-}
-#modal-cloned-card[data-theme="river"] .group-text, #modal-cloned-card[data-theme="river"] .sub-text {
-  color: #dc2626 !important;
-}
+/* 8. Special River */
+#modal-cloned-card[data-theme="river"] { background-color: #ffffff !important; border: 1px solid #dc2626 !important; }
+#modal-cloned-card[data-theme="river"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #dc2626 !important; }
+#modal-cloned-card[data-theme="river"] th { background: #dc2626 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="river"] tr { background: #fef2f2 !important; border-bottom: 1px solid #fee2e2 !important; }
+#modal-cloned-card[data-theme="river"] td.rank { color: #dc2626 !important; }
+#modal-cloned-card[data-theme="river"] td.name-col { color: #18181b !important; }
+#modal-cloned-card[data-theme="river"] td.group-col { color: #dc2626 !important; }
 
 /* ==========================================
    ESTILOS DE LA VENTANA MODAL
