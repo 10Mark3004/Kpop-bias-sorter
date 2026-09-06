@@ -372,11 +372,17 @@ important;
 }
 
 #modal-cloned-card .results-title,
+#modal-cloned-card .results-title *,
 #modal-cloned-card h2,
 #modal-cloned-card .title-text {
   font-size: 1.2rem !important;
   text-align: center !important;
   margin-bottom: 16px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 #modal-cloned-card table {
@@ -504,12 +510,14 @@ important;
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) { background-color: #ffffff !important; border: 2px solid #38bdf8 !important; }
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) .results-title,
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) h2 { color: #0284c7 !important; }
-#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) tr { background: #bae6fd !important; color: #0c4a6e !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) tr { background: #bae6fd !important; color: #0369a1 !important; }
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td:first-child,
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td.rank { color: #0284c7 !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td:nth-child(2),
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td.name-col { color: #0369a1 !important; }
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td:nth-child(3),
 #modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td.group-col { background: #0284c7 !important; color: #ffffff !important; }
-
+    
 /* 7. SPECIAL: BOCA JUNIORS */
 #modal-cloned-card[data-theme="boca"] { background-color: #002244 !important; border: 2px solid #ffcc00 !important; }
 #modal-cloned-card[data-theme="boca"] .results-title,
@@ -1722,11 +1730,10 @@ function updateModalCardTitle() {
   const cardTitle = card.querySelector('.title-text') || card.querySelector('h2');
 
   if (cardTitle) {
-    // --- UNA SOLA CORONA AL PRINCIPIO ---
     if (nameInput) {
-      cardTitle.textContent = `👑 Ranking de ${nameInput}`;
+      cardTitle.textContent = `Ranking de ${nameInput}`;
     } else {
-      cardTitle.textContent = '👑 Tu Ranking Definitivo';
+      cardTitle.textContent = 'Tu Ranking Definitivo';
     }
   }
 }
