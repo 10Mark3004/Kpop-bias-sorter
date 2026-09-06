@@ -361,9 +361,9 @@ important;
   --item-bg: #065f46 !important;
 }
 
-/* =======================================================
+/* ===================================================
    ESTILOS GENERALES DEL MODAL (PASTILLAS Y ESPACIADO)
-   ======================================================= */
+   =================================================== */
 
 #modal-cloned-card {
   padding: 20px 16px !important;
@@ -379,11 +379,10 @@ important;
   margin-bottom: 16px !important;
 }
 
-/* Forzar estructura con separación entre renglones */
 #modal-cloned-card table {
   width: 100% !important;
   border-collapse: separate !important;
-  border-spacing: 0 10px !important; /* SEPARACIÓN ENTRE RENGLONES */
+  border-spacing: 0 10px !important;
   table-layout: auto !important;
 }
 
@@ -428,7 +427,7 @@ important;
   padding-left: 10px !important;
 }
 
-/* Columna 3: Burbuja del Grupo (TAMAÑO JUSTO Y ALINEADO) */
+/* Columna 3: Burbuja del Grupo */
 #modal-cloned-card td:nth-child(3),
 #modal-cloned-card td.group-col {
   display: inline-block !important;
@@ -442,9 +441,9 @@ important;
   text-align: center !important;
 }
 
-/* =======================================================
-   TODAS LAS PALETAS DE COLORES (1 A 8) CORREGIDAS
-   ======================================================= */
+/* =============================
+   TODAS LAS PALETAS DE COLORES
+   ============================= */
 
 /* 1. BLACK VER */
 #modal-cloned-card,
@@ -464,9 +463,11 @@ important;
 #modal-cloned-card[data-theme="light"] tr { background: #f5f5f5 !important; color: #171717 !important; }
 #modal-cloned-card[data-theme="light"] td:first-child,
 #modal-cloned-card[data-theme="light"] td.rank { color: #404040 !important; }
+#modal-cloned-card[data-theme="light"] td:nth-child(2),
+#modal-cloned-card[data-theme="light"] td.name-col { color: #171717 !important; }
 #modal-cloned-card[data-theme="light"] td:nth-child(3),
 #modal-cloned-card[data-theme="light"] td.group-col { background: #e5e5e5 !important; color: #262626 !important; }
-
+    
 /* 3. PINK VER */
 #modal-cloned-card[data-theme="pink"] { background-color: #fce7f3 !important; border: 1px solid #f472b6 !important; }
 #modal-cloned-card[data-theme="pink"] .results-title,
@@ -474,9 +475,11 @@ important;
 #modal-cloned-card[data-theme="pink"] tr { background: #ffffff !important; color: #831843 !important; }
 #modal-cloned-card[data-theme="pink"] td:first-child,
 #modal-cloned-card[data-theme="pink"] td.rank { color: #be185d !important; }
+#modal-cloned-card[data-theme="pink"] td:nth-child(2),
+#modal-cloned-card[data-theme="pink"] td.name-col { color: #831843 !important; }
 #modal-cloned-card[data-theme="pink"] td:nth-child(3),
 #modal-cloned-card[data-theme="pink"] td.group-col { background: #f472b6 !important; color: #ffffff !important; }
-
+    
 /* 4. BLUE VER */
 #modal-cloned-card[data-theme="blue"] { background-color: #0f172a !important; border: 1px solid #1e293b !important; }
 #modal-cloned-card[data-theme="blue"] .results-title,
@@ -527,9 +530,9 @@ important;
 #modal-cloned-card[data-theme="river"] td:nth-child(3),
 #modal-cloned-card[data-theme="river"] td.group-col { background: #700012 !important; color: #ffffff !important; }
     
-/* ==========================================
+/* ===========================
    ESTILOS DE LA VENTANA MODAL
-   ========================================== */
+   =========================== */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -681,7 +684,6 @@ important;
   box-shadow: 0 6px 20px rgba(224, 82, 160, 0.6);
 }
 
-    /* CORRECCIÓN MODAL Y TÍTULOS */
 /* MODAL OCULTO POR DEFECTO Y CENTRADO */
 .modal-overlay,
 #card-modal {
@@ -780,9 +782,9 @@ important;
   white-space: nowrap !important;
 }
 
-/* -------------------------------------------------------
+/* ------------------------------------------------
    PALETAS AUTOMÁTICAS SEGÚN EL BOTÓN SELECCIONADO
-   ------------------------------------------------------- */
+   ------------------------------------------------ */
 
 /* 1. Pure Dark */
 #modal-cloned-card,
@@ -947,9 +949,9 @@ important;
   </div>
 
   <script>
-    /* ==============================================================================
+    /* =================================================
        MIS GRUPOS GUARDADOS (Ordenados alfabéticamente)
-       ============================================================================== */
+       ================================================= */
     const misGruposGuardados = {
       "2NE1": [
         "CL - 2NE1", "Bom - 2NE1", "Dara - 2NE1", "Minzy - 2NE1"
@@ -1222,9 +1224,9 @@ important;
       document.getElementById('preset-select').value = '';
     }
 
-    /* ==============================================================================
-       LÓGICA DEL SORTER CON HISTORIAL (UNDO)
-       ============================================================================== */
+    /* ================================
+       LÓGICA DEL SORTER CON HISTORIAL
+       ================================ */
     let unSortedList = [];
     let sortedList = [];
     let currentIdolToInsert = null;
@@ -1771,7 +1773,7 @@ function downloadModalCard() {
           <button class="btn-theme t-pink" onclick="setModalTheme('pink', 'Soft Pink', event)" title="Soft Pink"></button>
           <button class="btn-theme t-blue" onclick="setModalTheme('blue', 'Ocean Blue', event)" title="Ocean Blue"></button>
           <button class="btn-theme t-green" onclick="setModalTheme('green', 'Forest Green', event)" title="Forest Green"></button>
-          <button class="btn-theme t-arg" onclick="setModalTheme('argentina', 'Special Argentina', event)" title="Special Argentina"></button>
+          <button class="btn-theme t-argentina" onclick="setModalTheme('argentina', 'Special Argentina', event)" title="Special Argentina"></button>
           <button class="btn-theme t-boca" onclick="setModalTheme('boca', 'Special Boca', event)" title="Special Boca"></button>
           <button class="btn-theme t-river" onclick="setModalTheme('river', 'Special River', event)" title="Special River"></button>
         </div>
