@@ -1663,19 +1663,34 @@ startRotation();
 
     // Funciones para el Modal de la Tarjeta
 function openCardModal() {
-  const rankingCard = document.querySelector('.container') || document.getElementById('ranking-card');
+  const rankingCard = document.querySelector('.container') || document.querySelector('.card');
   const holder = document.getElementById('preview-card-holder');
-  
+
   if (!rankingCard || !holder) return;
-  
+
   holder.innerHTML = '';
-  
+
+  // Clonar la tarjeta
   const clonedCard = rankingCard.cloneNode(true);
   clonedCard.id = 'modal-cloned-card';
-  
-  // Quitar botones
+
   const oldButtons = clonedCard.querySelectorAll('button');
   oldButtons.forEach(btn => btn.remove());
+
+  const titleEl = clonedCard.querySelector('h1, h2, h3, .results-title, .title-text, [class*="title"]');
+  if (titleEl) {
+    titleEl.style.display = 'block';
+    titleEl.style.visibility = 'visible';
+    titleEl.style.opacity = '1';
+    titleEl.style.background = 'none';
+    titleEl.style.backgroundColor = 'transparent';
+    titleEl.style.boxShadow = 'none';
+    titleEl.style.border = 'none';
+    titleEl.style.marginBottom = '16px';
+    
+    // Asegura que quede al principio de la tarjeta
+    clonedCard.insertBefore(titleEl, clonedCard.firstChild);
+  }
 
   // Iconos de medallas
   const medals = ['🥇', '🥈', '🥉'];
@@ -1683,20 +1698,19 @@ function openCardModal() {
   // Procesar filas de la tabla
   const rows = clonedCard.querySelectorAll('tbody tr');
   rows.forEach((row, index) => {
-    const rankCell = row.querySelector('td:first-child, .rank-col');
+    const rankCell = row.querySelector('td:first-child, .rank, .rank-col');
     if (rankCell) {
       if (index < 3) {
-        // Puestos 1, 2 y 3: Reemplazar contenido por la medalla (sin número)
         rankCell.innerHTML = medals[index];
       } else {
-        // Puesto 4 en adelante: Número limpio
         rankCell.textContent = index + 1;
       }
     }
   });
 
   holder.appendChild(clonedCard);
-  
+
+  // Mostrar el modal
   const modal = document.getElementById('card-modal');
   if (modal) modal.style.display = 'flex';
 }
