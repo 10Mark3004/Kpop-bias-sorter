@@ -355,33 +355,69 @@
   display: none !important;
 }
 
-    /* ==========================================
+/* ==========================================
    ESTILOS Y PALETAS DE COLORES PARA LA TARJETA
    ========================================== */
+
+/* 1. Título de la tarjeta en un solo renglón */
+#modal-cloned-card h2,
+#modal-cloned-card .title-text,
+#ranking-card h2 {
+  font-size: 1.15rem !important;
+  white-space: nowrap !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+/* 2. Medallas alineadas al lado del número (en horizontal) */
+#modal-cloned-card .rank-number,
+#ranking-card .rank-number {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+/* 3. Encabezado de la tabla adaptable al tema */
+#modal-cloned-card .ranking-header,
+#ranking-card .ranking-header {
+  background: var(--header-bg) !important;
+  color: var(--header-text) !important;
+  border-radius: 8px !important;
+}
+
+#modal-cloned-card .ranking-header span,
+#ranking-card .ranking-header span {
+  color: var(--header-text) !important;
+}
+
+
+/* --- PALETAS DE COLORES --- */
 
 /* Pure Dark (Por defecto) */
 #modal-cloned-card,
 #ranking-card {
-  --bg-card: #18181b;
-  --card-border: #27272a;
-  --text-main: #ffffff;
-  --text-title: #f4f4f5;
-  --text-sub: #a1a1aa;
-  --item-bg: #27272a;
-  --badge-bg: #3f3f46;
-  --badge-text: #f4f4f5;
+  --bg-card: #09090b !important;
+  --card-border: #27272a !important;
+  --text-main: #ffffff !important;
+  --text-sub: #a1a1aa !important;
+  --header-bg: #18181b !important;
+  --header-text: #f4f4f5 !important;
+  --item-bg: #18181b !important;
 }
 
 /* Minimal Light */
 [data-theme="light"] {
   --bg-card: #ffffff !important;
-  --card-border: #d4d4d8 !important;
-  --text-main: #18181b !important;
-  --text-title: #09090b !important;
+  --card-border: #e4e4e7 !important;
+  --text-main: #09090b !important;
   --text-sub: #71717a !important;
-  --item-bg: #f4f4f5 !important;
-  --badge-bg: #e4e4e7 !important;
-  --badge-text: #18181b !important;
+  --header-bg: #f4f4f5 !important;
+  --header-text: #09090b !important;
+  --item-bg: #fafafa !important;
 }
 
 /* Soft Pink */
@@ -389,80 +425,86 @@
   --bg-card: #fbcfe8 !important;
   --card-border: #f472b6 !important;
   --text-main: #831843 !important;
-  --text-title: #831843 !important;
-  --text-sub: #db2777 !important;
+  --text-sub: #9d174d !important;
+  --header-bg: #f472b6 !important;
+  --header-text: #ffffff !important;
   --item-bg: #ffffff !important;
-  --badge-bg: #f472b6 !important;
-  --badge-text: #ffffff !important;
 }
 
 /* Ocean Blue */
 [data-theme="blue"] {
-  --bg-card: #0f172a !important;
-  --card-border: #1e293b !important;
+  --bg-card: #0c4a6e !important;
+  --card-border: #0284c7 !important;
   --text-main: #f0f9ff !important;
-  --text-title: #38bdf8 !important;
-  --text-sub: #7dd3fc !important;
-  --item-bg: #1e293b !important;
-  --badge-bg: #0284c7 !important;
-  --badge-text: #ffffff !important;
+  --text-sub: #bae6fd !important;
+  --header-bg: #0369a1 !important;
+  --header-text: #ffffff !important;
+  --item-bg: #075985 !important;
 }
 
 /* Forest Green */
 [data-theme="green"] {
   --bg-card: #064e3b !important;
-  --card-border: #047857 !important;
+  --card-border: #059669 !important;
   --text-main: #ecfdf5 !important;
-  --text-title: #6ee7b7 !important;
   --text-sub: #a7f3d0 !important;
+  --header-bg: #047857 !important;
+  --header-text: #ffffff !important;
   --item-bg: #065f46 !important;
-  --badge-bg: #10b981 !important;
-  --badge-text: #064e3b !important;
 }
 
 /* Argentina */
 [data-theme="argentina"] {
-  --bg-card: #ffffff !important;
+  --bg-card: #e0f2fe !important;
   --card-border: #38bdf8 !important;
-  --text-main: #0c4a6e !important;
-  --text-title: #0284c7 !important;
-  --text-sub: #38bdf8 !important;
-  --item-bg: #bae6fd !important;
-  --badge-bg: #0284c7 !important;
-  --badge-text: #ffffff !important;
+  --text-main: #0369a1 !important;
+  --text-sub: #0284c7 !important;
+  --header-bg: #7dd3fc !important;
+  --header-text: #0c4a6e !important;
+  --item-bg: #ffffff !important;
 }
 
 /* Boca Juniors */
 [data-theme="boca"] {
-  --bg-card: #002244 !important;
-  --card-border: #ffcc00 !important;
+  --bg-card: #03254c !important;
+  --card-border: #facc15 !important;
   --text-main: #ffffff !important;
-  --text-title: #ffcc00 !important;
-  --text-sub: #ffcc00 !important;
-  --item-bg: #003366 !important;
-  --badge-bg: #ffcc00 !important;
-  --badge-text: #002244 !important;
+  --text-sub: #fde047 !important;
+  --header-bg: #114084 !important;
+  --header-text: #facc15 !important;
+  --item-bg: #114084 !important;
 }
 
 /* River Plate */
 [data-theme="river"] {
   --bg-card: #ffffff !important;
-  --card-border: #e50027 !important;
-  --text-main: #ffffff !important;
-  --text-title: #e50027 !important;
-  --text-sub: #99001a !important;
-  --item-bg: #e50027 !important;
-  --badge-bg: #700012 !important;
-  --badge-text: #ffffff !important;
+  --card-border: #dc2626 !important;
+  --text-main: #18181b !important;
+  --text-sub: #dc2626 !important;
+  --header-bg: #fee2e2 !important;
+  --header-text: #991b1b !important;
+  --item-bg: #fef2f2 !important;
 }
 
+/* Aplicación estricta de variables */
 #modal-cloned-card {
-  background: var(--bg-card) !important;
+  background-color: var(--bg-card) !important;
   border-color: var(--card-border) !important;
 }
 
-#modal-cloned-card * {
-  color: var(--text-main);
+#modal-cloned-card li,
+#modal-cloned-card .ranking-item {
+  background-color: var(--item-bg) !important;
+}
+
+#modal-cloned-card .name-text,
+#modal-cloned-card .rank-number {
+  color: var(--text-main) !important;
+}
+
+#modal-cloned-card .group-text,
+#modal-cloned-card .sub-text {
+  color: var(--text-sub) !important;
 }
 
 /* ==========================================
