@@ -1461,6 +1461,19 @@ function openCardModal() {
   const oldButtons = clonedCard.querySelectorAll('button');
   oldButtons.forEach(btn => btn.remove());
 
+  // --- OCULTAR NÚMEROS EN LOS PRIMEROS 3 PUESTOS (DEJA SOLO LA MEDALLA) ---
+  const rows = clonedCard.querySelectorAll('tr, .ranking-item');
+  rows.forEach((row, index) => {
+    const rankCell = row.querySelector('.rank, .rank-number, td:first-child');
+    if (rankCell && index < 3) {
+      rankCell.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          node.textContent = '';
+        }
+      });
+    }
+  });
+
   holder.appendChild(clonedCard);
   
   // Abre el modal
@@ -1497,10 +1510,11 @@ function updateModalCardTitle() {
   const cardTitle = card.querySelector('.title-text') || card.querySelector('h2');
 
   if (cardTitle) {
+    // --- UNA SOLA CORONA AL PRINCIPIO ---
     if (nameInput) {
-      cardTitle.textContent = `👑 Ranking de ${nameInput} 👑`;
+      cardTitle.textContent = `👑 Ranking de ${nameInput}`;
     } else {
-      cardTitle.textContent = '👑 Tu Ranking Definitivo 👑';
+      cardTitle.textContent = '👑 Tu Ranking Definitivo';
     }
   }
 }
