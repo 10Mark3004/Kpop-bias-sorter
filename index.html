@@ -361,113 +361,172 @@ important;
   --item-bg: #065f46 !important;
 }
 
-   /* ==========================================
-   ESTILOS Y PALETAS DE COLORES (CORREGIDO PARA TABLA)
-   ========================================== */
+/* =======================================================
+   ESTILOS GENERALES DEL MODAL (PASTILLAS Y ESPACIADO)
+   ======================================================= */
 
-/* Ajuste general del clon dentro del modal */
 #modal-cloned-card {
-  width: 100% !important;
-  max-width: 360px !important;
-  border-radius: 16px !important;
-  padding: 15px !important;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  padding: 20px 16px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
 }
 
 #modal-cloned-card .results-title,
-#modal-cloned-card h2 {
-  font-size: 1.1rem !important;
-  white-space: nowrap !important;
+#modal-cloned-card h2,
+#modal-cloned-card .title-text {
+  font-size: 1.2rem !important;
   text-align: center !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 16px !important;
 }
 
+/* Forzar estructura con separación entre renglones */
 #modal-cloned-card table {
   width: 100% !important;
-  border-collapse: collapse !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
+  border-collapse: separate !important;
+  border-spacing: 0 10px !important; /* SEPARACIÓN ENTRE RENGLONES */
+  table-layout: auto !important;
 }
 
-/* ------------------------------------------
-   TEMAS DE COLORES PARA LA TABLA
-   ------------------------------------------ */
+#modal-cloned-card table thead {
+  display: none !important;
+}
 
-/* 1. Pure Dark (Negro profundo) */
+/* Renglón individual */
+#modal-cloned-card tr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  border-radius: 16px !important;
+}
+
+/* Celdas generales */
+#modal-cloned-card td {
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Columna 1: Medalla / Número */
+#modal-cloned-card td:first-child,
+#modal-cloned-card td.rank {
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
+  min-width: 35px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Columna 2: Nombre del Bias */
+#modal-cloned-card td:nth-child(2),
+#modal-cloned-card td.name-col {
+  flex-grow: 1 !important;
+  text-align: left !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  padding-left: 10px !important;
+}
+
+/* Columna 3: Burbuja del Grupo (TAMAÑO JUSTO Y ALINEADO) */
+#modal-cloned-card td:nth-child(3),
+#modal-cloned-card td.group-col {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: fit-content !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+/* =======================================================
+   TODAS LAS PALETAS DE COLORES (1 A 8) CORREGIDAS
+   ======================================================= */
+
+/* 1. BLACK VER */
 #modal-cloned-card,
-#modal-cloned-card[data-theme=""] {
-  background-color: #050505 !important;
-  border: 1px solid #27272a !important;
-}
-#modal-cloned-card[data-theme="dark"] th { background: #18181b !important; color: #f472b6 !important; }
-#modal-cloned-card[data-theme="dark"] tr { background: #121214 !important; border-bottom: 1px solid #27272a !important; }
-#modal-cloned-card[data-theme="dark"] td.rank { color: #f472b6 !important; }
-#modal-cloned-card[data-theme="dark"] td.name-col { color: #ffffff !important; }
-#modal-cloned-card[data-theme="dark"] td.group-col { color: #a1a1aa !important; }
+#modal-cloned-card[data-theme="dark"] { background-color: #0d0d0d !important; border: 1px solid #262626 !important; }
+#modal-cloned-card[data-theme="dark"] .results-title,
+#modal-cloned-card[data-theme="dark"] h2 { color: #a3a3a3 !important; }
+#modal-cloned-card[data-theme="dark"] tr { background: #171717 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="dark"] td:first-child,
+#modal-cloned-card[data-theme="dark"] td.rank { color: #d4d4d4 !important; }
+#modal-cloned-card[data-theme="dark"] td:nth-child(3),
+#modal-cloned-card[data-theme="dark"] td.group-col { background: #262626 !important; color: #e5e5e5 !important; }
 
-/* 2. Minimal Light (Blanco puro) */
-#modal-cloned-card[data-theme="light"] { background-color: #ffffff !important; border: 1px solid #e4e4e7 !important; }
-#modal-cloned-card[data-theme="light"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #09090b !important; }
-#modal-cloned-card[data-theme="light"] th { background: #f4f4f5 !important; color: #09090b !important; }
-#modal-cloned-card[data-theme="light"] tr { background: #f8f8f8 !important; border-bottom: 1px solid #e4e4e7 !important; }
-#modal-cloned-card[data-theme="light"] td.rank { color: #db2777 !important; }
-#modal-cloned-card[data-theme="light"] td.name-col { color: #09090b !important; }
-#modal-cloned-card[data-theme="light"] td.group-col { color: #52525b !important; }
+/* 2. WHITE VER */
+#modal-cloned-card[data-theme="light"] { background-color: #ffffff !important; border: 1px solid #e5e5e5 !important; }
+#modal-cloned-card[data-theme="light"] .results-title,
+#modal-cloned-card[data-theme="light"] h2 { color: #171717 !important; }
+#modal-cloned-card[data-theme="light"] tr { background: #f5f5f5 !important; color: #171717 !important; }
+#modal-cloned-card[data-theme="light"] td:first-child,
+#modal-cloned-card[data-theme="light"] td.rank { color: #404040 !important; }
+#modal-cloned-card[data-theme="light"] td:nth-child(3),
+#modal-cloned-card[data-theme="light"] td.group-col { background: #e5e5e5 !important; color: #262626 !important; }
 
-/* 3. Soft Pink */
-#modal-cloned-card[data-theme="pink"] { background-color: #fbcfe8 !important; border: 1px solid #f472b6 !important; }
-#modal-cloned-card[data-theme="pink"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #831843 !important; }
-#modal-cloned-card[data-theme="pink"] th { background: #f472b6 !important; color: #ffffff !important; }
-#modal-cloned-card[data-theme="pink"] tr { background: #ffffff !important; border-bottom: 1px solid #fbcfe8 !important; }
-#modal-cloned-card[data-theme="pink"] td.rank { color: #db2777 !important; }
-#modal-cloned-card[data-theme="pink"] td.name-col { color: #831843 !important; }
-#modal-cloned-card[data-theme="pink"] td.group-col { color: #9d174d !important; }
+/* 3. PINK VER */
+#modal-cloned-card[data-theme="pink"] { background-color: #fce7f3 !important; border: 1px solid #f472b6 !important; }
+#modal-cloned-card[data-theme="pink"] .results-title,
+#modal-cloned-card[data-theme="pink"] h2 { color: #831843 !important; }
+#modal-cloned-card[data-theme="pink"] tr { background: #ffffff !important; color: #831843 !important; }
+#modal-cloned-card[data-theme="pink"] td:first-child,
+#modal-cloned-card[data-theme="pink"] td.rank { color: #be185d !important; }
+#modal-cloned-card[data-theme="pink"] td:nth-child(3),
+#modal-cloned-card[data-theme="pink"] td.group-col { background: #f472b6 !important; color: #ffffff !important; }
 
-/* 4. Ocean Blue */
-#modal-cloned-card[data-theme="blue"] { background-color: #0c4a6e !important; border: 1px solid #0284c7 !important; }
-#modal-cloned-card[data-theme="blue"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #38bdf8 !important; }
-#modal-cloned-card[data-theme="blue"] th { background: #0369a1 !important; color: #ffffff !important; }
-#modal-cloned-card[data-theme="blue"] tr { background: #075985 !important; border-bottom: 1px solid #0c4a6e !important; }
+/* 4. BLUE VER */
+#modal-cloned-card[data-theme="blue"] { background-color: #0f172a !important; border: 1px solid #1e293b !important; }
+#modal-cloned-card[data-theme="blue"] .results-title,
+#modal-cloned-card[data-theme="blue"] h2 { color: #38bdf8 !important; }
+#modal-cloned-card[data-theme="blue"] tr { background: #1e293b !important; color: #f0f9ff !important; }
+#modal-cloned-card[data-theme="blue"] td:first-child,
 #modal-cloned-card[data-theme="blue"] td.rank { color: #38bdf8 !important; }
-#modal-cloned-card[data-theme="blue"] td.name-col { color: #f0f9ff !important; }
-#modal-cloned-card[data-theme="blue"] td.group-col { color: #bae6fd !important; }
+#modal-cloned-card[data-theme="blue"] td:nth-child(3),
+#modal-cloned-card[data-theme="blue"] td.group-col { background: #0284c7 !important; color: #ffffff !important; }
 
-/* 5. Forest Green */
-#modal-cloned-card[data-theme="green"] { background-color: #064e3b !important; border: 1px solid #059669 !important; }
-#modal-cloned-card[data-theme="green"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #34d399 !important; }
-#modal-cloned-card[data-theme="green"] th { background: #047857 !important; color: #ffffff !important; }
-#modal-cloned-card[data-theme="green"] tr { background: #065f46 !important; border-bottom: 1px solid #064e3b !important; }
-#modal-cloned-card[data-theme="green"] td.rank { color: #34d399 !important; }
-#modal-cloned-card[data-theme="green"] td.name-col { color: #ecfdf5 !important; }
-#modal-cloned-card[data-theme="green"] td.group-col { color: #a7f3d0 !important; }
+/* 5. FOREST GREEN */
+#modal-cloned-card[data-theme="green"] { background-color: #064e3b !important; border: 1px solid #047857 !important; }
+#modal-cloned-card[data-theme="green"] .results-title,
+#modal-cloned-card[data-theme="green"] h2 { color: #ecdf5f !important; }
+#modal-cloned-card[data-theme="green"] tr { background: #065f46 !important; color: #ecdf5f !important; }
+#modal-cloned-card[data-theme="green"] td:first-child,
+#modal-cloned-card[data-theme="green"] td.rank { color: #a7f3d0 !important; }
+#modal-cloned-card[data-theme="green"] td:nth-child(3),
+#modal-cloned-card[data-theme="green"] td.group-col { background: #10b981 !important; color: #064e3b !important; }
 
-/* 6. Special Argentina */
-#modal-cloned-card[data-theme="argentina"] { background-color: #e0f2fe !important; border: 1px solid #38bdf8 !important; }
-#modal-cloned-card[data-theme="argentina"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #0369a1 !important; }
-#modal-cloned-card[data-theme="argentina"] th { background: #7dd3fc !important; color: #0c4a6e !important; }
-#modal-cloned-card[data-theme="argentina"] tr { background: #ffffff !important; border-bottom: 1px solid #bae6fd !important; }
-#modal-cloned-card[data-theme="argentina"] td.rank { color: #0284c7 !important; }
-#modal-cloned-card[data-theme="argentina"] td.name-col { color: #0c4a6e !important; }
-#modal-cloned-card[data-theme="argentina"] td.group-col { color: #0284c7 !important; }
+/* 6. SPECIAL: ARGENTINA */
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) { background-color: #ffffff !important; border: 2px solid #38bdf8 !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) .results-title,
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) h2 { color: #0284c7 !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) tr { background: #bae6fd !important; color: #0c4a6e !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td:first-child,
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td.rank { color: #0284c7 !important; }
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td:nth-child(3),
+#modal-cloned-card:is([data-theme="argentina"], [data-theme="arg"]) td.group-col { background: #0284c7 !important; color: #ffffff !important; }
 
-/* 7. Special Boca */
-#modal-cloned-card[data-theme="boca"] { background-color: #03254c !important; border: 1px solid #facc15 !important; }
-#modal-cloned-card[data-theme="boca"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #facc15 !important; }
-#modal-cloned-card[data-theme="boca"] th { background: #114084 !important; color: #facc15 !important; }
-#modal-cloned-card[data-theme="boca"] tr { background: #0a3161 !important; border-bottom: 1px solid #03254c !important; }
-#modal-cloned-card[data-theme="boca"] td.rank { color: #facc15 !important; }
-#modal-cloned-card[data-theme="boca"] td.name-col { color: #ffffff !important; }
-#modal-cloned-card[data-theme="boca"] td.group-col { color: #fde047 !important; }
+/* 7. SPECIAL: BOCA JUNIORS */
+#modal-cloned-card[data-theme="boca"] { background-color: #002244 !important; border: 2px solid #ffcc00 !important; }
+#modal-cloned-card[data-theme="boca"] .results-title,
+#modal-cloned-card[data-theme="boca"] h2 { color: #ffcc00 !important; }
+#modal-cloned-card[data-theme="boca"] tr { background: #003366 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="boca"] td:first-child,
+#modal-cloned-card[data-theme="boca"] td.rank { color: #ffcc00 !important; }
+#modal-cloned-card[data-theme="boca"] td:nth-child(3),
+#modal-cloned-card[data-theme="boca"] td.group-col { background: #ffcc00 !important; color: #002244 !important; }
 
-/* 8. Special River */
-#modal-cloned-card[data-theme="river"] { background-color: #ffffff !important; border: 1px solid #dc2626 !important; }
-#modal-cloned-card[data-theme="river"] .results-title { background: none !important; -webkit-text-fill-color: initial !important; color: #dc2626 !important; }
-#modal-cloned-card[data-theme="river"] th { background: #dc2626 !important; color: #ffffff !important; }
-#modal-cloned-card[data-theme="river"] tr { background: #fef2f2 !important; border-bottom: 1px solid #fee2e2 !important; }
-#modal-cloned-card[data-theme="river"] td.rank { color: #dc2626 !important; }
-#modal-cloned-card[data-theme="river"] td.name-col { color: #18181b !important; }
-#modal-cloned-card[data-theme="river"] td.group-col { color: #dc2626 !important; }
-
+/* 8. SPECIAL: RIVER PLATE */
+#modal-cloned-card[data-theme="river"] { background-color: #ffffff !important; border: 2px solid #e50027 !important; }
+#modal-cloned-card[data-theme="river"] .results-title,
+#modal-cloned-card[data-theme="river"] h2 { color: #e50027 !important; }
+#modal-cloned-card[data-theme="river"] tr { background: #e50027 !important; color: #ffffff !important; }
+#modal-cloned-card[data-theme="river"] td:first-child,
+#modal-cloned-card[data-theme="river"] td.rank { color: #ffffff !important; }
+#modal-cloned-card[data-theme="river"] td:nth-child(3),
+#modal-cloned-card[data-theme="river"] td.group-col { background: #700012 !important; color: #ffffff !important; }
+    
 /* ==========================================
    ESTILOS DE LA VENTANA MODAL
    ========================================== */
@@ -1603,35 +1662,33 @@ function openCardModal() {
   const clonedCard = rankingCard.cloneNode(true);
   clonedCard.id = 'modal-cloned-card';
   
-  // Quita los botones internos
+  // Quitar botones
   const oldButtons = clonedCard.querySelectorAll('button');
   oldButtons.forEach(btn => btn.remove());
 
-  // Quita el número en los primeros 3 puestos dejando solo el ícono/emoji de la medalla
-  const rows = clonedCard.querySelectorAll('tr, .ranking-item');
+  // Iconos de medallas
+  const medals = ['🥇', '🥈', '🥉'];
+
+  // Procesar filas de la tabla
+  const rows = clonedCard.querySelectorAll('tbody tr');
   rows.forEach((row, index) => {
-    if (index < 3) {
-      const rankCell = row.querySelector('.rank, .rank-number, td:first-child');
-      if (rankCell) {
-        // Recorre los nodos hijos y remueve únicamente los nodos de texto que contengan números
-        rankCell.childNodes.forEach(node => {
-          if (node.nodeType === Node.TEXT_NODE && /\d/.test(node.textContent)) {
-            node.textContent = '';
-          }
-        });
+    const rankCell = row.querySelector('td:first-child, .rank-col');
+    if (rankCell) {
+      if (index < 3) {
+        // Puestos 1, 2 y 3: Reemplazar contenido por la medalla (sin número)
+        rankCell.innerHTML = medals[index];
+      } else {
+        // Puesto 4 en adelante: Número limpio
+        rankCell.textContent = index + 1;
       }
     }
   });
 
   holder.appendChild(clonedCard);
   
-  // Muestra el modal centrado
   const modal = document.getElementById('card-modal');
-  if (modal) {
-    modal.style.display = 'flex';
-    window.scrollTo(0, 0); // Opcional: rescroll al tope si fuera necesario
-  }
-} 
+  if (modal) modal.style.display = 'flex';
+}
     
 function closeCardModal() {
   const modal = document.getElementById('card-modal');
