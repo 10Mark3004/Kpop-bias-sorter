@@ -620,6 +620,43 @@ important;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(224, 82, 160, 0.6);
 }
+
+    /* CORRECCIÓN MODAL Y TÍTULOS */
+.modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 99999 !important;
+  overflow-y: auto !important;
+  padding: 20px 10px !important;
+}
+
+#modal-cloned-card .results-title,
+#modal-cloned-card h2,
+#modal-cloned-card .title-text {
+  font-size: 1.1rem !important;
+  text-align: center !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  max-width: 100% !important;
+  padding: 0 10px !important;
+}
+
+#modal-cloned-card td:first-child,
+#modal-cloned-card .rank-col {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  min-width: 40px !important;
+}
     
   </style>
 </head>
@@ -1445,7 +1482,6 @@ startRotation();
 
     // Funciones para el Modal de la Tarjeta
 function openCardModal() {
-  // Busca la tarjeta del ranking usando clase o id
   const rankingCard = document.querySelector('.container') || document.getElementById('ranking-card');
   const holder = document.getElementById('preview-card-holder');
   
@@ -1453,33 +1489,38 @@ function openCardModal() {
   
   holder.innerHTML = '';
   
-  // Clona la tarjeta para la vista previa
   const clonedCard = rankingCard.cloneNode(true);
   clonedCard.id = 'modal-cloned-card';
   
-  // Quita los botones dentro del clon para que la tarjeta salga limpia
+  // Quita los botones internos
   const oldButtons = clonedCard.querySelectorAll('button');
   oldButtons.forEach(btn => btn.remove());
 
-  // --- OCULTAR NÚMEROS EN LOS PRIMEROS 3 PUESTOS (DEJA SOLO LA MEDALLA) ---
+  // Quita el número en los primeros 3 puestos dejando solo el ícono/emoji de la medalla
   const rows = clonedCard.querySelectorAll('tr, .ranking-item');
   rows.forEach((row, index) => {
-    const rankCell = row.querySelector('.rank, .rank-number, td:first-child');
-    if (rankCell && index < 3) {
-      rankCell.childNodes.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          node.textContent = '';
-        }
-      });
+    if (index < 3) {
+      const rankCell = row.querySelector('.rank, .rank-number, td:first-child');
+      if (rankCell) {
+        // Recorre los nodos hijos y remueve únicamente los nodos de texto que contengan números
+        rankCell.childNodes.forEach(node => {
+          if (node.nodeType === Node.TEXT_NODE && /\d/.test(node.textContent)) {
+            node.textContent = '';
+          }
+        });
+      }
     }
   });
 
   holder.appendChild(clonedCard);
   
-  // Abre el modal
+  // Muestra el modal centrado
   const modal = document.getElementById('card-modal');
-  if (modal) modal.style.display = 'flex';
-}
+  if (modal) {
+    modal.style.display = 'flex';
+    window.scrollTo(0, 0); // Opcional: rescroll al tope si fuera necesario
+  }
+} 
     
 function closeCardModal() {
   document.getElementById('card-modal').style.display = 'none';
