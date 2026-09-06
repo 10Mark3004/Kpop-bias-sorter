@@ -838,6 +838,21 @@ important;
 #modal-cloned-card[data-theme="river"] { background-color: #ffffff !important; border: 2px solid #e50027 !important; }
 #modal-cloned-card[data-theme="river"] tr { background: #e50027 !important; color: #ffffff !important; }
 #modal-cloned-card[data-theme="river"] td:nth-child(3) { background: #700012 !important; color: #ffffff !important; }
+
+    /* Estilo para el título generado dentro del modal */
+#modal-cloned-card .modal-generated-title {
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  margin-top: 5px !important;
+  margin-bottom: 16px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
     
   </style>
 </head>
@@ -1677,21 +1692,18 @@ function openCardModal() {
   const oldButtons = clonedCard.querySelectorAll('button');
   oldButtons.forEach(btn => btn.remove());
 
-  const titleEl = clonedCard.querySelector('h1, h2, h3, .results-title, .title-text, [class*="title"]');
-  if (titleEl) {
-    titleEl.style.display = 'block';
-    titleEl.style.visibility = 'visible';
-    titleEl.style.opacity = '1';
-    titleEl.style.background = 'none';
-    titleEl.style.backgroundColor = 'transparent';
-    titleEl.style.boxShadow = 'none';
-    titleEl.style.border = 'none';
-    titleEl.style.marginBottom = '16px';
-    
-    // Asegura que quede al principio de la tarjeta
-    clonedCard.insertBefore(titleEl, clonedCard.firstChild);
-  }
+    // CREAR TÍTULO DINÁMICO
+  const oldTitles = clonedCard.querySelectorAll('h1, h2, h3, .results-title, .title-text');
+  oldTitles.forEach(el => el.remove());
 
+  const nameInput = document.querySelector('input[type="text"]') || document.getElementById('username-input');
+  const userName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Marcos';
+
+  const newTitle = document.createElement('h2');
+  newTitle.className = 'modal-generated-title';
+  newTitle.textContent = `Ranking de ${userName}`;
+  clonedCard.insertBefore(newTitle, clonedCard.firstChild);
+  
   // Iconos de medallas
   const medals = ['🥇', '🥈', '🥉'];
 
